@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>SNEF- Selling Near Expired Foods</title>
 
         <!-- Custom fonts for this template -->
@@ -62,7 +62,12 @@
                 <div class="sidebar-heading">
                     Utility
                 </div>
-
+ <li class="nav-item">
+                    <a class="nav-link collapsed"  href="addProduct.jsp" />
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Add Product</span>
+                    </a>
+                </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item active">
                     <a class="nav-link collapsed"  href="order.jsp" />
@@ -98,11 +103,11 @@
                         </button>
 
                         <!-- Topbar Search -->
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="searchOrder">
                             <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Check code..." aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
+                                    <button class="btn btn-primary" type="submit">
                                         <i class="fas fa-search fa-sm"></i>
                                     </button>
                                 </div>
@@ -208,7 +213,7 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h4 class="m-0 font-weight-bold text-primary" style="float:left">Receive Order </h4>
-                                <input type="button" value="Add Product" data-toggle="modal" data-target="#addProductModal" style="float:right" class="btn btn-link rounded-circle mr-3"/>
+                                <!--<input type="button" value="Add Product" data-toggle="modal" data-target="#addProductModal" style="float:right" class="btn btn-link rounded-circle mr-3"/>-->
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -216,8 +221,7 @@
                                         <thead>
                                             <tr>
                                                 <th>OrderId</th>
-                                                <th>Ordered Date</th>
-
+                                                <th>Ordered Date</th>  
                                                 <th>Customer</th>
                                                 <th>Status</th>
                                                 <th>CheckOut Date</th>
@@ -235,7 +239,7 @@
                                         <tbody>
                                             <tr>
                                                 <td> 
-                                                    #1234
+                                                    <a data-toggle="modal" data-target="#informationModal">#1234</a>
                                                 </td>
                                                 <td>6/6/2019 12:00:00</td>
 
@@ -245,7 +249,7 @@
                                             </tr>
                                             <tr>
                                                 <td> 
-                                                    #1233
+                                                     <a data-toggle="modal" data-target="#informationModal">#1233</a>
                                                 </td>
                                                 <td>5/6/2019 10:40:35</td>
 
@@ -255,7 +259,7 @@
                                             </tr>
                                             <tr>
                                                 <td> 
-                                                    #1525
+                                                      <a data-toggle="modal" data-target="#informationModal"> #1525</a>
                                                 </td>
                                                 <td>6/9/2019 7:00:00</td>
 
@@ -315,7 +319,100 @@
                 </div>
             </div>
         </div>
-
+        <div class="modal fade" id="informationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;align-items: center">
+                        <form>
+                            <table border="0" cellspacing="1" cellpadding="1" style="margin: 0 auto;width: 100%" id="infoTable">
+                            <tbody>
+                                <tr>
+                                    <td colspan="3" style="text-align: center"><h3 class=""><b>Bách Hóa Xanh</b></h3></td>
+                                </tr>
+                                <tr>
+                                   <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
+                                </tr>
+                                 <tr>
+                                    <td colspan="3">----------***----------</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align: center"><h3 class=""><b>ORDER INFORMATION</b></h3></td>
+                                </tr>
+                                <tr>
+                                   <td colspan="3" style="text-align: center"><hr></td>
+                                </tr>
+                                 <tr>
+                                   <td style="text-align: left"><b>Customer:<b></td>
+                                   <td style="text-align: right" colspan="2">#0001_Truong Hai Nguyen</td>
+                                </tr>
+                                 <tr>
+                                   <td style="text-align: left"><b>OrderId:<b></td>
+                                   <td style="text-align: right" colspan="2">#1234</td>
+                                </tr>
+                                 <tr>
+                                   <td style="text-align: left"><b>Receive Time:<b></td>
+                                   <td style="text-align: right" colspan="2"><span>6/6/2019 13:00:01</span></td>
+                                </tr>
+                                  <tr>
+                                   <td colspan="3" style="text-align: center"><hr></td>
+                                </tr>
+                                 <tr>
+                                   <td style="text-align: left;width: 55%" ><b>Product<b></td>
+                                   <td style="text-align: center;width: 10%"><b>Amount<b></td>
+                                   <td style="text-align: right;width: 35%"><b>Cash &nbsp;</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left">COCA COLA</td>
+                                    <td style="text-align: center">1</td>
+                                    <td style="text-align: right">3,500 &nbsp;</td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td style="text-align: left">3,500<br> </td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: right"></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left">Hao Hao spicy & shrimp instant noodle </td>
+                                    <td style="text-align: center">5</td>
+                                    <td style="text-align: right">12,500 &nbsp;</td>
+                                </tr>
+                                <tr>
+                                     <td style="text-align: left">2,500 &nbsp;</td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: right"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><hr></td>
+                                </tr>
+                                 <tr>
+                                    <td style="text-align: left"><b>Total </b></td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: right"><b>16,000 &nbsp;<b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><hr></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">THANK YOU FOR SHOPPING</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">See You Again</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                            </form>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+       
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -332,7 +429,22 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
-
+        <script>
+            $('document').ready(function(){
+               $('#searchOrder').submit(function(e){
+                   e.preventDefault();
+                   $('#informationModal').modal();
+                   if($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length<=0){
+                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
+                    }
+               });
+               $('#informationModal').on("hidden.bs.modal", function () {
+                   if($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length>0){
+                        $('#btOrderConfirm').remove();
+                    }
+                });
+            });
+        </script>
     </body>
 
 </html>
