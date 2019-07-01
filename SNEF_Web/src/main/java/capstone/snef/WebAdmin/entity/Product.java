@@ -14,13 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -29,12 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Product", catalog = "SNEF_Part2", schema = "dbo")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
-    , @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId")
-    , @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE p.productName = :productName")
-    , @NamedQuery(name = "Product.findByImageSrc", query = "SELECT p FROM Product p WHERE p.imageSrc = :imageSrc")})
+
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,6 +56,14 @@ public class Product implements Serializable {
 
     public Product(Integer productId) {
         this.productId = productId;
+    }
+
+    public Product(Integer productId, String productName, String imageSrc, List<StoreProduct> storeProductList, Categories categoriesId) {
+        this.productId = productId;
+        this.productName = productName;
+        this.imageSrc = imageSrc;
+        this.storeProductList = storeProductList;
+        this.categoriesId = categoriesId;
     }
 
     public Product(Integer productId, String productName, String imageSrc) {
