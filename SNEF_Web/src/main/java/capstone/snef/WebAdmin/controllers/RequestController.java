@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class RequestController {
-    @RequestMapping("/")
+    @RequestMapping("/web/admin")
     public String home(){
         return "homepage.jsp";
     }
