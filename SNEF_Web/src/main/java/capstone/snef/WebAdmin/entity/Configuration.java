@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Configuration", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "Configuration", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Configuration.findAll", query = "SELECT c FROM Configuration c")
@@ -33,19 +35,19 @@ public class Configuration implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "configurationId")
+    @Column(name = "configurationId", nullable = false)
     private Integer configurationId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "configurationName")
+    @Column(name = "configurationName", nullable = false, length = 30)
     private String configurationName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(name = "configurationValue")
+    @Column(name = "configurationValue", nullable = false, length = 500)
     private String configurationValue;
 
     public Configuration() {

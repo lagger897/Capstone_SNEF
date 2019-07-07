@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "StoreProduct", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "StoreProduct", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreProduct.findAll", query = "SELECT s FROM StoreProduct s")
@@ -46,45 +48,46 @@ public class StoreProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "StoreProductId")
+    @Column(name = "StoreProductId", nullable = false)
     private Integer storeProductId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ProductName")
+    @Column(name = "ProductName", nullable = false, length = 50)
     private String productName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ExpiredDate")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ExpiredDate", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date expiredDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity")
+    @Column(name = "Quantity", nullable = false)
     private int quantity;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "Price")
-    private Double price;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Price", nullable = false)
+    private float price;
     @Size(max = 4000)
-    @Column(name = "Description")
+    @Column(name = "Description", length = 4000)
     private String description;
     @Size(max = 50)
-    @Column(name = "SKU")
+    @Column(name = "SKU", length = 50)
     private String sku;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
-    private List<FlashSaleProduct> flashSaleProductList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
     private List<StoreProductImage> storeProductImageList;
-    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
+    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId", nullable = false)
     @ManyToOne(optional = false)
     private Product productId;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
     @ManyToOne(optional = false)
     private Store storeId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
-    private List<LikeItem> likeItemList;
+    private List<FlashsaleProduct> flashsaleProductList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
+    private List<Like1> like1List;
 
     public StoreProduct() {
     }
@@ -93,11 +96,12 @@ public class StoreProduct implements Serializable {
         this.storeProductId = storeProductId;
     }
 
-    public StoreProduct(Integer storeProductId, String productName, Date expiredDate, int quantity) {
+    public StoreProduct(Integer storeProductId, String productName, Date expiredDate, int quantity, float price) {
         this.storeProductId = storeProductId;
         this.productName = productName;
         this.expiredDate = expiredDate;
         this.quantity = quantity;
+        this.price = price;
     }
 
     public Integer getStoreProductId() {
@@ -132,11 +136,11 @@ public class StoreProduct implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -154,15 +158,6 @@ public class StoreProduct implements Serializable {
 
     public void setSku(String sku) {
         this.sku = sku;
-    }
-
-    @XmlTransient
-    public List<FlashSaleProduct> getFlashSaleProductList() {
-        return flashSaleProductList;
-    }
-
-    public void setFlashSaleProductList(List<FlashSaleProduct> flashSaleProductList) {
-        this.flashSaleProductList = flashSaleProductList;
     }
 
     @XmlTransient
@@ -191,12 +186,21 @@ public class StoreProduct implements Serializable {
     }
 
     @XmlTransient
-    public List<LikeItem> getLikeItemList() {
-        return likeItemList;
+    public List<FlashsaleProduct> getFlashsaleProductList() {
+        return flashsaleProductList;
     }
 
-    public void setLikeItemList(List<LikeItem> likeItemList) {
-        this.likeItemList = likeItemList;
+    public void setFlashsaleProductList(List<FlashsaleProduct> flashsaleProductList) {
+        this.flashsaleProductList = flashsaleProductList;
+    }
+
+    @XmlTransient
+    public List<Like1> getLike1List() {
+        return like1List;
+    }
+
+    public void setLike1List(List<Like1> like1List) {
+        this.like1List = like1List;
     }
 
     @Override

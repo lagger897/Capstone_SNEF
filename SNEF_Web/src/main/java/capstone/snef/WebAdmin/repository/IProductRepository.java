@@ -7,6 +7,8 @@ package capstone.snef.WebAdmin.repository;
 
 import capstone.snef.WebAdmin.entity.Product;
 import java.util.List;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -17,6 +19,14 @@ public interface IProductRepository extends CrudRepository<Product, Integer> {
 
     @Override
     public List<Product> findAll();
+
+    public List<Product> findAllByProductName(String productName);
+    
+    @Query(value="SELECT * FROM Product p WHERE p.ProductName LIKE %?1%",nativeQuery = true)
+    public List<Product> searchAllByProductName(String productName);
+
+    @Override
+    public Optional<Product> findById(Integer id);
     
     
 }

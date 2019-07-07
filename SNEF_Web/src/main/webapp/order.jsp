@@ -15,7 +15,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>SNEF- Selling Near Expired Foods</title>
+        <title>SAFO- Sale Food</title>
 
         <!-- Custom fonts for this template -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -41,17 +41,17 @@
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
-                    <div class="sidebar-brand-text mx-3">SNEF</div>
+                    <div class="sidebar-brand-text mx-3">SAFO</div>
                 </a>
 
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
 
-                <!-- Nav Item - Dashboard -->
+                <!-- Nav Item - Home -->
                 <li class="nav-item ">
                     <a class="nav-link" href="homepage.jsp">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
+                        <span>Home</span></a>
                 </li>
 
 
@@ -65,7 +65,7 @@
  <li class="nav-item">
                     <a class="nav-link collapsed"  href="addProduct.jsp" />
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Add Product</span>
+                    <span>Post Sale</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -213,7 +213,7 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h4 class="m-0 font-weight-bold text-primary" style="float:left">Receive Order </h4>
-                                <!--<input type="button" value="Add Product" data-toggle="modal" data-target="#addProductModal" style="float:right" class="btn btn-link rounded-circle mr-3"/>-->
+                                <!--<input type="button" value="Post Sale" data-toggle="modal" data-target="#addProductModal" style="float:right" class="btn btn-link rounded-circle mr-3"/>-->
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">

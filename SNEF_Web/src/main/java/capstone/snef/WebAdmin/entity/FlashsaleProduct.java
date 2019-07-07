@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,41 +29,41 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "FlashSaleProduct", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "FlashsaleProduct", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "FlashSaleProduct.findAll", query = "SELECT f FROM FlashSaleProduct f")
-    , @NamedQuery(name = "FlashSaleProduct.findByFlashSaleProductId", query = "SELECT f FROM FlashSaleProduct f WHERE f.flashSaleProductId = :flashSaleProductId")
-    , @NamedQuery(name = "FlashSaleProduct.findByQuantity", query = "SELECT f FROM FlashSaleProduct f WHERE f.quantity = :quantity")})
-public class FlashSaleProduct implements Serializable {
+    @NamedQuery(name = "FlashsaleProduct.findAll", query = "SELECT f FROM FlashsaleProduct f")
+    , @NamedQuery(name = "FlashsaleProduct.findByFlashSaleProductId", query = "SELECT f FROM FlashsaleProduct f WHERE f.flashSaleProductId = :flashSaleProductId")
+    , @NamedQuery(name = "FlashsaleProduct.findByQuantity", query = "SELECT f FROM FlashsaleProduct f WHERE f.quantity = :quantity")})
+public class FlashsaleProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "FlashSaleProductId")
+    @Column(name = "FlashSaleProductId", nullable = false)
     private Integer flashSaleProductId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity")
+    @Column(name = "Quantity", nullable = false)
     private int quantity;
-    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId")
+    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId", nullable = false)
     @ManyToOne(optional = false)
-    private FlashSales flashSalesId;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
+    private Flashsales flashSalesId;
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flashSaleProductId")
     private List<OrderDetail> orderDetailList;
 
-    public FlashSaleProduct() {
+    public FlashsaleProduct() {
     }
 
-    public FlashSaleProduct(Integer flashSaleProductId) {
+    public FlashsaleProduct(Integer flashSaleProductId) {
         this.flashSaleProductId = flashSaleProductId;
     }
 
-    public FlashSaleProduct(Integer flashSaleProductId, int quantity) {
+    public FlashsaleProduct(Integer flashSaleProductId, int quantity) {
         this.flashSaleProductId = flashSaleProductId;
         this.quantity = quantity;
     }
@@ -82,11 +84,11 @@ public class FlashSaleProduct implements Serializable {
         this.quantity = quantity;
     }
 
-    public FlashSales getFlashSalesId() {
+    public Flashsales getFlashSalesId() {
         return flashSalesId;
     }
 
-    public void setFlashSalesId(FlashSales flashSalesId) {
+    public void setFlashSalesId(Flashsales flashSalesId) {
         this.flashSalesId = flashSalesId;
     }
 
@@ -117,10 +119,10 @@ public class FlashSaleProduct implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FlashSaleProduct)) {
+        if (!(object instanceof FlashsaleProduct)) {
             return false;
         }
-        FlashSaleProduct other = (FlashSaleProduct) object;
+        FlashsaleProduct other = (FlashsaleProduct) object;
         if ((this.flashSaleProductId == null && other.flashSaleProductId != null) || (this.flashSaleProductId != null && !this.flashSaleProductId.equals(other.flashSaleProductId))) {
             return false;
         }
@@ -129,7 +131,7 @@ public class FlashSaleProduct implements Serializable {
 
     @Override
     public String toString() {
-        return "capstone.snef.WebAdmin.entity.FlashSaleProduct[ flashSaleProductId=" + flashSaleProductId + " ]";
+        return "capstone.snef.WebAdmin.entity.FlashsaleProduct[ flashSaleProductId=" + flashSaleProductId + " ]";
     }
     
 }

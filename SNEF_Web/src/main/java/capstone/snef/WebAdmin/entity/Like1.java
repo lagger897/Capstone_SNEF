@@ -9,13 +9,14 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -23,30 +24,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Like", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "Like", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LikeItem.findAll", query = "SELECT l FROM LikeItem l")
-    , @NamedQuery(name = "LikeItem.findByLikeId", query = "SELECT l FROM LikeItem l WHERE l.likeId = :likeId")})
-public class LikeItem implements Serializable {
+    @NamedQuery(name = "Like1.findAll", query = "SELECT l FROM Like1 l")
+    , @NamedQuery(name = "Like1.findByLikeId", query = "SELECT l FROM Like1 l WHERE l.likeId = :likeId")})
+public class Like1 implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "LikeId")
+    @Column(name = "LikeId", nullable = false)
     private Integer likeId;
-    @JoinColumn(name = "CustomerId", referencedColumnName = "CustomerId")
+    @JoinColumn(name = "CustomerId", referencedColumnName = "CustomerId", nullable = false)
     @ManyToOne(optional = false)
     private Customer customerId;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
 
-    public LikeItem() {
+    public Like1() {
     }
 
-    public LikeItem(Integer likeId) {
+    public Like1(Integer likeId) {
         this.likeId = likeId;
     }
 
@@ -84,10 +85,10 @@ public class LikeItem implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LikeItem)) {
+        if (!(object instanceof Like1)) {
             return false;
         }
-        LikeItem other = (LikeItem) object;
+        Like1 other = (Like1) object;
         if ((this.likeId == null && other.likeId != null) || (this.likeId != null && !this.likeId.equals(other.likeId))) {
             return false;
         }
@@ -96,7 +97,7 @@ public class LikeItem implements Serializable {
 
     @Override
     public String toString() {
-        return "capstone.snef.WebAdmin.entity.LikeItem[ likeId=" + likeId + " ]";
+        return "capstone.snef.WebAdmin.entity.Like1[ likeId=" + likeId + " ]";
     }
     
 }

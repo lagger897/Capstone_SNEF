@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Customer", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "Customer", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")
@@ -36,17 +37,17 @@ public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "CustomerId")
+    @Column(name = "CustomerId", nullable = false)
     private Integer customerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerCustomerId")
-    private List<CustomerOrder> customerOrderList;
-    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
+    private List<Order1> order1List;
+    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId", nullable = false)
     @ManyToOne(optional = false)
     private Account accountId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    private List<LikeItem> likeItemList;
+    private List<Like1> like1List;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
     private List<StoreFollwer> storeFollwerList;
 
@@ -66,12 +67,12 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public List<CustomerOrder> getCustomerOrderList() {
-        return customerOrderList;
+    public List<Order1> getOrder1List() {
+        return order1List;
     }
 
-    public void setCustomerOrderList(List<CustomerOrder> customerOrderList) {
-        this.customerOrderList = customerOrderList;
+    public void setOrder1List(List<Order1> order1List) {
+        this.order1List = order1List;
     }
 
     public Account getAccountId() {
@@ -83,12 +84,12 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public List<LikeItem> getLikeItemList() {
-        return likeItemList;
+    public List<Like1> getLike1List() {
+        return like1List;
     }
 
-    public void setLikeItemList(List<LikeItem> likeItemList) {
-        this.likeItemList = likeItemList;
+    public void setLike1List(List<Like1> like1List) {
+        this.like1List = like1List;
     }
 
     @XmlTransient

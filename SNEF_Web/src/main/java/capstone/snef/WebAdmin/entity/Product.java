@@ -11,13 +11,18 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -25,29 +30,34 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Product", catalog = "SNEF_Part2", schema = "dbo")
-
+@Table(name = "Product", catalog = "snef_part2", schema = "")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
+    , @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId")
+    , @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE p.productName = :productName")
+    , @NamedQuery(name = "Product.findByImageSrc", query = "SELECT p FROM Product p WHERE p.imageSrc = :imageSrc")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "ProductId")
+    @Column(name = "ProductId", nullable = false)
     private Integer productId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ProductName")
+    @Column(name = "ProductName", nullable = false, length = 50)
     private String productName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 400)
-    @Column(name = "ImageSrc")
+    @Column(name = "ImageSrc", nullable = false, length = 400)
     private String imageSrc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private List<StoreProduct> storeProductList;
-    @JoinColumn(name = "CategoriesId", referencedColumnName = "CategoriesId")
+    @JoinColumn(name = "CategoriesId", referencedColumnName = "CategoriesId", nullable = false)
     @ManyToOne(optional = false)
     private Categories categoriesId;
 
@@ -56,14 +66,6 @@ public class Product implements Serializable {
 
     public Product(Integer productId) {
         this.productId = productId;
-    }
-
-    public Product(Integer productId, String productName, String imageSrc, List<StoreProduct> storeProductList, Categories categoriesId) {
-        this.productId = productId;
-        this.productName = productName;
-        this.imageSrc = imageSrc;
-        this.storeProductList = storeProductList;
-        this.categoriesId = categoriesId;
     }
 
     public Product(Integer productId, String productName, String imageSrc) {

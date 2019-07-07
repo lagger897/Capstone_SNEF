@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "StoreProductImage", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "StoreProductImage", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreProductImage.findAll", query = "SELECT s FROM StoreProductImage s")
@@ -34,16 +36,16 @@ public class StoreProductImage implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "FSPId")
+    @Column(name = "FSPId", nullable = false)
     private Integer fSPId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 400)
-    @Column(name = "ImageSrc")
+    @Column(name = "ImageSrc", nullable = false, length = 400)
     private String imageSrc;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
 
