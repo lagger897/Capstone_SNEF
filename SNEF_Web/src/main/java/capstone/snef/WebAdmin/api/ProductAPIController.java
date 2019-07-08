@@ -5,9 +5,12 @@
  */
 package capstone.snef.WebAdmin.api;
 
+import capstone.snef.WebAdmin.dataform.AddProductDataForm;
+import capstone.snef.WebAdmin.dataform.Message;
 import capstone.snef.WebAdmin.dataform.ProductData;
 import capstone.snef.WebAdmin.dataform.StoreProductData;
 import capstone.snef.WebAdmin.entity.Product;
+import capstone.snef.WebAdmin.entity.StoreProduct;
 import capstone.snef.WebAdmin.service.ProductService;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +19,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,5 +68,13 @@ public class ProductAPIController {
     public ProductData getProduct(@RequestParam("id") Integer id){
         return pService.getProductById(id);
     };
-    
+    @PostMapping(value="/addProduct",consumes="application/json")
+ public Message addProduct(@RequestBody AddProductDataForm data){
+     StoreProduct rs = pService.saveStoreProduct(data.getStoreId(),data.getProductId(),data.getName(),data.getExpiredDate(),data.getAmmount(),data.getPrice(),data.getDescription());
+     if (rs!=null){
+        return new Message(true, "Success");
+         
+     }
+    return new Message(false,"Fail");
+ }        
 }

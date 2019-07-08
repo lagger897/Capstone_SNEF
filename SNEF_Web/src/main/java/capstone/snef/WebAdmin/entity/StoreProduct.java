@@ -103,6 +103,12 @@ public class StoreProduct implements Serializable {
         this.quantity = quantity;
         this.price = price;
     }
+    public StoreProduct( String productName, Date expiredDate, int quantity, float price) {
+        this.productName = productName;
+        this.expiredDate = expiredDate;
+        this.quantity = quantity;
+        this.price = price;
+    }
 
     public Integer getStoreProductId() {
         return storeProductId;

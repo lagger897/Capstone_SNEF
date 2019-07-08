@@ -9,6 +9,8 @@ import capstone.snef.WebAdmin.dataform.ProductData;
 import capstone.snef.WebAdmin.dataform.StoreProductData;
 import capstone.snef.WebAdmin.entity.FlashsaleProduct;
 import capstone.snef.WebAdmin.entity.Product;
+import capstone.snef.WebAdmin.entity.Store;
+import capstone.snef.WebAdmin.entity.StoreProduct;
 import capstone.snef.WebAdmin.repository.IFlashSaleRepository;
 import capstone.snef.WebAdmin.repository.IProductRepository;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import capstone.snef.WebAdmin.repository.IStoreProductRepository;
+import capstone.snef.WebAdmin.repository.IStoreRepository;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -30,6 +34,8 @@ public class ProductService {
 
     @Autowired
     private IStoreProductRepository storeProductRepos;
+    @Autowired
+    private IStoreRepository storeRepos;
     @Autowired
     private IFlashSaleRepository flashSaleRepos;
 
@@ -75,4 +81,19 @@ public class ProductService {
         }
         return null;
     }
+
+    public StoreProduct saveStoreProduct(Integer storeId, Integer productId, String name, Date expiredDate, Integer ammount, double price, String description) {
+        Optional<Product> rs = productRepos.findById(productId);
+        if (rs.isPresent()) {
+            StoreProduct storeProduct = new StoreProduct(name, expiredDate, ammount, (float) price);
+            Optional<Store> store = storeRepos.findById(storeId);
+            storeProduct.setStoreId(store.get());
+            storeProduct.setProductId(rs.get());
+            storeProduct.setStoreProductImageList(null);
+            storeProduct.setLike1List(null);
+            return storeProductRepos.save(storeProduct);
+        }
+        return null;
+    }
+
 }

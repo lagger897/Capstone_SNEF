@@ -39,9 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o")
     , @NamedQuery(name = "Order1.findByOrderId", query = "SELECT o FROM Order1 o WHERE o.orderId = :orderId")
     , @NamedQuery(name = "Order1.findByDateOrder", query = "SELECT o FROM Order1 o WHERE o.dateOrder = :dateOrder")
-    , @NamedQuery(name = "Order1.findByTotalPrice", query = "SELECT o FROM Order1 o WHERE o.totalPrice = :totalPrice")
     , @NamedQuery(name = "Order1.findByConfirmationCode", query = "SELECT o FROM Order1 o WHERE o.confirmationCode = :confirmationCode")
-    , @NamedQuery(name = "Order1.findByOrderQuantity", query = "SELECT o FROM Order1 o WHERE o.orderQuantity = :orderQuantity")
     , @NamedQuery(name = "Order1.findByStatus", query = "SELECT o FROM Order1 o WHERE o.status = :status")
     , @NamedQuery(name = "Order1.findByRatingPoint", query = "SELECT o FROM Order1 o WHERE o.ratingPoint = :ratingPoint")})
 public class Order1 implements Serializable {
@@ -59,17 +57,9 @@ public class Order1 implements Serializable {
     private Date dateOrder;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "TotalPrice", nullable = false)
-    private float totalPrice;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "ConfirmationCode", nullable = false, length = 50)
     private String confirmationCode;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "OrderQuantity", nullable = false)
-    private int orderQuantity;
     @Basic(optional = false)
     @NotNull
     @Column(name = "Status", nullable = false)
@@ -90,12 +80,10 @@ public class Order1 implements Serializable {
         this.orderId = orderId;
     }
 
-    public Order1(Integer orderId, Date dateOrder, float totalPrice, String confirmationCode, int orderQuantity, boolean status) {
+    public Order1(Integer orderId, Date dateOrder, String confirmationCode, boolean status) {
         this.orderId = orderId;
         this.dateOrder = dateOrder;
-        this.totalPrice = totalPrice;
         this.confirmationCode = confirmationCode;
-        this.orderQuantity = orderQuantity;
         this.status = status;
     }
 
@@ -115,28 +103,12 @@ public class Order1 implements Serializable {
         this.dateOrder = dateOrder;
     }
 
-    public float getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(float totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public String getConfirmationCode() {
         return confirmationCode;
     }
 
     public void setConfirmationCode(String confirmationCode) {
         this.confirmationCode = confirmationCode;
-    }
-
-    public int getOrderQuantity() {
-        return orderQuantity;
-    }
-
-    public void setOrderQuantity(int orderQuantity) {
-        this.orderQuantity = orderQuantity;
     }
 
     public boolean getStatus() {

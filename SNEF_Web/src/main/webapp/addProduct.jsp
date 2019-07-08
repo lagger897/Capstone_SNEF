@@ -501,6 +501,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="addProduct">
+                        <input type="hidden" id="productId"/>
                         <table border="0">
                             <tbody>
                                 <tr>
@@ -562,7 +563,6 @@
 
                 </div>
                 <div class="modal-footer" style="align-items: center;align-content: center">
-
                     <input type="submit" class="btn btn-primary" value="Save"/>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>
@@ -654,8 +654,41 @@
                                                 $('#calPrice').html(cal);
                                             })
                                             $('#addProduct').submit(function (event) {
-                                                event.preventDefault;
-                                                $('#addProductModal').modal('hide');
+                                                event.preventDefault();
+                                                alert("Add Product");
+                                                alert($('#productId').val());
+                                                $.ajax({
+                                                    url: "api/product/addProduct",
+                                                    method: "POST",
+                                                    data: JSON.stringify({
+                                                        "storeId":"1",
+                                                        "productId":$('#productId').val(),
+                                                        "name": $('#txtName').val(),
+                                                        "imageSrc": $('#previewImage').attr('src'),
+                                                        "description": $('#txtDescription').val(),
+                                                        "expiredDate": $('#eDate').val(),
+                                                        "ammount": $('#txtAmmount').val(),
+                                                        "price": $('#txtPrice').val(),
+                                                        "discount": $('#range').val(),
+                                                        "discPrice": $('#calPrice').html()
+                                                    }),
+                                                    dataType: "json", 
+                                                    contentType: "application/json; charset=utf-8",
+
+                                                    success: function (rs) {
+                                                        alert("Say something");
+                                                        if (rs.result === true) {
+                                                            alert(rs.msg);
+                                                            $('#addProductModal').modal('hide');
+                                                        } else {
+                                                            alert(rs.msg);
+                                                        }
+                                                    }, error: function (err) {
+                                                        console.log(err);
+                                                        alert("ERR:" + err.Message);
+                                                    }
+
+                                                });
                                             })
                                         });
                                         function uploadImg(event) {
@@ -671,8 +704,9 @@
                                                 method: "GET",
                                                 dataType: "json",
                                                 success: function (data) {
+                                                    $('#productId').val(data.productId);
                                                     $('#txtName').val(data.productName);
-                                                    $('#previewImage').attr("src",data.imageSrc);
+                                                    $('#previewImage').attr("src", data.imageSrc);
                                                     $('#addProductModal').modal('show');
                                                 }
                                             });
