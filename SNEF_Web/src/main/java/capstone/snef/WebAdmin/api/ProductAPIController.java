@@ -35,7 +35,7 @@ public class ProductAPIController {
     @Autowired
     private ProductService pService;
 
-    @PostMapping("/getAll")
+    @GetMapping("/getAll")
     public List<Product> getAllProduct() {
         return pService.getAllProduct();
     }

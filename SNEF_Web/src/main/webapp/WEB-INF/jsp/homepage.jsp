@@ -1,4 +1,6 @@
-<%-- 
+<%@ page pageEncoding="UTF-8" contentType="text/html; ISO-8859-1" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
     Document   : homepage
     Created on : May 29, 2019, 8:39:59 PM
     Author     : Phuc Nguyen -VN
@@ -125,7 +127,7 @@
             $('document').ready(function () {
                 $table = $('#dataTable').dataTable({
                     "ajax": {
-                        "url": "api/product/getAllStoreProduct?id=1",
+                        "url": "api/product/getAllStoreProduct?id=4",
                         "method": "GET", "dataType": "json"
                     },
                     "processing": true,
@@ -158,6 +160,8 @@
             });
         </script>
     </head>
+
+
 
     <body id="page-top">
 
@@ -195,14 +199,14 @@
                 </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="addProduct.jsp" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <a class="nav-link collapsed"  href="../../addProduct.jsp" />
+                    <i class="fas fa-fw fa-folder"></i> 
                     <span>Post Sale</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="order.jsp" />
+                    <a class="nav-link collapsed"  href="../../order.jsp" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Order</span>
                     </a>
@@ -336,7 +340,7 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Bách Hóa Xanh</h1>
+                        <h1 class="h3 mb-2 text-gray-800">BÃ¡ch HÃ³a Xanh</h1>
                         <p class="mb-4">Retail Store at Trung My Tay, 12 district, Ho Chi Minh city</p>
 
 
@@ -419,7 +423,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">ï¿½</span>
                         </button>
                     </div>
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -437,7 +441,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">ï¿½</span>
                         </button>
                     </div>
                     <div class="modal-body" style="text-align: center;align-items: center">
@@ -445,7 +449,7 @@
                             <table border="0" cellspacing="1" cellpadding="1" style="margin: 0 auto;width: 100%" id="infoTable">
                                 <tbody>
                                     <tr>
-                                        <td colspan="3" style="text-align: center"><h3 class=""><b>Bách Hóa Xanh</b></h3></td>
+                                        <td colspan="3" style="text-align: center"><h3 class=""><b>Bï¿½ch Hï¿½a Xanh</b></h3></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
@@ -520,85 +524,85 @@
                                 </tbody>
                             </table>
                         </form>
-                    </div>                    
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Post Sale Modal Modal-->
-        <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Post Sale</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addProduct">
-                            <table border="0">
-                                <tbody>
-                                    <tr>
-                                        <td>Name</td>
-                                        <td> <input type="text" name="txtName" value="" placeholder="Product name" required  style="width: 100%;border-top: none;border-left: none;border-right: none;"/> </td>
-                                    </tr>
-                                    <tr>
-                                        <td >Image </td>
-                                        <td > <input type="file" name="txtFile" value="" onchange="uploadImg(event)"  /> </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <img width="400px" height="400px" id = "previewImage" src ="https://5.imimg.com/data5/CK/LM/MY-46960546/fresh-red-strawberry-500x500.jpg"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Description </td>
-                                        <td>
-                                            <textarea id="txtDescription" style="width: 100%;height: 100px"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Expired Date</td>
-                                        <td>
-                                            <input type="date" id="eDate" required=""/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Price (VND)</td>
-                                        <td> <input type="number" id = "txtPrice" name="txtPrice" value="0" placeholder="1000"  placeholder="Product original price"   required/> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Discount </td>
-                                        <td>
-                                            <input type="range" name="range" id="range" min="0" max="100" step="" value="0"  class="slider"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>
-                                            <input type="text" id='output' style="width: 30px"><span>%</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Seling Price (VND)   </td>
-                                        <td>
-                                            <span id='calPrice'>0 </span>
-                                        </td>
-                                    </tr>
+<%--        <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
+<%--            <div class="modal-dialog" role="document">--%>
+<%--                <div class="modal-content">--%>
+<%--                    <div class="modal-header">--%>
+<%--                        <h5 class="modal-title" id="exampleModalLabel">Post Sale</h5>--%>
+<%--                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">--%>
+<%--                            <span aria-hidden="true">ï¿½</span>--%>
+<%--                        </button>--%>
+<%--                    </div>--%>
+<%--                    <div class="modal-body">--%>
+<%--                        <form id="addProduct">--%>
+<%--                            <table border="0">--%>
+<%--                                <tbody>--%>
+<%--                                    <tr>--%>
+<%--                                        <td>Name</td>--%>
+<%--                                        <td> <input type="text" name="txtName" value="" placeholder="Product name" required  style="width: 100%;border-top: none;border-left: none;border-right: none;"/> </td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr>--%>
+<%--                                        <td >Image </td>--%>
+<%--                                        <td > <input type="file" name="txtFile" value="" onchange="uploadImg(event)"  /> </td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr>--%>
+<%--                                        <td colspan="2">--%>
+<%--                                            <img width="400px" height="400px" id = "previewImage" src ="https://5.imimg.com/data5/CK/LM/MY-46960546/fresh-red-strawberry-500x500.jpg"/>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr>--%>
+<%--                                        <td>Description </td>--%>
+<%--                                        <td>--%>
+<%--                                            <textarea id="txtDescription" style="width: 100%;height: 100px"></textarea>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr>--%>
+<%--                                        <td>Expired Date</td>--%>
+<%--                                        <td>--%>
+<%--                                            <input type="date" id="eDate" required=""/>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr>--%>
+<%--                                        <td>Price (VND)</td>--%>
+<%--                                        <td> <input type="number" id = "txtPrice" name="txtPrice" value="0" placeholder="1000"  placeholder="Product original price"   required/> </td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr>--%>
+<%--                                        <td>Discount </td>--%>
+<%--                                        <td>--%>
+<%--                                            <input type="range" name="range" id="range" min="0" max="100" step="" value="0"  class="slider"/>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr>--%>
+<%--                                        <td> </td>--%>
+<%--                                        <td>--%>
+<%--                                            <input type="text" id='output' style="width: 30px"><span>%</span>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
+<%--                                    <tr>--%>
+<%--                                        <td>Seling Price (VND)   </td>--%>
+<%--                                        <td>--%>
+<%--                                            <span id='calPrice'>0 </span>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
 
-                                </tbody>
-                            </table>
+<%--                                </tbody>--%>
+<%--                            </table>--%>
 
-                    </div>
-                    <div class="modal-footer" style="align-items: center;align-content: center">
+<%--                    </div>--%>
+<%--                    <div class="modal-footer" style="align-items: center;align-content: center">--%>
 
-                        <input type="submit" class="btn btn-primary" value="Save"/>
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<%--                        <input type="submit" class="btn btn-primary" value="Save"/>--%>
+<%--                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>--%>
+<%--                    </div>--%>
+<%--                    </form>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
 
         <!-- Core plugin JavaScript-->

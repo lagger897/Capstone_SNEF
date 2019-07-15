@@ -37,7 +37,7 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="homepage.jsp">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="WEB-INF/jsp/homepage.jsp">
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
@@ -49,7 +49,7 @@
 
                 <!-- Nav Item - Home -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="homepage.jsp">
+                    <a class="nav-link" href="WEB-INF/jsp/homepage.jsp">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Home</span></a>
                 </li>
@@ -205,7 +205,7 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Bách Hóa Xanh</h1>
+                        <h1 class="h3 mb-2 text-gray-800">Bï¿½ch Hï¿½a Xanh</h1>
                         <p class="mb-4">Retail Store at Trung My Tay, 12 district, Ho Chi Minh city</p>
 
 
@@ -308,7 +308,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">ï¿½</span>
                         </button>
                     </div>
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -325,7 +325,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">ï¿½</span>
                         </button>
                     </div>
                     <div class="modal-body" style="text-align: center;align-items: center">
@@ -333,7 +333,7 @@
                             <table border="0" cellspacing="1" cellpadding="1" style="margin: 0 auto;width: 100%" id="infoTable">
                             <tbody>
                                 <tr>
-                                    <td colspan="3" style="text-align: center"><h3 class=""><b>Bách Hóa Xanh</b></h3></td>
+                                    <td colspan="3" style="text-align: center"><h3 class=""><b>Bï¿½ch Hï¿½a Xanh</b></h3></td>
                                 </tr>
                                 <tr>
                                    <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
