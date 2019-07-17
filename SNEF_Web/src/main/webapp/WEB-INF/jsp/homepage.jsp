@@ -127,7 +127,7 @@
             $('document').ready(function () {
                 $table = $('#dataTable').dataTable({
                     "ajax": {
-                        "url": "api/product/getAllStoreProduct?id=4",
+                        "url": "api/product/getAllStoreProduct?storeId=${storeId}",
                         "method": "GET", "dataType": "json"
                     },
                     "processing": true,
@@ -612,11 +612,11 @@
         <script src="js/sb-admin-2.min.js"></script>
 
         <!-- Page level plugins -->
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<%--        <script src="vendor/datatables/jquery.dataTables.min.js"></script>--%>
+<%--        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>--%>
 
         <!-- Page level custom scripts -->
-        <script src="js/demo/datatables-demo.js"></script>
+<%--        <script src="js/demo/datatables-demo.js"></script>--%>
         <script>
                                             function uploadImg(event) {
                                                 $('#previewImage').attr("src", URL.createObjectURL(event.target.files[0]));

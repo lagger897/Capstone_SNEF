@@ -17,12 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -45,7 +40,7 @@ public class ProductAPIController {
 //        return new StoreProductDataForm(pService.getAllStoreProductById(storeId));
 //    }
 
-    @GetMapping("/getAllStoreProduct")
+    @RequestMapping(value = "/getAllStoreProduct", method = RequestMethod.GET)
     public Map<String, List<StoreProductData>> getAllStoreProduct(@RequestParam("id") Integer storeId) {
         System.out.println(storeId);
         Map<String, List<StoreProductData>> map = new HashMap<String, List<StoreProductData>>();

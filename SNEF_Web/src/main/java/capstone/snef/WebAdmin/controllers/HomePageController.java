@@ -19,10 +19,11 @@ public class HomePageController {
 
     @Autowired
     private ProductService pService;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String homepage(Model model){
+    public String homepage(){
         System.out.println("Vào Đây");
-        return "homepage";
+        return "login";
     }
 
 }

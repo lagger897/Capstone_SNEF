@@ -34,6 +34,6 @@ public interface IFlashSaleRepository extends CrudRepository<FlashsaleProduct, I
     public Optional<FlashsaleProduct> findByStoreProductId(Integer storeProductId);
     
     @Query(value="SELECT * FROM FlashsaleProduct f WHERE f.FlashsaleProductId = ?1",nativeQuery = true)
-    public List<FlashsaleProduct> findAllWithStoreProductId(Integer id);
+    List<FlashsaleProduct> findAllWithStoreProductId(Integer id);
  
 }
