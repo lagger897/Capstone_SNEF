@@ -9,8 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,43 +28,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreProductImage.findAll", query = "SELECT s FROM StoreProductImage s")
-    , @NamedQuery(name = "StoreProductImage.findByFSPId", query = "SELECT s FROM StoreProductImage s WHERE s.fSPId = :fSPId")
+    , @NamedQuery(name = "StoreProductImage.findBySPIId", query = "SELECT s FROM StoreProductImage s WHERE s.sPIId = :sPIId")
     , @NamedQuery(name = "StoreProductImage.findByImageSrc", query = "SELECT s FROM StoreProductImage s WHERE s.imageSrc = :imageSrc")})
 public class StoreProductImage implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "FSPId", nullable = false)
-    private Integer fSPId;
+    @NotNull
+    @Column(name = "SPIId")
+    private Integer sPIId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 400)
-    @Column(name = "ImageSrc", nullable = false, length = 400)
+    @Column(name = "ImageSrc")
     private String imageSrc;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
 
     public StoreProductImage() {
     }
 
-    public StoreProductImage(Integer fSPId) {
-        this.fSPId = fSPId;
+    public StoreProductImage(Integer sPIId) {
+        this.sPIId = sPIId;
     }
 
-    public StoreProductImage(Integer fSPId, String imageSrc) {
-        this.fSPId = fSPId;
+    public StoreProductImage(Integer sPIId, String imageSrc) {
+        this.sPIId = sPIId;
         this.imageSrc = imageSrc;
     }
 
-    public Integer getFSPId() {
-        return fSPId;
+    public Integer getSPIId() {
+        return sPIId;
     }
 
-    public void setFSPId(Integer fSPId) {
-        this.fSPId = fSPId;
+    public void setSPIId(Integer sPIId) {
+        this.sPIId = sPIId;
     }
 
     public String getImageSrc() {
@@ -88,7 +86,7 @@ public class StoreProductImage implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (fSPId != null ? fSPId.hashCode() : 0);
+        hash += (sPIId != null ? sPIId.hashCode() : 0);
         return hash;
     }
 
@@ -99,7 +97,7 @@ public class StoreProductImage implements Serializable {
             return false;
         }
         StoreProductImage other = (StoreProductImage) object;
-        if ((this.fSPId == null && other.fSPId != null) || (this.fSPId != null && !this.fSPId.equals(other.fSPId))) {
+        if ((this.sPIId == null && other.sPIId != null) || (this.sPIId != null && !this.sPIId.equals(other.sPIId))) {
             return false;
         }
         return true;
@@ -107,7 +105,7 @@ public class StoreProductImage implements Serializable {
 
     @Override
     public String toString() {
-        return "capstone.snef.WebAdmin.entity.StoreProductImage[ fSPId=" + fSPId + " ]";
+        return "capstone.snef.WebAdmin.entity.StoreProductImage[ sPIId=" + sPIId + " ]";
     }
     
 }

@@ -42,16 +42,16 @@ public class Location implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "LocationId", nullable = false)
+    @Column(name = "LocationId")
     private Integer locationId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "Address", nullable = false, length = 50)
+    @Column(name = "Address")
     private String address;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
     private List<Store> storeList;
-    @JoinColumn(name = "DistrictId", referencedColumnName = "DistrictId", nullable = false)
+    @JoinColumn(name = "DistrictId", referencedColumnName = "DistrictId")
     @ManyToOne(optional = false)
     private District districtId;
 

@@ -11,33 +11,28 @@ import java.util.Date;
  *
  * @author Phuc Nguyen -VN
  */
-public class StoreProductData {
+public class InStoreProduct {
 
     private Integer storeProductId;
-    private String imageSrc;
     private String name;
+    private String imageSrc;
     private Date expiredDate;
     private Integer quantity;
     private double price;
     private String description;
     private String sku;
 
-    public StoreProductData(Integer storeProductId, String imageSrc, String name, Date expiredDate, Integer quantity, double price, String description, String sku) {
+    public InStoreProduct() {
+    }
+
+    public InStoreProduct(Integer storeProductId, String name, String imageSrc, Date expiredDate, Integer quantity, double price, String description, String sku) {
         this.storeProductId = storeProductId;
-        this.imageSrc = imageSrc;
         this.name = name;
+        this.imageSrc = imageSrc;
         this.expiredDate = expiredDate;
         this.quantity = quantity;
         this.price = price;
         this.description = description;
-        this.sku = sku;
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
         this.sku = sku;
     }
 
@@ -47,6 +42,14 @@ public class StoreProductData {
 
     public void setImageSrc(String imageSrc) {
         this.imageSrc = imageSrc;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public String getName() {

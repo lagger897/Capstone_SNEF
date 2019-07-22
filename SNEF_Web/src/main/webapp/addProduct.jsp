@@ -26,91 +26,6 @@
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
         <style>
-            input[type=range] {
-                -webkit-appearance: none;
-                width: 100%;
-                margin: 6.25px 0;
-            }
-            input[type=range]:focus {
-                outline: none;
-            }
-            input[type=range]::-webkit-slider-runnable-track {
-                width: 100%;
-                height: 26.5px;
-                cursor: pointer;
-                box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-                background: #53bedb;
-                border-radius: 1.3px;
-                border: 0.2px solid #010101;
-            }
-            input[type=range]::-webkit-slider-thumb {
-                box-shadow: 1.8px 1.8px 1px #6174a0, 0px 0px 1.8px #7182aa;
-                border: 0.6px solid #000000;
-                height: 39px;
-                width: 15px;
-                border-radius: 12px;
-                background: #ffffff;
-                cursor: pointer;
-                -webkit-appearance: none;
-                margin-top: -6.45px;
-            }
-            input[type=range]:focus::-webkit-slider-runnable-track {
-                background: #60c3de;
-            }
-            input[type=range]::-moz-range-track {
-                width: 100%;
-                height: 26.5px;
-                cursor: pointer;
-                box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-                background: #53bedb;
-                border-radius: 1.3px;
-                border: 0.2px solid #010101;
-            }
-            input[type=range]::-moz-range-thumb {
-                box-shadow: 1.8px 1.8px 1px #6174a0, 0px 0px 1.8px #7182aa;
-                border: 0.6px solid #000000;
-                height: 39px;
-                width: 15px;
-                border-radius: 12px;
-                background: #ffffff;
-                cursor: pointer;
-            }
-            input[type=range]::-ms-track {
-                width: 100%;
-                height: 26.5px;
-                cursor: pointer;
-                background: transparent;
-                border-color: transparent;
-                color: transparent;
-            }
-            input[type=range]::-ms-fill-lower {
-                background: #46b9d8;
-                border: 0.2px solid #010101;
-                border-radius: 2.6px;
-                box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-            }
-            input[type=range]::-ms-fill-upper {
-                background: #53bedb;
-                border: 0.2px solid #010101;
-                border-radius: 2.6px;
-                box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-            }
-            input[type=range]::-ms-thumb {
-                box-shadow: 1.8px 1.8px 1px #6174a0, 0px 0px 1.8px #7182aa;
-                border: 0.6px solid #000000;
-                height: 39px;
-                width: 15px;
-                border-radius: 12px;
-                background: #ffffff;
-                cursor: pointer;
-                height: 26.5px;
-            }
-            input[type=range]:focus::-ms-fill-lower {
-                background: #53bedb;
-            }
-            input[type=range]:focus::-ms-fill-upper {
-                background: #60c3de;
-            }
             input[type=text], input[type=number],input[type=date]{
                 border-top: none;border-left: none;border-right: none;
             }
@@ -160,7 +75,14 @@
                 <li class="nav-item active">
                     <a class="nav-link collapsed"  href="addProduct.jsp" />
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Post Sale</span>
+                    <span>Add Store Product</span>
+                    </a>
+                </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed"  href="storeproduct.jsp" />
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Store Product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -530,14 +452,16 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Ammount</td>
+                                    <td>Quantity</td>
                                     <td> <input type="number" id = "txtAmmount" name="txtAmmount" value="0" placeholder="1000"  placeholder="1"   required/>  </td>
                                 </tr>
                                 <tr>
                                     <td>Price (VND)</td>
-                                    <td> <input type="number" id = "txtPrice" name="txtPrice" value="0" placeholder="1000"  placeholder="Product original price"   required/>   <a onclick="suggestPrice()" href="#"> Suggest</a></td>
+                                    <td> <input type="number" id = "txtPrice" name="txtPrice" value="0" placeholder="1000"  placeholder="Product original price"   required/>   
+                                        <!--<a onclick="suggestPrice()" href="#"> Suggest</a>-->
+                                    </td>
                                 </tr>
-                                <tr>
+<!--                                <tr>
                                     <td>Discount </td>
                                     <td>
                                         <input type="range" name="range" id="range" min="0" max="100" step="" value="0"  class="slider"/>
@@ -556,7 +480,7 @@
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span id='sugPrice'> </span>
                                     </td>
-                                </tr>
+                                </tr>-->
 
                             </tbody>
                         </table>
@@ -655,8 +579,8 @@
                                             })
                                             $('#addProduct').submit(function (event) {
                                                 event.preventDefault();
-                                                alert("Add Product");
-                                                alert($('#productId').val());
+//                                                alert("Add Product");
+//                                                alert($('#productId').val());
                                                 $.ajax({
                                                     url: "api/product/addProduct",
                                                     method: "POST",
@@ -665,18 +589,14 @@
                                                         "productId":$('#productId').val(),
                                                         "name": $('#txtName').val(),
                                                         "imageSrc": $('#previewImage').attr('src'),
-                                                        "description": $('#txtDescription').val(),
+                                                        "description": $('#txtDescription').html(),
                                                         "expiredDate": $('#eDate').val(),
                                                         "ammount": $('#txtAmmount').val(),
-                                                        "price": $('#txtPrice').val(),
-                                                        "discount": $('#range').val(),
-                                                        "discPrice": $('#calPrice').html()
+                                                        "price": $('#txtPrice').val()
                                                     }),
                                                     dataType: "json", 
                                                     contentType: "application/json; charset=utf-8",
-
-                                                    success: function (rs) {
-                                                        alert("Say something");
+                                                    success: function (rs) {                                                        
                                                         if (rs.result === true) {
                                                             alert(rs.msg);
                                                             $('#addProductModal').modal('hide');
@@ -685,17 +605,15 @@
                                                         }
                                                     }, error: function (err) {
                                                         console.log(err);
-                                                        alert("ERR:" + err.Message);
                                                     }
-
                                                 });
                                             })
                                         });
                                         function uploadImg(event) {
                                             $('#previewImage').attr("src", URL.createObjectURL(event.target.files[0]));
+                                            
                                         }
                                         function suggestPrice() {
-
                                             $('#sugPrice').html(10000);
                                         }
                                         function getProduct(id) {

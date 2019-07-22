@@ -35,12 +35,12 @@ public class StoreFollwer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "StoreFollower", nullable = false)
+    @Column(name = "StoreFollower")
     private Integer storeFollower;
-    @JoinColumn(name = "CustomerId", referencedColumnName = "CustomerId", nullable = false)
+    @JoinColumn(name = "CustomerId", referencedColumnName = "CustomerId")
     @ManyToOne(optional = false)
     private Customer customerId;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
     @ManyToOne(optional = false)
     private Store storeId;
 

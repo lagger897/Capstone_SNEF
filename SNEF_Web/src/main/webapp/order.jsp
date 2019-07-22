@@ -1,5 +1,5 @@
 <%-- 
-    Document   : homepage
+    Document   : orderpage
     Created on : May 29, 2019, 8:39:59 PM
     Author     : Phuc Nguyen -VN
 --%>
@@ -62,10 +62,17 @@
                 <div class="sidebar-heading">
                     Utility
                 </div>
- <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link collapsed"  href="addProduct.jsp" />
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Post Sale</span>
+                    <span>Add store product</span>
+                    </a>
+                </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed"  href="storeproduct.jsp" />
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Store Product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -249,7 +256,7 @@
                                             </tr>
                                             <tr>
                                                 <td> 
-                                                     <a data-toggle="modal" data-target="#informationModal">#1233</a>
+                                                    <a data-toggle="modal" data-target="#informationModal">#1233</a>
                                                 </td>
                                                 <td>5/6/2019 10:40:35</td>
 
@@ -259,7 +266,7 @@
                                             </tr>
                                             <tr>
                                                 <td> 
-                                                      <a data-toggle="modal" data-target="#informationModal"> #1525</a>
+                                                    <a data-toggle="modal" data-target="#informationModal"> #1525</a>
                                                 </td>
                                                 <td>6/9/2019 7:00:00</td>
 
@@ -331,121 +338,121 @@
                     <div class="modal-body" style="text-align: center;align-items: center">
                         <form>
                             <table border="0" cellspacing="1" cellpadding="1" style="margin: 0 auto;width: 100%" id="infoTable">
-                            <tbody>
-                                <tr>
-                                    <td colspan="3" style="text-align: center"><h3 class=""><b>Bách Hóa Xanh</b></h3></td>
-                                </tr>
-                                <tr>
-                                   <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
-                                </tr>
-                                 <tr>
-                                    <td colspan="3">----------***----------</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" style="text-align: center"><h3 class=""><b>ORDER INFORMATION</b></h3></td>
-                                </tr>
-                                <tr>
-                                   <td colspan="3" style="text-align: center"><hr></td>
-                                </tr>
-                                 <tr>
-                                   <td style="text-align: left"><b>Customer:<b></td>
-                                   <td style="text-align: right" colspan="2">#0001_Truong Hai Nguyen</td>
-                                </tr>
-                                 <tr>
-                                   <td style="text-align: left"><b>OrderId:<b></td>
-                                   <td style="text-align: right" colspan="2">#1234</td>
-                                </tr>
-                                 <tr>
-                                   <td style="text-align: left"><b>Receive Time:<b></td>
-                                   <td style="text-align: right" colspan="2"><span>6/6/2019 13:00:01</span></td>
-                                </tr>
-                                  <tr>
-                                   <td colspan="3" style="text-align: center"><hr></td>
-                                </tr>
-                                 <tr>
-                                   <td style="text-align: left;width: 55%" ><b>Product<b></td>
-                                   <td style="text-align: center;width: 10%"><b>Amount<b></td>
-                                   <td style="text-align: right;width: 35%"><b>Cash &nbsp;</b></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left">COCA COLA</td>
-                                    <td style="text-align: center">1</td>
-                                    <td style="text-align: right">3,500 &nbsp;</td>
-                                </tr>
-                                <tr>
-                                    
-                                    <td style="text-align: left">3,500<br> </td>
-                                    <td style="text-align: center"></td>
-                                    <td style="text-align: right"></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left">Hao Hao spicy & shrimp instant noodle </td>
-                                    <td style="text-align: center">5</td>
-                                    <td style="text-align: right">12,500 &nbsp;</td>
-                                </tr>
-                                <tr>
-                                     <td style="text-align: left">2,500 &nbsp;</td>
-                                    <td style="text-align: center"></td>
-                                    <td style="text-align: right"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><hr></td>
-                                </tr>
-                                 <tr>
-                                    <td style="text-align: left"><b>Total </b></td>
-                                    <td style="text-align: center"></td>
-                                    <td style="text-align: right"><b>16,000 &nbsp;<b></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><hr></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">THANK YOU FOR SHOPPING</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">See You Again</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                            </form>
-                    </div>                    
-                </div>
-            </div>
-        </div>
-       
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center"><h3 class=""><b>Bách Hóa Xanh</b></h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">----------***----------</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center"><h3 class=""><b>ORDER INFORMATION</b></h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center"><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left"><b>Customer:<b></td>
+                                                    <td style="text-align: right" colspan="2">#0001_Truong Hai Nguyen</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align: left"><b>OrderId:<b></td>
+                                                                    <td style="text-align: right" colspan="2">#1234</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="text-align: left"><b>Receive Time:<b></td>
+                                                                                    <td style="text-align: right" colspan="2"><span>6/6/2019 13:00:01</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="3" style="text-align: center"><hr></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="text-align: left;width: 55%" ><b>Product<b></td>
+                                                                                                    <td style="text-align: center;width: 10%"><b>Amount<b></td>
+                                                                                                                <td style="text-align: right;width: 35%"><b>Cash &nbsp;</b></td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td style="text-align: left">COCA COLA</td>
+                                                                                                                    <td style="text-align: center">1</td>
+                                                                                                                    <td style="text-align: right">3,500 &nbsp;</td>
+                                                                                                                </tr>
+                                                                                                                <tr>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                                                                                                                    <td style="text-align: left">3,500<br> </td>
+                                                                                                                    <td style="text-align: center"></td>
+                                                                                                                    <td style="text-align: right"></td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td style="text-align: left">Hao Hao spicy & shrimp instant noodle </td>
+                                                                                                                    <td style="text-align: center">5</td>
+                                                                                                                    <td style="text-align: right">12,500 &nbsp;</td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td style="text-align: left">2,500 &nbsp;</td>
+                                                                                                                    <td style="text-align: center"></td>
+                                                                                                                    <td style="text-align: right"></td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td colspan="3"><hr></td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td style="text-align: left"><b>Total </b></td>
+                                                                                                                    <td style="text-align: center"></td>
+                                                                                                                    <td style="text-align: right"><b>16,000 &nbsp;<b></td>
+                                                                                                                                </tr>
+                                                                                                                                <tr>
+                                                                                                                                    <td colspan="3"><hr></td>
+                                                                                                                                </tr>
+                                                                                                                                <tr>
+                                                                                                                                    <td colspan="3">THANK YOU FOR SHOPPING</td>
+                                                                                                                                </tr>
+                                                                                                                                <tr>
+                                                                                                                                    <td colspan="3">See You Again</td>
+                                                                                                                                </tr>
+                                                                                                                                </tbody>
+                                                                                                                                </table>
+                                                                                                                                </form>
+                                                                                                                                </div>                    
+                                                                                                                                </div>
+                                                                                                                                </div>
+                                                                                                                                </div>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+                                                                                                                                <!-- Bootstrap core JavaScript-->
+                                                                                                                                <script src="vendor/jquery/jquery.min.js"></script>
+                                                                                                                                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Page level plugins -->
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+                                                                                                                                <!-- Core plugin JavaScript-->
+                                                                                                                                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="js/demo/datatables-demo.js"></script>
-        <script>
-            $('document').ready(function(){
-               $('#searchOrder').submit(function(e){
-                   e.preventDefault();
-                   $('#informationModal').modal();
-                   if($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length<=0){
-                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
-                    }
-               });
-               $('#informationModal').on("hidden.bs.modal", function () {
-                   if($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length>0){
-                        $('#btOrderConfirm').remove();
-                    }
-                });
-            });
-        </script>
-    </body>
+                                                                                                                                <!-- Custom scripts for all pages-->
+                                                                                                                                <script src="js/sb-admin-2.min.js"></script>
 
-</html>
+                                                                                                                                <!-- Page level plugins -->
+                                                                                                                                <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+                                                                                                                                <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+                                                                                                                                <!-- Page level custom scripts -->
+                                                                                                                                <script src="js/demo/datatables-demo.js"></script>
+                                                                                                                                <script>
+                                                                                                                                    $('document').ready(function () {
+                                                                                                                                        $('#searchOrder').submit(function (e) {
+                                                                                                                                            e.preventDefault();
+                                                                                                                                            $('#informationModal').modal();
+                                                                                                                                            if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
+                                                                                                                                                $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
+                                                                                                                                            }
+                                                                                                                                        });
+                                                                                                                                        $('#informationModal').on("hidden.bs.modal", function () {
+                                                                                                                                            if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
+                                                                                                                                                $('#btOrderConfirm').remove();
+                                                                                                                                            }
+                                                                                                                                        });
+                                                                                                                                    });
+                                                                                                                                </script>
+                                                                                                                                </body>
+
+                                                                                                                                </html>
 

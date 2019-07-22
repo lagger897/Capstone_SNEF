@@ -35,9 +35,9 @@ public class Admin implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "AdminId", nullable = false)
+    @Column(name = "AdminId")
     private Integer adminId;
-    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId", nullable = false)
+    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
     @ManyToOne(optional = false)
     private Account accountId;
 

@@ -11,21 +11,22 @@ import java.util.List;
  *
  * @author Phuc Nguyen -VN
  */
-public class StoreProductDataForm {
-    private List<StoreProductData> data;
+public class FlashSaleProductDataForm {
+    private List<FlashSaleProductData> data;
 
-    public StoreProductDataForm() {
+    public FlashSaleProductDataForm() {
+        
     }
 
-    public StoreProductDataForm(List<StoreProductData> data) {
+    public FlashSaleProductDataForm(List<FlashSaleProductData> data) {
         this.data = data;
     }
 
-    public List<StoreProductData> getData() {
+    public List<FlashSaleProductData> getData() {
         return data;
     }
 
-    public void setData(List<StoreProductData> data) {
+    public void setData(List<FlashSaleProductData> data) {
         this.data = data;
     }
 

@@ -50,38 +50,38 @@ public class StoreProduct implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "StoreProductId", nullable = false)
+    @Column(name = "StoreProductId")
     private Integer storeProductId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ProductName", nullable = false, length = 50)
+    @Column(name = "ProductName")
     private String productName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ExpiredDate", nullable = false)
+    @Column(name = "ExpiredDate")
     @Temporal(TemporalType.DATE)
     private Date expiredDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity", nullable = false)
+    @Column(name = "Quantity")
     private int quantity;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Price", nullable = false)
+    @Column(name = "Price")
     private float price;
     @Size(max = 4000)
-    @Column(name = "Description", length = 4000)
+    @Column(name = "Description")
     private String description;
     @Size(max = 50)
-    @Column(name = "SKU", length = 50)
+    @Column(name = "SKU")
     private String sku;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
     private List<StoreProductImage> storeProductImageList;
-    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId", nullable = false)
+    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
     @ManyToOne(optional = false)
     private Product productId;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
     @ManyToOne(optional = false)
     private Store storeId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
@@ -103,7 +103,9 @@ public class StoreProduct implements Serializable {
         this.quantity = quantity;
         this.price = price;
     }
-    public StoreProduct( String productName, Date expiredDate, int quantity, float price) {
+
+    public StoreProduct(String productName, Date expiredDate, int quantity, float price) {
+
         this.productName = productName;
         this.expiredDate = expiredDate;
         this.quantity = quantity;
@@ -233,5 +235,5 @@ public class StoreProduct implements Serializable {
     public String toString() {
         return "capstone.snef.WebAdmin.entity.StoreProduct[ storeProductId=" + storeProductId + " ]";
     }
-    
+
 }

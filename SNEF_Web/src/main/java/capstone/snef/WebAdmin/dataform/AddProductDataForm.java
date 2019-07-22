@@ -20,13 +20,11 @@ public class AddProductDataForm {
     private Date expiredDate;
     private Integer ammount;
     private double price;
-    private double discount;
-    private double discPrice;
 
     public AddProductDataForm() {
     }
 
-    public AddProductDataForm(Integer storeId, Integer productId, String name, String imageSrc, String description, Date expiredDate, Integer ammount, double price, double discount, double discPrice) {
+    public AddProductDataForm(Integer storeId, Integer productId, String name, String imageSrc, String description, Date expiredDate, Integer ammount, double price) {
         this.storeId = storeId;
         this.productId = productId;
         this.name = name;
@@ -35,9 +33,8 @@ public class AddProductDataForm {
         this.expiredDate = expiredDate;
         this.ammount = ammount;
         this.price = price;
-        this.discount = discount;
-        this.discPrice = discPrice;
     }
+
 
 
     public Integer getStoreId() {
@@ -104,27 +101,10 @@ public class AddProductDataForm {
         this.price = price;
     }
 
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
-
-    public double getDiscPrice() {
-        return discPrice;
-    }
-
-    public void setDiscPrice(double discPrice) {
-        this.discPrice = discPrice;
-    }
-
-
     @Override
     public String toString() {
 //        return super.toString(); //To change body of generated methods, choose Tools | Templates.
-        return getName() + "_" + getDescription() + "_" + getImageSrc() + "_" + getAmmount() + "_" + getDiscount() + "_" + getDiscPrice() + "_" + getExpiredDate().toString() + "_" + getPrice();
+        return getName() + "_" + getDescription() + "_" + getImageSrc() + "_" + getAmmount() + "_" + "_" + getExpiredDate().toString() + "_" + getPrice();
     }
 
 }

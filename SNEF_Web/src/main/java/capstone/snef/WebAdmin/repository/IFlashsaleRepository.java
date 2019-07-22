@@ -5,8 +5,8 @@
  */
 package capstone.snef.WebAdmin.repository;
 
+import capstone.snef.WebAdmin.entity.Flashsales;
 import capstone.snef.WebAdmin.entity.Store;
-import capstone.snef.WebAdmin.entity.StoreProduct;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,19 +14,17 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author Phuc Nguyen -VN
  */
-public interface IStoreProductRepository extends CrudRepository<StoreProduct, Integer> {
+public interface IFlashsaleRepository extends CrudRepository<Flashsales, Integer> {
 
     @Override
-    public List<StoreProduct> findAll();
+    public void delete(Flashsales t);
 
-    public List<StoreProduct> findAllByStoreProductId(Integer id);
-    public List<StoreProduct> findAllByStoreId(Store storeId);
+    @Override
+    public <S extends Flashsales> S save(S s);
 
     @Override
     public boolean existsById(Integer id);
 
-    @Override
-    public <S extends StoreProduct> S save(S s);
-    
-    
+    public List<Flashsales> findAllByStoreId(Store storeId);
+
 }

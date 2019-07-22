@@ -40,12 +40,12 @@ public class Country implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "CountryId", nullable = false)
+    @Column(name = "CountryId")
     private Integer countryId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "CountryName", nullable = false, length = 20)
+    @Column(name = "CountryName")
     private String countryName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "countryId")
     private List<City> cityList;

@@ -35,12 +35,12 @@ public class Like1 implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "LikeId", nullable = false)
+    @Column(name = "LikeId")
     private Integer likeId;
-    @JoinColumn(name = "CustomerId", referencedColumnName = "CustomerId", nullable = false)
+    @JoinColumn(name = "CustomerId", referencedColumnName = "CustomerId")
     @ManyToOne(optional = false)
     private Customer customerId;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
 

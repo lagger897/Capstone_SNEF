@@ -46,25 +46,25 @@ public class Flashsales implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "FlashSalesId", nullable = false)
+    @Column(name = "FlashSalesId")
     private Integer flashSalesId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Discount", nullable = false)
+    @Column(name = "Discount")
     private int discount;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "StartDate", nullable = false)
+    @Column(name = "StartDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "EndDate", nullable = false)
+    @Column(name = "EndDate")
     @Temporal(TemporalType.DATE)
     private Date endDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flashSalesId")
     private List<FlashsaleProduct> flashsaleProductList;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
     @ManyToOne(optional = false)
     private Store storeId;
 
@@ -80,6 +80,13 @@ public class Flashsales implements Serializable {
         this.discount = discount;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Flashsales(int discount, Date startDate, Date endDate, Store storeId) {
+        this.discount = discount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.storeId = storeId;
     }
 
     public Integer getFlashSalesId() {
@@ -155,5 +162,5 @@ public class Flashsales implements Serializable {
     public String toString() {
         return "capstone.snef.WebAdmin.entity.Flashsales[ flashSalesId=" + flashSalesId + " ]";
     }
-    
+
 }

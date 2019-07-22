@@ -42,14 +42,14 @@ public class District implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "DistrictId", nullable = false)
+    @Column(name = "DistrictId")
     private Integer districtId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "DistrictName", nullable = false, length = 20)
+    @Column(name = "DistrictName")
     private String districtName;
-    @JoinColumn(name = "WardId", referencedColumnName = "WardId", nullable = false)
+    @JoinColumn(name = "WardId", referencedColumnName = "WardId")
     @ManyToOne(optional = false)
     private Ward wardId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtId")

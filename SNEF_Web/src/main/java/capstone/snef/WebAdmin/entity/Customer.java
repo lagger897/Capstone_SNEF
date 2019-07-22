@@ -39,11 +39,11 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "CustomerId", nullable = false)
+    @Column(name = "CustomerId")
     private Integer customerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerCustomerId")
     private List<Order1> order1List;
-    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId", nullable = false)
+    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
     @ManyToOne(optional = false)
     private Account accountId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")

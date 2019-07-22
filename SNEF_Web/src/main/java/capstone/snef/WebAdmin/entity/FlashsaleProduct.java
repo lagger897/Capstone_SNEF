@@ -34,23 +34,28 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "FlashsaleProduct.findAll", query = "SELECT f FROM FlashsaleProduct f")
     , @NamedQuery(name = "FlashsaleProduct.findByFlashSaleProductId", query = "SELECT f FROM FlashsaleProduct f WHERE f.flashSaleProductId = :flashSaleProductId")
-    , @NamedQuery(name = "FlashsaleProduct.findByQuantity", query = "SELECT f FROM FlashsaleProduct f WHERE f.quantity = :quantity")})
+    , @NamedQuery(name = "FlashsaleProduct.findByQuantity", query = "SELECT f FROM FlashsaleProduct f WHERE f.quantity = :quantity")
+    , @NamedQuery(name = "FlashsaleProduct.findByStatus", query = "SELECT f FROM FlashsaleProduct f WHERE f.status = :status")})
 public class FlashsaleProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "FlashSaleProductId", nullable = false)
+    @Column(name = "FlashSaleProductId")
     private Integer flashSaleProductId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity", nullable = false)
+    @Column(name = "Quantity")
     private int quantity;
-    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId", nullable = false)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Status")
+    private int status;
+    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId")
     @ManyToOne(optional = false)
     private Flashsales flashSalesId;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flashSaleProductId")
@@ -63,9 +68,10 @@ public class FlashsaleProduct implements Serializable {
         this.flashSaleProductId = flashSaleProductId;
     }
 
-    public FlashsaleProduct(Integer flashSaleProductId, int quantity) {
+    public FlashsaleProduct(Integer flashSaleProductId, int quantity, int status) {
         this.flashSaleProductId = flashSaleProductId;
         this.quantity = quantity;
+        this.status = status;
     }
 
     public Integer getFlashSaleProductId() {
@@ -82,6 +88,14 @@ public class FlashsaleProduct implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Flashsales getFlashSalesId() {

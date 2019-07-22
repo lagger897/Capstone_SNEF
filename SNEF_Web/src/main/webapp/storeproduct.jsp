@@ -1,5 +1,5 @@
 <%-- 
-    Document   : homepage
+    Document   : storeproducepage
     Created on : May 29, 2019, 8:39:59 PM
     Author     : Phuc Nguyen -VN
 --%>
@@ -26,137 +26,66 @@
 
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+        <link href="css/inputRange.css" rel="stylesheet">
         <style>
-            input[type=range] {
-                -webkit-appearance: none;
-                width: 100%;
-                margin: 6.25px 0;
-            }
-            input[type=range]:focus {
-                outline: none;
-            }
-            input[type=range]::-webkit-slider-runnable-track {
-                width: 100%;
-                height: 26.5px;
-                cursor: pointer;
-                box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-                background: #53bedb;
-                border-radius: 1.3px;
-                border: 0.2px solid #010101;
-            }
-            input[type=range]::-webkit-slider-thumb {
-                box-shadow: 1.8px 1.8px 1px #6174a0, 0px 0px 1.8px #7182aa;
-                border: 0.6px solid #000000;
-                height: 39px;
-                width: 15px;
-                border-radius: 12px;
-                background: #ffffff;
-                cursor: pointer;
-                -webkit-appearance: none;
-                margin-top: -6.45px;
-            }
-            input[type=range]:focus::-webkit-slider-runnable-track {
-                background: #60c3de;
-            }
-            input[type=range]::-moz-range-track {
-                width: 100%;
-                height: 26.5px;
-                cursor: pointer;
-                box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-                background: #53bedb;
-                border-radius: 1.3px;
-                border: 0.2px solid #010101;
-            }
-            input[type=range]::-moz-range-thumb {
-                box-shadow: 1.8px 1.8px 1px #6174a0, 0px 0px 1.8px #7182aa;
-                border: 0.6px solid #000000;
-                height: 39px;
-                width: 15px;
-                border-radius: 12px;
-                background: #ffffff;
-                cursor: pointer;
-            }
-            input[type=range]::-ms-track {
-                width: 100%;
-                height: 26.5px;
-                cursor: pointer;
-                background: transparent;
-                border-color: transparent;
-                color: transparent;
-            }
-            input[type=range]::-ms-fill-lower {
-                background: #46b9d8;
-                border: 0.2px solid #010101;
-                border-radius: 2.6px;
-                box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-            }
-            input[type=range]::-ms-fill-upper {
-                background: #53bedb;
-                border: 0.2px solid #010101;
-                border-radius: 2.6px;
-                box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-            }
-            input[type=range]::-ms-thumb {
-                box-shadow: 1.8px 1.8px 1px #6174a0, 0px 0px 1.8px #7182aa;
-                border: 0.6px solid #000000;
-                height: 39px;
-                width: 15px;
-                border-radius: 12px;
-                background: #ffffff;
-                cursor: pointer;
-                height: 26.5px;
-            }
-            input[type=range]:focus::-ms-fill-lower {
-                background: #53bedb;
-            }
-            input[type=range]:focus::-ms-fill-upper {
-                background: #60c3de;
-            }
             input[type=text], input[type=number],input[type=date]{
                 border-top: none;border-left: none;border-right: none;
+            }
+            #editStoreProduct td{
+                padding: 5px;
             }
         </style>
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <link href="css/inputRange.css" rel="stylesheet"/>
         <script>
             $('document').ready(function () {
                 $table = $('#dataTable').dataTable({
                     "ajax": {
-                        "url": "api/product/getAllStoreProduct?id=1",
-                        "method": "GET", "dataType": "json"
+                        "url": "api/product/getAllStoreProductWithoutFlashSale?storeId=1",
+                        "method": "GET",
+                        "dataType": "json"
                     },
                     "processing": true,
                     "serverSide": false,
-
                     "columns": [
                         {data: function (row, type, set) {
+//                                alert(type);
                                 if (type === 'display') {
-                                    return "<img src='" + row.image + "' width=300px;height=300px />";
+                                    return "<img src='" + row.imageSrc + "' width=200px;height=200px />";
                                 }
                                 return "";
                             }},
-                        {data: "name"},
-                        {data: "discPrice"},
-                        {data: "totalQuantity"},
-                        {data: "soldNum"},
-                        {data: "inStock"},
-                        {data: "expireDate"},
-                        {data: function (row, type, set) {
+                        {width: "13%", data: "name"},
+                        {data: "description"},
+                        {data: "price"},
+                        {width: "10%", data: "expiredDate"},
+                        {width: "5%", data: "quantity"},
+                        {width: "5%", data: function (row, type, set) {
+                                return row.sku !== null ? row.sku : "";
+                            }},
+                        {width: "60px", data: function (row, type, set) {
                                 if (type === 'display') {
-                                    if (row.status === null)
-                                        return "Nothing";
+                                    var content = "<ul class='navbar-nav '>";
+                                    content += '<li class="nav-item"><a class="nav-link" href="#" onclick="saleProduct(' + row.storeProductId + ',' + row.price + ',' + row.expiredDate + ')" ><i class="fas fa-fw fa-cart-plus"></i><span style="color:black"> Sale</span></a><li>';
+                                    content += '<li class="nav-item"><a class="nav-link" href="#" onclick="editProduct(' + row.storeProductId + ')" ><i class="fas fa-edit" ></i><span style="color:black"> Edit</span></a><li>';
+                                    content += '<li class="nav-item"><a class="nav-link" href="#" onclick="deleteProduct(' + row.storeProductId + ')"><i class="fas fa-fw fa-trash" ></i><span style="color:black"> Delete</span></a><li>';
+                                    content += "<ul>";
+                                    //content += '<input type="button" value="Edit" onclick="" style="width:70px"><br><br>';
+                                    //content += '<input type="button" value="Delete" onclick="" style="width:70px">';
+                                    return content;
                                 }
-                                return "Status: " + type;
-                            }
-                        }
+                                return "";
+                            }},
                     ]
-//                                                    , "destroy": true
+                            //                    , "destroy": true
                 });
             });
         </script>
+
     </head>
 
     <body id="page-top">
@@ -179,12 +108,13 @@
                 <hr class="sidebar-divider my-0">
 
                 <!-- Nav Item - Home -->
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="homepage.jsp">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Home</span></a>
                 </li>
-                
+
+
                 <!-- Divider -->
                 <hr class="sidebar-divider">
 
@@ -195,12 +125,12 @@
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed"  href="addProduct.jsp" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-folder "></i>
                     <span>Add store product</span>
                     </a>
                 </li>
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
+                <!-- Nav StoreProduct - Pages Collapse Menu -->
+                <li class="nav-item active">
                     <a class="nav-link collapsed"  href="storeproduct.jsp" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Store Product</span>
@@ -349,8 +279,8 @@
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h4 class="m-0 font-weight-bold text-primary" style="float:left">Sell product </h4>
-                                <!--<input type="button" value="Post Sale" data-toggle="modal" data-target="#addProductModal" style="float:right" class="btn btn-link rounded-circle mr-3"/>-->
+                                <h4 class="m-0 font-weight-bold text-primary" style="float:left">Product In Store </h4>
+                                <!--<input type="button" value="Post Sale" data-toggle="modal" data-target="#saleProductModal" style="float:right" class="btn btn-link rounded-circle mr-3"/>-->
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -359,14 +289,13 @@
                                             <tr>
                                                 <th>Image</th>
                                                 <th>Name</th>
-                                                <th>Disc. Price Per Unit</th>
-                                                <th>Total</th>
-                                                <th>No. Sold</th>
-                                                <th>In Stock</th>
-                                                <th>Expired Date</th>
-                                                <th>Status</th>
+                                                <th>Description</th>
+                                                <th>Price Per Unit</th>
+                                                <th>Expired Date</th> 
+                                                <th>Quantity</th>
+                                                <th>SKU</th>
                                                 <!--<th>Last Update</th>-->
-                                                <!--<th>Action</th>-->
+                                                <th>Action</th>
 
                                             </tr>
                                         </thead>
@@ -375,14 +304,13 @@
                                             <tr>
                                                 <th>Image</th>
                                                 <th>Name</th>
-                                                <th>Disc. Price Per Unit</th>
-                                                <th>Total</th>
-                                                <th>No. Sold</th>
-                                                <th>In Stock</th>
-                                                <th>Expired Date</th>
-                                                <th>Status</th>
+                                                <th>Description</th>
+                                                <th>Price Per Unit</th>
+                                                <th>Expired Date</th> 
+                                                <th>Quantity</th>
+                                                <th>SKU</th>
                                                 <!--<th>Last Update</th>-->
-                                                <!--<th>Action</th>-->
+                                                <th>Action</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -530,8 +458,8 @@
                 </div>
             </div>
         </div>
-        <!-- Post Sale Modal Modal-->
-        <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Post Sale  Modal-->
+        <div class="modal fade" id="saleProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -540,38 +468,29 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form id="addProduct">
-                            <table border="0">
+                    <form id="addSale">
+                        <div class="modal-body">
+                            <table border="0" style="margin:0 auto">
                                 <tbody>
                                     <tr>
-                                        <td>Name</td>
-                                        <td> <input type="text" name="txtName" value="" placeholder="Product name" required  style="width: 100%;border-top: none;border-left: none;border-right: none;"/> </td>
-                                    </tr>
-                                    <tr>
-                                        <td >Image </td>
-                                        <td > <input type="file" name="txtFile" value="" onchange="uploadImg(event)"  /> </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <img width="400px" height="400px" id = "previewImage" src ="https://5.imimg.com/data5/CK/LM/MY-46960546/fresh-red-strawberry-500x500.jpg"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Description </td>
+                                        <td>Start Date</td>
                                         <td>
-                                            <textarea id="txtDescription" style="width: 100%;height: 100px"></textarea>
+                                            <input type="date" id="sDate" name="sDate" required="" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Expired Date</td>
+                                        <td>End Date</td>
                                         <td>
-                                            <input type="date" id="eDate" required=""/>
+                                            <input type="date" id="eDate" name="eDate" required=""/>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quantity</td>
+                                        <td> <input type="number" id = "txtQuantity" name="txtQuantity" required/> </td>
                                     </tr>
                                     <tr>
                                         <td>Price (VND)</td>
-                                        <td> <input type="number" id = "txtPrice" name="txtPrice" value="0" placeholder="1000"  placeholder="Product original price"   required/> </td>
+                                        <td> <input type="number" id = "txtPrice" name="txtPrice" disabled/> </td>
                                     </tr>
                                     <tr>
                                         <td>Discount </td>
@@ -582,7 +501,7 @@
                                     <tr>
                                         <td> </td>
                                         <td>
-                                            <input type="text" id='output' style="width: 30px"><span>%</span>
+                                            <input type="text" id='output' style="width: 30px" value="0"><span>%</span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -591,17 +510,119 @@
                                             <span id='calPrice'>0 </span>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="2"><span id="saleProductError" style="color: red"></span></td>
+                                    </tr>
 
                                 </tbody>
                             </table>
+                            <input type="hidden" id="hiddenStoreProductId"/>
+                            <input type="hidden" id="hiddenExpiredDate"/>
 
-                    </div>
-                    <div class="modal-footer" style="align-items: center;align-content: center">
+                        </div>
+                        <div class="modal-footer" style="align-items: center;align-content: center">
 
-                        <input type="submit" class="btn btn-primary" value="Save"/>
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    </div>
+                            <button class="btn btn-secondary" type="button" >Suggest</button>
+                            <input type="submit" class="btn btn-primary" value="Save"/>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <!-- Edit Sale Modal-->
+        <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" >Edit In Store Product</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <form id="editStoreProduct">
+                        <div class="modal-body">
+                            <input type="hidden" id="hiddenEditStoreProductId"/>
+                            <table border="0" style="margin:0 auto">
+                                <tbody>
+                                    <tr>
+                                        <td>Image</td>
+                                        <td>
+                                            <img id="editImage" style="width:300px;height:300px"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Change Image</td>
+                                        <td>
+                                            <input type="file" id ="editImageFile" value="" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td> <input type="text" id = "txtEditName" id = "txtEditName"  required/> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td> <textarea style="width:300px;height: 300px" id="txtEditDescription"></textarea> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Price </td>
+                                        <td>
+                                            <input type="number" id="txtEditPrice" required/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Expired Date</td>
+                                        <td>
+                                            <input type="date" required id="editExpiredDate"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quantity</td>
+                                        <td>
+                                            <input type='number' required id='editQuantity'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SKU</td>
+                                        <td>
+                                            <input type='text' id='editSKU'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><span id="editProductError" style="color: red"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer" style="align-items: center;align-content: center">
+                            <input type="submit" class="btn btn-primary" value="Save"/>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Modal-->
+        <div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><b>Are you sure to delete?</b></h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">This will delete in store product and all sales with it. Press "Delete" if you are sure </div>
+
+                    <div class="modal-footer">
+                        <form id="deleteProductForm">
+                            <input type='hidden' id="hiddenDeleteProductId"/>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <input type='submit' class="btn btn-primary" value="Delete" ></a>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -619,67 +640,133 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
-        <script>
-                                            function uploadImg(event) {
-                                                $('#previewImage').attr("src", URL.createObjectURL(event.target.files[0]));
-                                            }
-//                                            var initData = function () {
-//                                                $('#dataTable').DataTable({
-//                                                    "data": "data",
-//                                                    "ajax": {
-//                                                        "url": "api/product/getAllStoreProduct?id=1",
-//                                                        "method": "GET"
-//                                                    },
-//                                                    "processing": false,
-//                                                    "serverSide": false,
-//                                                    "columns": [
-//                                                        {"data": "image"},
-//                                                        {"data": "name"},
-//                                                        {"data": "discPrice"},
-//                                                        {"data": "totalQuantity"},
-//                                                        {"data": "soldNum"},
-//                                                        {"data": "inStock"},
-//                                                        {"data": "expireDate"},
-//                                                        {"data": "status"}
-//                                                    ]
-//                                                    , "destroy": true
-//                                                });
-//                                            };
-                                            $('document').ready(function () {
-                                                $('#searchOrder').submit(function (e) {
-                                                    e.preventDefault();
-                                                    $('#informationModal').modal();
-                                                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
-                                                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
-                                                    }
-                                                });
-                                                $('#informationModal').on("hidden.bs.modal", function () {
-                                                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
-                                                        $('#btOrderConfirm').remove();
-                                                    }
-                                                });
-                                                $('#range').on("input", function () {
-                                                    $('#output').val(this.value);
-                                                    var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;
-                                                    $('#calPrice').html(cal);
-                                                }).trigger("change");
-                                                $('#output').change(function () {
-                                                    $('#range').val(this.value);
-                                                    var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;
-                                                    $('#calPrice').html(cal);
-                                                });
-                                                $('#txtPrice').change(function () {
-                                                    var cal = Math.round((1 - $('#range').value / 100) * $('#txtPrice').val() * 100) / 100;
-                                                    $('#calPrice').html(cal);
-                                                });
-                                                $('#addProduct').submit(function (event) {
-                                                    event.preventDefault;
-                                                    $('#addProductModal').modal('hide');
-                                                });
-                                            }
-                                            );
+        <script> function saleProduct(productId, price, expiredDate) {
+                $('#saleProductModal').modal('show');
+                $('#txtPrice').val(price);
+                $('#hiddenStoreProductId').val(productId);
+                $('#hiddenExpiredDate').val(expiredDate);
+            }
+            function editProduct(productId) {
+                $.ajax({
+                    url: "api/product/getStoreProduct?id=" + productId,
+                    type: 'GET', success: function (data) {
+                        $("#editImage").attr("src", data.imageSrc);
+                        $("#txtEditName").val(data.name);
+                        $("#txtEditDescription").val(data.description);
+                        $("#txtEditPrice").val(data.price);
+                        $("#editExpiredDate").val(data.expiredDate);
+                        $("#editQuantity").val(data.quantity);
+                        $("#editSKU").val(data.sku);
+                        $("#hiddenStoreProductId").val(data.storeProductId);
+                    }
+                });
+                $('#editProductModal').modal('show');
+            }
+            function deleteProduct(productId) {
+                $('#deleteProductModal').modal('show');
+                $('#hiddenDeleteProductId').val(productId);
+//                $('#dataTable').DataTable().ajax.reload();
+            }
+
+
+            $('document').ready(function () {
+                $('#searchOrder').submit(function (e) {
+                    e.preventDefault();
+                    $('#informationModal').modal();
+                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
+                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
+                    }
+                });
+                $('#informationModal').on("hidden.bs.modal", function () {
+                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
+                        $('#btOrderConfirm').remove();
+                    }
+                });
+                $('#range').on("input", function () {
+                    $('#output').val(this.value);
+                    var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;
+                    $('#calPrice').html(cal);
+                }).trigger("change");
+                $('#output').change(function () {
+                    $('#range').val(this.value);
+                    var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;
+                    $('#calPrice').html(cal);
+                });
+                $('#txtPrice').change(function () {
+                    var cal = Math.round((1 - $('#range').value / 100) * $('#txtPrice').val() * 100) / 100;
+                    $('#calPrice').html(cal);
+                });
+                $('#addSale').submit(function (event) {
+                    event.preventDefault();
+                    var expiredDate = new Date($('#hiddenExpiredDate').val());
+                    var startDate = new Date($('#sDate').val());
+                    var endDate = new Date($('#eDate').val());
+                    var curDate = new Date();
+                    $.ajax({
+                        url: "api/product/saleStoreProduct", type: 'POST',
+                        data: JSON.stringify({"storeProductId": $('#hiddenStoreProductId').val(),
+                            "startDate": $('#sDate').val(),
+                            "endDate": $('#sDate').val(),
+                            "quantity": $('#txtQuantity').val(),
+                            "discount": $('#output').val(),
+                        }), dataType: "json", contentType: "application/json", success: function (result) {
+                            if (result.result === true) {
+                                alert(result.msg);
+                                $('#saleProductModal').modal('hide');
+                                $('#dataTable').DataTable().ajax.reload();
+                            } else {
+                                $('#saleProductError').html(result.msg);
+                            }
+
+                        }, error: function (err) {
+                            $('#saleProductError').html(err);
+                        }
+                    });
+                });
+                $('#deleteProductForm').submit(function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: "api/product/deleteStoreProduct?productId=" + $('#hiddenDeleteProductId').val(),
+                        type: "PUT", success: function (data) {
+                            if (data.result) {
+                                $('#dataTable').DataTable().ajax.reload();
+                                $('#deleteProductModal').modal("hide");
+                            } else {
+                                alert(data.msg);
+                            }
+
+                        }
+                    });
+                })
+                $('#editStoreProduct').submit(function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: "api/product/updateStoreProduct",
+                        type: "POST", dataType: "json", contentType: "application/json",
+                        data: JSON.stringify({
+                            "storeProductId": $("#hiddenStoreProductId").val(),
+                            "imageSrc": $("#editImage").attr("src"),
+                            "name": $("#txtEditName").val(),
+                            "expiredDate": $("#editExpiredDate").val(),
+                            "quantity": $("#editQuantity").val(),
+                            "price": $("#txtEditPrice").val(),
+                            "description": $("#txtEditDescription").val(),
+                            "sku": $("#editSKU").val()
+                        })
+                        , success: function (data) {
+                            if (data.result) {
+                                $('#dataTable').DataTable().ajax.reload();
+                                $('#editProductModal').modal("hide");
+                            } else {
+                                alert(data.msg);
+                            }
+
+                        }
+                    });
+                }
+                )
+            });
         </script>
     </body>
-
 </html>
 

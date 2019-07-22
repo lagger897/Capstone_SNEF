@@ -39,11 +39,11 @@ public class StoreManager implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "StoreManagerId", nullable = false)
+    @Column(name = "StoreManagerId")
     private Integer storeManagerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeManagerId")
     private List<Store> storeList;
-    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId", nullable = false)
+    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
     @ManyToOne(optional = false)
     private Account accountId;
 

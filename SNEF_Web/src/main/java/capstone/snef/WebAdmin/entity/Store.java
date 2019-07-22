@@ -39,42 +39,48 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Store.findByRatingPoint", query = "SELECT s FROM Store s WHERE s.ratingPoint = :ratingPoint")
     , @NamedQuery(name = "Store.findByAvatar", query = "SELECT s FROM Store s WHERE s.avatar = :avatar")
     , @NamedQuery(name = "Store.findByOpenHour", query = "SELECT s FROM Store s WHERE s.openHour = :openHour")
-    , @NamedQuery(name = "Store.findByCloseHour", query = "SELECT s FROM Store s WHERE s.closeHour = :closeHour")})
+    , @NamedQuery(name = "Store.findByCloseHour", query = "SELECT s FROM Store s WHERE s.closeHour = :closeHour")
+    , @NamedQuery(name = "Store.findByLongitude", query = "SELECT s FROM Store s WHERE s.longitude = :longitude")
+    , @NamedQuery(name = "Store.findByLatitude", query = "SELECT s FROM Store s WHERE s.latitude = :latitude")})
 public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "StoreId", nullable = false)
+    @Column(name = "StoreId")
     private Integer storeId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "StoreName", nullable = false, length = 50)
+    @Column(name = "StoreName")
     private String storeName;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RatingPoint", precision = 12, scale = 0)
+    @Column(name = "RatingPoint")
     private Float ratingPoint;
     @Size(max = 400)
-    @Column(name = "Avatar", length = 400)
+    @Column(name = "Avatar")
     private String avatar;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "OpenHour", nullable = false, length = 5)
+    @Column(name = "OpenHour")
     private String openHour;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "CloseHour", nullable = false, length = 5)
+    @Column(name = "CloseHour")
     private String closeHour;
+    @Column(name = "Longitude")
+    private Double longitude;
+    @Column(name = "Latitude")
+    private Double latitude;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
     private List<StoreProduct> storeProductList;
-    @JoinColumn(name = "LocationId", referencedColumnName = "LocationId", nullable = false)
+    @JoinColumn(name = "LocationId", referencedColumnName = "LocationId")
     @ManyToOne(optional = false)
     private Location locationId;
-    @JoinColumn(name = "StoreManagerId", referencedColumnName = "StoreManagerId", nullable = false)
+    @JoinColumn(name = "StoreManagerId", referencedColumnName = "StoreManagerId")
     @ManyToOne(optional = false)
     private StoreManager storeManagerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
@@ -142,6 +148,22 @@ public class Store implements Serializable {
 
     public void setCloseHour(String closeHour) {
         this.closeHour = closeHour;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     @XmlTransient

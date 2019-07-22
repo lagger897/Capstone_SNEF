@@ -42,14 +42,14 @@ public class Ward implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "WardId", nullable = false)
+    @Column(name = "WardId")
     private Integer wardId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "WardName", nullable = false, length = 20)
+    @Column(name = "WardName")
     private String wardName;
-    @JoinColumn(name = "CityId", referencedColumnName = "CityId", nullable = false)
+    @JoinColumn(name = "CityId", referencedColumnName = "CityId")
     @ManyToOne(optional = false)
     private City cityId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wardId")

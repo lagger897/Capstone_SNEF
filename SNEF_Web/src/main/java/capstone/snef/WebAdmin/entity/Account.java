@@ -48,42 +48,42 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "AccountId", nullable = false)
+    @Column(name = "AccountId")
     private Integer accountId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "UserName", nullable = false, length = 30)
+    @Column(name = "UserName")
     private String userName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "Password", nullable = false, length = 30)
+    @Column(name = "Password")
     private String password;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "FirstName", nullable = false, length = 20)
+    @Column(name = "FirstName")
     private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "LastName", nullable = false, length = 20)
+    @Column(name = "LastName")
     private String lastName;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 20)
-    @Column(name = "Phone", length = 20)
+    @Column(name = "Phone")
     private String phone;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 50)
-    @Column(name = "Email", length = 50)
+    @Column(name = "Email")
     private String email;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "IsActive", nullable = false)
+    @Column(name = "IsActive")
     private boolean isActive;
     @Size(max = 400)
-    @Column(name = "Avatar", length = 400)
+    @Column(name = "Avatar")
     private String avatar;
     @Column(name = "Gender")
     private Boolean gender;
