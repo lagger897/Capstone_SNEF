@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "District", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "District", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "District.findAll", query = "SELECT d FROM District d")
@@ -38,16 +40,16 @@ public class District implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "DistrictId")
+    @Column(name = "DistrictId", nullable = false)
     private Integer districtId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "DistrictName")
+    @Column(name = "DistrictName", nullable = false, length = 20)
     private String districtName;
-    @JoinColumn(name = "WardId", referencedColumnName = "WardId")
+    @JoinColumn(name = "WardId", referencedColumnName = "WardId", nullable = false)
     @ManyToOne(optional = false)
     private Ward wardId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtId")

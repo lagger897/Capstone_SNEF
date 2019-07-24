@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Store", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "Store", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Store.findAll", query = "SELECT s FROM Store s")
@@ -42,41 +44,41 @@ public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "StoreId")
+    @Column(name = "StoreId", nullable = false)
     private Integer storeId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "StoreName")
+    @Column(name = "StoreName", nullable = false, length = 50)
     private String storeName;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RatingPoint")
-    private Double ratingPoint;
+    @Column(name = "RatingPoint", precision = 12, scale = 0)
+    private Float ratingPoint;
     @Size(max = 400)
-    @Column(name = "Avatar")
+    @Column(name = "Avatar", length = 400)
     private String avatar;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "OpenHour")
+    @Column(name = "OpenHour", nullable = false, length = 5)
     private String openHour;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "CloseHour")
+    @Column(name = "CloseHour", nullable = false, length = 5)
     private String closeHour;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
     private List<StoreProduct> storeProductList;
-    @JoinColumn(name = "LocationId", referencedColumnName = "LocationId")
+    @JoinColumn(name = "LocationId", referencedColumnName = "LocationId", nullable = false)
     @ManyToOne(optional = false)
     private Location locationId;
-    @JoinColumn(name = "StoreManagerId", referencedColumnName = "StoreManagerId")
+    @JoinColumn(name = "StoreManagerId", referencedColumnName = "StoreManagerId", nullable = false)
     @ManyToOne(optional = false)
     private StoreManager storeManagerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
-    private List<FlashSales> flashSalesList;
+    private List<Flashsales> flashsalesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
     private List<StoreFollwer> storeFollwerList;
 
@@ -110,11 +112,11 @@ public class Store implements Serializable {
         this.storeName = storeName;
     }
 
-    public Double getRatingPoint() {
+    public Float getRatingPoint() {
         return ratingPoint;
     }
 
-    public void setRatingPoint(Double ratingPoint) {
+    public void setRatingPoint(Float ratingPoint) {
         this.ratingPoint = ratingPoint;
     }
 
@@ -168,12 +170,12 @@ public class Store implements Serializable {
     }
 
     @XmlTransient
-    public List<FlashSales> getFlashSalesList() {
-        return flashSalesList;
+    public List<Flashsales> getFlashsalesList() {
+        return flashsalesList;
     }
 
-    public void setFlashSalesList(List<FlashSales> flashSalesList) {
-        this.flashSalesList = flashSalesList;
+    public void setFlashsalesList(List<Flashsales> flashsalesList) {
+        this.flashsalesList = flashsalesList;
     }
 
     @XmlTransient

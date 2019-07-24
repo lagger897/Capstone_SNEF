@@ -22,6 +22,12 @@
     <class>capstone.snef.WebAdmin.entity.LikeItem</class>
     <class>capstone.snef.WebAdmin.entity.StoreProductImage</class>
     <class>capstone.snef.WebAdmin.entity.CustomerOrder</class>
+    <class>capstone.snef.WebAdmin.entity.Sysdiagrams</class>
+    <class>capstone.snef.WebAdmin.entity.Like1</class>
+    <class>capstone.snef.WebAdmin.entity.Flashsales</class>
+    <class>capstone.snef.WebAdmin.entity.Order1</class>
+    <class>capstone.snef.WebAdmin.entity.FlashsaleProduct</class>
+    <class>capstone.snef.WebAdmin.entity.Admin</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=SNEF_Part2"/>

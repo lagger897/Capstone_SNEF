@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,50 +32,50 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "FlashSales", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "Flashsales", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "FlashSales.findAll", query = "SELECT f FROM FlashSales f")
-    , @NamedQuery(name = "FlashSales.findByFlashSalesId", query = "SELECT f FROM FlashSales f WHERE f.flashSalesId = :flashSalesId")
-    , @NamedQuery(name = "FlashSales.findByDiscount", query = "SELECT f FROM FlashSales f WHERE f.discount = :discount")
-    , @NamedQuery(name = "FlashSales.findByStartDate", query = "SELECT f FROM FlashSales f WHERE f.startDate = :startDate")
-    , @NamedQuery(name = "FlashSales.findByEndDate", query = "SELECT f FROM FlashSales f WHERE f.endDate = :endDate")})
-public class FlashSales implements Serializable {
+    @NamedQuery(name = "Flashsales.findAll", query = "SELECT f FROM Flashsales f")
+    , @NamedQuery(name = "Flashsales.findByFlashSalesId", query = "SELECT f FROM Flashsales f WHERE f.flashSalesId = :flashSalesId")
+    , @NamedQuery(name = "Flashsales.findByDiscount", query = "SELECT f FROM Flashsales f WHERE f.discount = :discount")
+    , @NamedQuery(name = "Flashsales.findByStartDate", query = "SELECT f FROM Flashsales f WHERE f.startDate = :startDate")
+    , @NamedQuery(name = "Flashsales.findByEndDate", query = "SELECT f FROM Flashsales f WHERE f.endDate = :endDate")})
+public class Flashsales implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "FlashSalesId")
+    @Column(name = "FlashSalesId", nullable = false)
     private Integer flashSalesId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Discount")
+    @Column(name = "Discount", nullable = false)
     private int discount;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "StartDate")
+    @Column(name = "StartDate", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "EndDate")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "EndDate", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date endDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flashSalesId")
-    private List<FlashSaleProduct> flashSaleProductList;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
+    private List<FlashsaleProduct> flashsaleProductList;
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
     @ManyToOne(optional = false)
     private Store storeId;
 
-    public FlashSales() {
+    public Flashsales() {
     }
 
-    public FlashSales(Integer flashSalesId) {
+    public Flashsales(Integer flashSalesId) {
         this.flashSalesId = flashSalesId;
     }
 
-    public FlashSales(Integer flashSalesId, int discount, Date startDate, Date endDate) {
+    public Flashsales(Integer flashSalesId, int discount, Date startDate, Date endDate) {
         this.flashSalesId = flashSalesId;
         this.discount = discount;
         this.startDate = startDate;
@@ -113,12 +115,12 @@ public class FlashSales implements Serializable {
     }
 
     @XmlTransient
-    public List<FlashSaleProduct> getFlashSaleProductList() {
-        return flashSaleProductList;
+    public List<FlashsaleProduct> getFlashsaleProductList() {
+        return flashsaleProductList;
     }
 
-    public void setFlashSaleProductList(List<FlashSaleProduct> flashSaleProductList) {
-        this.flashSaleProductList = flashSaleProductList;
+    public void setFlashsaleProductList(List<FlashsaleProduct> flashsaleProductList) {
+        this.flashsaleProductList = flashsaleProductList;
     }
 
     public Store getStoreId() {
@@ -139,10 +141,10 @@ public class FlashSales implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FlashSales)) {
+        if (!(object instanceof Flashsales)) {
             return false;
         }
-        FlashSales other = (FlashSales) object;
+        Flashsales other = (Flashsales) object;
         if ((this.flashSalesId == null && other.flashSalesId != null) || (this.flashSalesId != null && !this.flashSalesId.equals(other.flashSalesId))) {
             return false;
         }
@@ -151,7 +153,7 @@ public class FlashSales implements Serializable {
 
     @Override
     public String toString() {
-        return "capstone.snef.WebAdmin.entity.FlashSales[ flashSalesId=" + flashSalesId + " ]";
+        return "capstone.snef.WebAdmin.entity.Flashsales[ flashSalesId=" + flashSalesId + " ]";
     }
     
 }

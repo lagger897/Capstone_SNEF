@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,69 +33,57 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Order", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "Order", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CustomerOrder.findAll", query = "SELECT c FROM CustomerOrder c")
-    , @NamedQuery(name = "CustomerOrder.findByOrderId", query = "SELECT c FROM CustomerOrder c WHERE c.orderId = :orderId")
-    , @NamedQuery(name = "CustomerOrder.findByDateOrder", query = "SELECT c FROM CustomerOrder c WHERE c.dateOrder = :dateOrder")
-    , @NamedQuery(name = "CustomerOrder.findByTotalPrice", query = "SELECT c FROM CustomerOrder c WHERE c.totalPrice = :totalPrice")
-    , @NamedQuery(name = "CustomerOrder.findByConfirmationCode", query = "SELECT c FROM CustomerOrder c WHERE c.confirmationCode = :confirmationCode")
-    , @NamedQuery(name = "CustomerOrder.findByOrderQuantity", query = "SELECT c FROM CustomerOrder c WHERE c.orderQuantity = :orderQuantity")
-    , @NamedQuery(name = "CustomerOrder.findByStatus", query = "SELECT c FROM CustomerOrder c WHERE c.status = :status")
-    , @NamedQuery(name = "CustomerOrder.findByRatingPoint", query = "SELECT c FROM CustomerOrder c WHERE c.ratingPoint = :ratingPoint")})
-public class CustomerOrder implements Serializable {
+    @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o")
+    , @NamedQuery(name = "Order1.findByOrderId", query = "SELECT o FROM Order1 o WHERE o.orderId = :orderId")
+    , @NamedQuery(name = "Order1.findByDateOrder", query = "SELECT o FROM Order1 o WHERE o.dateOrder = :dateOrder")
+    , @NamedQuery(name = "Order1.findByConfirmationCode", query = "SELECT o FROM Order1 o WHERE o.confirmationCode = :confirmationCode")
+    , @NamedQuery(name = "Order1.findByStatus", query = "SELECT o FROM Order1 o WHERE o.status = :status")
+    , @NamedQuery(name = "Order1.findByRatingPoint", query = "SELECT o FROM Order1 o WHERE o.ratingPoint = :ratingPoint")})
+public class Order1 implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "OrderId")
+    @Column(name = "OrderId", nullable = false)
     private Integer orderId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "DateOrder")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DateOrder", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date dateOrder;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "TotalPrice")
-    private double totalPrice;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ConfirmationCode")
+    @Column(name = "ConfirmationCode", nullable = false, length = 50)
     private String confirmationCode;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "OrderQuantity")
-    private int orderQuantity;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     private boolean status;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RatingPoint")
-    private Double ratingPoint;
-    @JoinColumn(name = "CustomerCustomerId", referencedColumnName = "CustomerId")
+    @Column(name = "RatingPoint", precision = 12, scale = 0)
+    private Float ratingPoint;
+    @JoinColumn(name = "CustomerCustomerId", referencedColumnName = "CustomerId", nullable = false)
     @ManyToOne(optional = false)
     private Customer customerCustomerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderOrderId")
     private List<OrderDetail> orderDetailList;
 
-    public CustomerOrder() {
+    public Order1() {
     }
 
-    public CustomerOrder(Integer orderId) {
+    public Order1(Integer orderId) {
         this.orderId = orderId;
     }
 
-    public CustomerOrder(Integer orderId, Date dateOrder, double totalPrice, String confirmationCode, int orderQuantity, boolean status) {
+    public Order1(Integer orderId, Date dateOrder, String confirmationCode, boolean status) {
         this.orderId = orderId;
         this.dateOrder = dateOrder;
-        this.totalPrice = totalPrice;
         this.confirmationCode = confirmationCode;
-        this.orderQuantity = orderQuantity;
         this.status = status;
     }
 
@@ -113,28 +103,12 @@ public class CustomerOrder implements Serializable {
         this.dateOrder = dateOrder;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public String getConfirmationCode() {
         return confirmationCode;
     }
 
     public void setConfirmationCode(String confirmationCode) {
         this.confirmationCode = confirmationCode;
-    }
-
-    public int getOrderQuantity() {
-        return orderQuantity;
-    }
-
-    public void setOrderQuantity(int orderQuantity) {
-        this.orderQuantity = orderQuantity;
     }
 
     public boolean getStatus() {
@@ -145,11 +119,11 @@ public class CustomerOrder implements Serializable {
         this.status = status;
     }
 
-    public Double getRatingPoint() {
+    public Float getRatingPoint() {
         return ratingPoint;
     }
 
-    public void setRatingPoint(Double ratingPoint) {
+    public void setRatingPoint(Float ratingPoint) {
         this.ratingPoint = ratingPoint;
     }
 
@@ -180,10 +154,10 @@ public class CustomerOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CustomerOrder)) {
+        if (!(object instanceof Order1)) {
             return false;
         }
-        CustomerOrder other = (CustomerOrder) object;
+        Order1 other = (Order1) object;
         if ((this.orderId == null && other.orderId != null) || (this.orderId != null && !this.orderId.equals(other.orderId))) {
             return false;
         }
@@ -192,7 +166,7 @@ public class CustomerOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "capstone.snef.WebAdmin.entity.CustomerOrder[ orderId=" + orderId + " ]";
+        return "capstone.snef.WebAdmin.entity.Order1[ orderId=" + orderId + " ]";
     }
     
 }

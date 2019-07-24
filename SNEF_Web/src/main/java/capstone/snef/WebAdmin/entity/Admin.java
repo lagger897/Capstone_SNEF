@@ -6,9 +6,7 @@
 package capstone.snef.WebAdmin.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,57 +16,44 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "StoreManager", catalog = "snef_part2", schema = "")
+@Table(name = "Admin", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "StoreManager.findAll", query = "SELECT s FROM StoreManager s")
-    , @NamedQuery(name = "StoreManager.findByStoreManagerId", query = "SELECT s FROM StoreManager s WHERE s.storeManagerId = :storeManagerId")})
-public class StoreManager implements Serializable {
+    @NamedQuery(name = "Admin.findAll", query = "SELECT a FROM Admin a")
+    , @NamedQuery(name = "Admin.findByAdminId", query = "SELECT a FROM Admin a WHERE a.adminId = :adminId")})
+public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "StoreManagerId", nullable = false)
-    private Integer storeManagerId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeManagerId")
-    private List<Store> storeList;
+    @Column(name = "AdminId", nullable = false)
+    private Integer adminId;
     @JoinColumn(name = "AccountId", referencedColumnName = "AccountId", nullable = false)
     @ManyToOne(optional = false)
     private Account accountId;
 
-    public StoreManager() {
+    public Admin() {
     }
 
-    public StoreManager(Integer storeManagerId) {
-        this.storeManagerId = storeManagerId;
+    public Admin(Integer adminId) {
+        this.adminId = adminId;
     }
 
-    public Integer getStoreManagerId() {
-        return storeManagerId;
+    public Integer getAdminId() {
+        return adminId;
     }
 
-    public void setStoreManagerId(Integer storeManagerId) {
-        this.storeManagerId = storeManagerId;
-    }
-
-    @XmlTransient
-    public List<Store> getStoreList() {
-        return storeList;
-    }
-
-    public void setStoreList(List<Store> storeList) {
-        this.storeList = storeList;
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
     }
 
     public Account getAccountId() {
@@ -82,18 +67,18 @@ public class StoreManager implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (storeManagerId != null ? storeManagerId.hashCode() : 0);
+        hash += (adminId != null ? adminId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof StoreManager)) {
+        if (!(object instanceof Admin)) {
             return false;
         }
-        StoreManager other = (StoreManager) object;
-        if ((this.storeManagerId == null && other.storeManagerId != null) || (this.storeManagerId != null && !this.storeManagerId.equals(other.storeManagerId))) {
+        Admin other = (Admin) object;
+        if ((this.adminId == null && other.adminId != null) || (this.adminId != null && !this.adminId.equals(other.adminId))) {
             return false;
         }
         return true;
@@ -101,7 +86,7 @@ public class StoreManager implements Serializable {
 
     @Override
     public String toString() {
-        return "capstone.snef.WebAdmin.entity.StoreManager[ storeManagerId=" + storeManagerId + " ]";
+        return "capstone.snef.WebAdmin.entity.Admin[ adminId=" + adminId + " ]";
     }
     
 }

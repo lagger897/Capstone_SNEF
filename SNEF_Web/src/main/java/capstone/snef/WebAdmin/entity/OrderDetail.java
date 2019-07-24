@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "OrderDetail", catalog = "SNEF_Part2", schema = "dbo")
+@Table(name = "OrderDetail", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "OrderDetail.findAll", query = "SELECT o FROM OrderDetail o")
@@ -34,24 +36,24 @@ public class OrderDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "OrderDetailId")
+    @Column(name = "OrderDetailId", nullable = false)
     private Integer orderDetailId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity")
+    @Column(name = "Quantity", nullable = false)
     private int quantity;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "OrderDetailPrice")
-    private double orderDetailPrice;
-    @JoinColumn(name = "FlashSaleProductId", referencedColumnName = "FlashSaleProductId")
+    @Column(name = "OrderDetailPrice", nullable = false)
+    private float orderDetailPrice;
+    @JoinColumn(name = "FlashSaleProductId", referencedColumnName = "FlashSaleProductId", nullable = false)
     @ManyToOne(optional = false)
-    private FlashSaleProduct flashSaleProductId;
-    @JoinColumn(name = "OrderOrderId", referencedColumnName = "OrderId")
+    private FlashsaleProduct flashSaleProductId;
+    @JoinColumn(name = "OrderOrderId", referencedColumnName = "OrderId", nullable = false)
     @ManyToOne(optional = false)
-    private CustomerOrder orderOrderId;
+    private Order1 orderOrderId;
 
     public OrderDetail() {
     }
@@ -60,7 +62,7 @@ public class OrderDetail implements Serializable {
         this.orderDetailId = orderDetailId;
     }
 
-    public OrderDetail(Integer orderDetailId, int quantity, double orderDetailPrice) {
+    public OrderDetail(Integer orderDetailId, int quantity, float orderDetailPrice) {
         this.orderDetailId = orderDetailId;
         this.quantity = quantity;
         this.orderDetailPrice = orderDetailPrice;
@@ -82,27 +84,27 @@ public class OrderDetail implements Serializable {
         this.quantity = quantity;
     }
 
-    public double getOrderDetailPrice() {
+    public float getOrderDetailPrice() {
         return orderDetailPrice;
     }
 
-    public void setOrderDetailPrice(double orderDetailPrice) {
+    public void setOrderDetailPrice(float orderDetailPrice) {
         this.orderDetailPrice = orderDetailPrice;
     }
 
-    public FlashSaleProduct getFlashSaleProductId() {
+    public FlashsaleProduct getFlashSaleProductId() {
         return flashSaleProductId;
     }
 
-    public void setFlashSaleProductId(FlashSaleProduct flashSaleProductId) {
+    public void setFlashSaleProductId(FlashsaleProduct flashSaleProductId) {
         this.flashSaleProductId = flashSaleProductId;
     }
 
-    public CustomerOrder getOrderOrderId() {
+    public Order1 getOrderOrderId() {
         return orderOrderId;
     }
 
-    public void setOrderOrderId(CustomerOrder orderOrderId) {
+    public void setOrderOrderId(Order1 orderOrderId) {
         this.orderOrderId = orderOrderId;
     }
 
