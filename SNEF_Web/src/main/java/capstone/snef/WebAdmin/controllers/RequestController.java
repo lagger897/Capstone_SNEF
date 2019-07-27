@@ -13,13 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Phuc Nguyen -VN
  */
 @Controller
+@RequestMapping("/")
 public class RequestController {
-    @RequestMapping("/web/admin")
-    public String home(){
-        return "homepage.jsp";
-    }
-    @RequestMapping("/test")
-    public String layout(){
-        return "Layout/layout.jsp";
-    }
+   @RequestMapping("/storeProduct")
+   public String storeProductPage(){
+       return "storeproduct";
+   }
+   @RequestMapping("/addStoreProduct")
+   public String addStoreProductPage(){
+       return "addProduct";
+   }
+   @RequestMapping("/order")
+   public String orderPage(){
+       return "order";
+   }
+   @RequestMapping("/homepage")
+   public String homepage(){
+       return "homepage";
+   }
 }

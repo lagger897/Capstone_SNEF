@@ -14,9 +14,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>SAFO-Sale Food</title>
-
+        <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <!-- Custom fonts for this template -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -125,12 +126,11 @@
             $('document').ready(function () {
                 $table = $('#dataTable').dataTable({
                     "ajax": {
-                        "url": "api/product/getAllStoreProduct?id=1",
+                        "url": "api/product/getAllStoreProduct?id=${sessionScope.store.storeId}",
                         "method": "GET", "dataType": "json"
                     },
                     "processing": true,
                     "serverSide": false,
-
                     "columns": [
                         {data: function (row, type, set) {
                                 if (type === 'display') {
@@ -168,7 +168,7 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="homepage.jsp">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="homepage">
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
@@ -180,7 +180,7 @@
 
                 <!-- Nav Item - Home -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="homepage.jsp">
+                    <a class="nav-link" href="homepage">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Home</span></a>
                 </li>
@@ -194,21 +194,21 @@
                 </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="addProduct.jsp" />
+                    <a class="nav-link collapsed"  href="addStoreProduct" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Add store product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="storeproduct.jsp" />
+                    <a class="nav-link collapsed"  href="storeProduct" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Store Product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="order.jsp" />
+                    <a class="nav-link collapsed"  href="order" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Order</span>
                     </a>
@@ -342,8 +342,8 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Bách Hóa Xanh</h1>
-                        <p class="mb-4">Retail Store at Trung My Tay, 12 district, Ho Chi Minh city</p>
+                        <h1 class="h3 mb-2 text-gray-800"><c:out value="${sessionScope.store.storeName}"/></h1>
+                        <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.locationId.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
 
 
                         <!-- DataTales Example -->
@@ -682,4 +682,3 @@
     </body>
 
 </html>
-

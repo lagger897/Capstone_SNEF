@@ -46,7 +46,7 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="WEB-INF/jsp/homepage.jsp">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="homepage">
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
@@ -57,12 +57,11 @@
                 <hr class="sidebar-divider my-0">
 
                 <!-- Nav Item - Home -->
-                <li class="nav-item">
-                    <a class="nav-link" href="WEB-INF/jsp/homepage.jsp">
+                <li class="nav-item ">
+                    <a class="nav-link" href="homepage">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Home</span></a>
                 </li>
-
 
                 <!-- Divider -->
                 <hr class="sidebar-divider">
@@ -73,21 +72,21 @@
                 </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item active">
-                    <a class="nav-link collapsed"  href="addProduct.jsp" />
+                    <a class="nav-link collapsed "  href="addStoreProduct" />
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Add Store Product</span>
+                    <span>Add store product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="storeproduct.jsp" />
+                    <a class="nav-link collapsed"  href="storeProduct" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Store Product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="order.jsp" />
+                    <a class="nav-link collapsed"  href="order" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Order</span>
                     </a>
@@ -461,26 +460,26 @@
                                         <!--<a onclick="suggestPrice()" href="#"> Suggest</a>-->
                                     </td>
                                 </tr>
-<!--                                <tr>
-                                    <td>Discount </td>
-                                    <td>
-                                        <input type="range" name="range" id="range" min="0" max="100" step="" value="0"  class="slider"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td> </td>
-                                    <td>
-                                        <input type="text" id='output' style="width: 30px"><span>%</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Seling Price (VND)   </td>
-                                    <td>
-                                        <span id='calPrice'>0 </span>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span id='sugPrice'> </span>
-                                    </td>
-                                </tr>-->
+                                <!--                                <tr>
+                                                                    <td>Discount </td>
+                                                                    <td>
+                                                                        <input type="range" name="range" id="range" min="0" max="100" step="" value="0"  class="slider"/>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td> </td>
+                                                                    <td>
+                                                                        <input type="text" id='output' style="width: 30px"><span>%</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Seling Price (VND)   </td>
+                                                                    <td>
+                                                                        <span id='calPrice'>0 </span>
+                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                        <span id='sugPrice'> </span>
+                                                                    </td>
+                                                                </tr>-->
 
                             </tbody>
                         </table>
@@ -585,8 +584,8 @@
                                                     url: "api/product/addProduct",
                                                     method: "POST",
                                                     data: JSON.stringify({
-                                                        "storeId":"1",
-                                                        "productId":$('#productId').val(),
+                                                        "storeId": ${sessionScope.store.storeId},
+                                                        "productId": $('#productId').val(),
                                                         "name": $('#txtName').val(),
                                                         "imageSrc": $('#previewImage').attr('src'),
                                                         "description": $('#txtDescription').html(),
@@ -594,9 +593,9 @@
                                                         "ammount": $('#txtAmmount').val(),
                                                         "price": $('#txtPrice').val()
                                                     }),
-                                                    dataType: "json", 
+                                                    dataType: "json",
                                                     contentType: "application/json; charset=utf-8",
-                                                    success: function (rs) {                                                        
+                                                    success: function (rs) {
                                                         if (rs.result === true) {
                                                             alert(rs.msg);
                                                             $('#addProductModal').modal('hide');
@@ -611,7 +610,7 @@
                                         });
                                         function uploadImg(event) {
                                             $('#previewImage').attr("src", URL.createObjectURL(event.target.files[0]));
-                                            
+
                                         }
                                         function suggestPrice() {
                                             $('#sugPrice').html(10000);

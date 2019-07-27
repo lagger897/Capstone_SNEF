@@ -37,7 +37,7 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="WEB-INF/jsp/homepage.jsp">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="homepage">
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
@@ -49,11 +49,10 @@
 
                 <!-- Nav Item - Home -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="WEB-INF/jsp/homepage.jsp">
+                    <a class="nav-link" href="homepage">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Home</span></a>
                 </li>
-
 
                 <!-- Divider -->
                 <hr class="sidebar-divider">
@@ -62,26 +61,26 @@
                 <div class="sidebar-heading">
                     Utility
                 </div>
+                <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="addProduct.jsp" />
+                    <a class="nav-link collapsed"  href="addStoreProduct" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Add store product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="storeproduct.jsp" />
+                    <a class="nav-link collapsed"  href="storeProduct" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Store Product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item active">
-                    <a class="nav-link collapsed"  href="order.jsp" />
+                    <a class="nav-link collapsed "  href="order" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Order</span>
                     </a>
-
                 </li>
 
                 <!-- Divider -->
@@ -212,8 +211,8 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Bï¿½ch Hï¿½a Xanh</h1>
-                        <p class="mb-4">Retail Store at Trung My Tay, 12 district, Ho Chi Minh city</p>
+                        <h1 class="h3 mb-2 text-gray-800"><c:out value="${sessionScope.store.storeName}"/></h1>
+                        <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.locationId.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
 
 
                         <!-- DataTales Example -->
@@ -315,7 +314,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">ï¿½</span>
+                            <span aria-hidden="true">?</span>
                         </button>
                     </div>
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -332,16 +331,15 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">ï¿½</span>
+                            <span aria-hidden="true">?</span>
                         </button>
                     </div>
                     <div class="modal-body" style="text-align: center;align-items: center">
                         <form>
                             <table border="0" cellspacing="1" cellpadding="1" style="margin: 0 auto;width: 100%" id="infoTable">
-<<<<<<< HEAD:SNEF_Web/src/main/webapp/order.html
                                 <tbody>
                                     <tr>
-                                        <td colspan="3" style="text-align: center"><h3 class=""><b>Bách Hóa Xanh</b></h3></td>
+                                        <td colspan="3" style="text-align: center"><h3 class=""><b>B?ch H?a Xanh</b></h3></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
@@ -456,123 +454,3 @@
                                                                                                                                 </body>
 
                                                                                                                                 </html>
-=======
-                            <tbody>
-                                <tr>
-                                    <td colspan="3" style="text-align: center"><h3 class=""><b>Bï¿½ch Hï¿½a Xanh</b></h3></td>
-                                </tr>
-                                <tr>
-                                   <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
-                                </tr>
-                                 <tr>
-                                    <td colspan="3">----------***----------</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" style="text-align: center"><h3 class=""><b>ORDER INFORMATION</b></h3></td>
-                                </tr>
-                                <tr>
-                                   <td colspan="3" style="text-align: center"><hr></td>
-                                </tr>
-                                 <tr>
-                                   <td style="text-align: left"><b>Customer:<b></td>
-                                   <td style="text-align: right" colspan="2">#0001_Truong Hai Nguyen</td>
-                                </tr>
-                                 <tr>
-                                   <td style="text-align: left"><b>OrderId:<b></td>
-                                   <td style="text-align: right" colspan="2">#1234</td>
-                                </tr>
-                                 <tr>
-                                   <td style="text-align: left"><b>Receive Time:<b></td>
-                                   <td style="text-align: right" colspan="2"><span>6/6/2019 13:00:01</span></td>
-                                </tr>
-                                  <tr>
-                                   <td colspan="3" style="text-align: center"><hr></td>
-                                </tr>
-                                 <tr>
-                                   <td style="text-align: left;width: 55%" ><b>Product<b></td>
-                                   <td style="text-align: center;width: 10%"><b>Amount<b></td>
-                                   <td style="text-align: right;width: 35%"><b>Cash &nbsp;</b></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left">COCA COLA</td>
-                                    <td style="text-align: center">1</td>
-                                    <td style="text-align: right">3,500 &nbsp;</td>
-                                </tr>
-                                <tr>
-                                    
-                                    <td style="text-align: left">3,500<br> </td>
-                                    <td style="text-align: center"></td>
-                                    <td style="text-align: right"></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left">Hao Hao spicy & shrimp instant noodle </td>
-                                    <td style="text-align: center">5</td>
-                                    <td style="text-align: right">12,500 &nbsp;</td>
-                                </tr>
-                                <tr>
-                                     <td style="text-align: left">2,500 &nbsp;</td>
-                                    <td style="text-align: center"></td>
-                                    <td style="text-align: right"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><hr></td>
-                                </tr>
-                                 <tr>
-                                    <td style="text-align: left"><b>Total </b></td>
-                                    <td style="text-align: center"></td>
-                                    <td style="text-align: right"><b>16,000 &nbsp;<b></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><hr></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">THANK YOU FOR SHOPPING</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">See You Again</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                            </form>
-                    </div>                    
-                </div>
-            </div>
-        </div>
-       
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
-
-        <!-- Page level plugins -->
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-        <!-- Page level custom scripts -->
-        <script src="js/demo/datatables-demo.js"></script>
-        <script>
-            $('document').ready(function(){
-               $('#searchOrder').submit(function(e){
-                   e.preventDefault();
-                   $('#informationModal').modal();
-                   if($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length<=0){
-                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
-                    }
-               });
-               $('#informationModal').on("hidden.bs.modal", function () {
-                   if($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length>0){
-                        $('#btOrderConfirm').remove();
-                    }
-                });
-            });
-        </script>
-    </body>
-
-</html>
->>>>>>> origin/nhannt-webstore:SNEF_Web/src/main/webapp/order.jsp
-

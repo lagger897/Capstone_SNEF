@@ -16,13 +16,10 @@ import java.util.Map;
 
 @Controller
 public class HomePageController {
-
     @Autowired
     private ProductService pService;
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String homepage(){
-        System.out.println("Vào Đây");
         return "login";
     }
 

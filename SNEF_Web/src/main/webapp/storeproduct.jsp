@@ -45,14 +45,14 @@
             $('document').ready(function () {
                 $table = $('#dataTable').dataTable({
                     "ajax": {
-                        "url": "api/product/getAllStoreProductWithoutFlashSale?storeId=1",
+                        "url": "api/product/getAllStoreProductWithoutFlashSale?storeId="+${sessionScope.store.storeId},
                         "method": "GET",
                         "dataType": "json"
                     },
                     "processing": true,
                     "serverSide": false,
                     "columns": [
-                        
+
                         {width: "5%", data: "storeProductId"},
                         {width: "20%", data: "name"},
                         {data: function (row, type, set) {
@@ -98,7 +98,7 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="homepage.jsp">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="homepage">
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
@@ -110,11 +110,10 @@
 
                 <!-- Nav Item - Home -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="homepage.jsp">
+                    <a class="nav-link" href="homepage">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Home</span></a>
                 </li>
-
 
                 <!-- Divider -->
                 <hr class="sidebar-divider">
@@ -125,21 +124,21 @@
                 </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="addProduct.jsp" />
-                    <i class="fas fa-fw fa-folder "></i>
+                    <a class="nav-link collapsed"  href="addStoreProduct" />
+                    <i class="fas fa-fw fa-folder"></i>
                     <span>Add store product</span>
                     </a>
                 </li>
-                <!-- Nav StoreProduct - Pages Collapse Menu -->
+                <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item active">
-                    <a class="nav-link collapsed"  href="storeproduct.jsp" />
+                    <a class="nav-link collapsed "  href="storeProduct" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Store Product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed"  href="order.jsp" />
+                    <a class="nav-link collapsed "  href="order" />
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Order</span>
                     </a>
@@ -273,8 +272,9 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Bách Hóa Xanh</h1>
-                        <p class="mb-4">Retail Store at Trung My Tay, 12 district, Ho Chi Minh city</p>
+                        <h1 class="h3 mb-2 text-gray-800"><c:out value="${sessionScope.store.storeName}"/></h1>
+                        <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.locationId.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
+
 
 
                         <!-- DataTales Example -->
