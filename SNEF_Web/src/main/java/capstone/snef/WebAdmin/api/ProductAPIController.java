@@ -16,6 +16,7 @@ import capstone.snef.WebAdmin.entity.Product;
 import capstone.snef.WebAdmin.entity.StoreProduct;
 import capstone.snef.WebAdmin.service.ProductService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -96,6 +96,7 @@ public class ProductAPIController {
 
     @PostMapping("/saleStoreProduct")
     public Message saleStoreProduct(@RequestBody FlashSaleForm body) {
+         
         return pService.saleProduct(body);
     }
 
@@ -114,6 +115,7 @@ public class ProductAPIController {
 
     @PostMapping("/updateStoreProduct")
     public Message saleStoreProduct(@RequestBody StoreProductData body) {
+       
         boolean rs = pService.updateStoreProduct(body);
         if (rs) {
             return new Message(true, "Update success");
@@ -121,4 +123,5 @@ public class ProductAPIController {
             return new Message(false, "Update fail");
         }
     }
+    
 }

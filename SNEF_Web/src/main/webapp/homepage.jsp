@@ -134,7 +134,7 @@
                     "columns": [
                         {data: function (row, type, set) {
                                 if (type === 'display') {
-                                    return "<img src='" + row.image + "' width=300px;height=300px />";
+                                    return "<img src='" + row.image + "' width=70px;height=30px />";
                                 }
                                 return "";
                             }},

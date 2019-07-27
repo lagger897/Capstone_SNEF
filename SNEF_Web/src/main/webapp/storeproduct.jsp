@@ -52,19 +52,20 @@
                     "processing": true,
                     "serverSide": false,
                     "columns": [
+                        
+                        {width: "5%", data: "storeProductId"},
+                        {width: "20%", data: "name"},
                         {data: function (row, type, set) {
 //                                alert(type);
                                 if (type === 'display') {
-                                    return "<img src='" + row.imageSrc + "' width=200px;height=200px />";
+                                    return "<img src='" + row.imageSrc + "' width=70px;height=30px />";
                                 }
                                 return "";
                             }},
-                        {width: "13%", data: "name"},
-                        {data: "description"},
                         {data: "price"},
                         {width: "10%", data: "expiredDate"},
                         {width: "5%", data: "quantity"},
-                        {width: "5%", data: function (row, type, set) {
+                        {width: "10%", data: function (row, type, set) {
                                 return row.sku !== null ? row.sku : "";
                             }},
                         {width: "60px", data: function (row, type, set) {
@@ -287,9 +288,9 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Image</th>
+                                                <th>Product Id</th>
                                                 <th>Name</th>
-                                                <th>Description</th>
+                                                <th>Image</th>
                                                 <th>Price Per Unit</th>
                                                 <th>Expired Date</th> 
                                                 <th>Quantity</th>
@@ -302,9 +303,9 @@
                                         <tbody></tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>Image</th>
+                                                <th>Product Id</th>
                                                 <th>Name</th>
-                                                <th>Description</th>
+                                                <th>Image</th>
                                                 <th>Price Per Unit</th>
                                                 <th>Expired Date</th> 
                                                 <th>Quantity</th>
@@ -531,7 +532,7 @@
             </div>
         </div>
         <!-- Edit Sale Modal-->
-        <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade " id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
