@@ -96,7 +96,18 @@ public class ProductAPIController {
 
     @PostMapping("/saleStoreProduct")
     public Message saleStoreProduct(@RequestBody FlashSaleForm body) {
-         
+        Date sDate = body.getStartDate();
+        Date eDate = body.getEndDate();
+        Date now = new Date();
+        if (sDate.compareTo(now) < 0) {
+            return new Message(false, "Start date cannot be set before current date");
+        }
+        if (eDate.compareTo(sDate) < 0) {
+            return new Message(false, "End date must be set after start date");
+        }
+        if (body.getDiscount() < 50) {
+            return new Message(false, "Discount must be more than 50%");
+        }
         return pService.saleProduct(body);
     }
 
@@ -115,7 +126,7 @@ public class ProductAPIController {
 
     @PostMapping("/updateStoreProduct")
     public Message saleStoreProduct(@RequestBody StoreProductData body) {
-       
+
         boolean rs = pService.updateStoreProduct(body);
         if (rs) {
             return new Message(true, "Update success");
@@ -123,5 +134,5 @@ public class ProductAPIController {
             return new Message(false, "Update fail");
         }
     }
-    
+
 }

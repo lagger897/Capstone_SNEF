@@ -16,7 +16,7 @@
         <meta name="author" content="">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>SAFO- Sale Food</title>
-
+        <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <!-- Custom fonts for this template -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -226,54 +226,54 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>OrderId</th>
+                                                <th>Order Id</th>
                                                 <th>Ordered Date</th>  
                                                 <th>Customer</th>
                                                 <th>Status</th>
-                                                <th>CheckOut Date</th>
+                                                <th>Rating Point</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>OrderId</th>
+                                                <th>Order Id</th>
                                                 <th>Ordered Date</th>
                                                 <th>Customer Name</th>
                                                 <th>Status</th>
-                                                <th>CheckOut Date</th>
+                                                <th>Rating Point</th>
                                             </tr>
                                         </tfoot>
-                                        <tbody>
-                                            <tr>
-                                                <td> 
-                                                    <a data-toggle="modal" data-target="#informationModal">#1234</a>
-                                                </td>
-                                                <td>6/6/2019 12:00:00</td>
-
-                                                <td>#0001_Truong Hai Nguyen</td>
-                                                <td>Received</td>
-                                                <td>6/6/2019 13:00:01</td>
-                                            </tr>
-                                            <tr>
-                                                <td> 
-                                                    <a data-toggle="modal" data-target="#informationModal">#1233</a>
-                                                </td>
-                                                <td>5/6/2019 10:40:35</td>
-
-                                                <td>#0020_Lai Duc Hung</td>
-                                                <td>Received</td>
-                                                <td>5/6/2019 11:30:30</td>
-                                            </tr>
-                                            <tr>
-                                                <td> 
-                                                    <a data-toggle="modal" data-target="#informationModal"> #1525</a>
-                                                </td>
-                                                <td>6/9/2019 7:00:00</td>
-
-                                                <td>#0101_Le Minh Tin</td>
-                                                <td>Ordered</td>
-                                                <td>NaN</td>
-                                            </tr>
-                                        </tbody>
+                                        <!--                                        <tbody>
+                                                                                    <tr>
+                                                                                        <td> 
+                                                                                            <a data-toggle="modal" data-target="#informationModal">#1234</a>
+                                                                                        </td>
+                                                                                        <td>6/6/2019 12:00:00</td>
+                                        
+                                                                                        <td>#0001_Truong Hai Nguyen</td>
+                                                                                        <td>Received</td>
+                                                                                        <td>6/6/2019 13:00:01</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td> 
+                                                                                            <a data-toggle="modal" data-target="#informationModal">#1233</a>
+                                                                                        </td>
+                                                                                        <td>5/6/2019 10:40:35</td>
+                                        
+                                                                                        <td>#0020_Lai Duc Hung</td>
+                                                                                        <td>Received</td>
+                                                                                        <td>5/6/2019 11:30:30</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td> 
+                                                                                            <a data-toggle="modal" data-target="#informationModal"> #1525</a>
+                                                                                        </td>
+                                                                                        <td>6/9/2019 7:00:00</td>
+                                        
+                                                                                        <td>#0101_Le Minh Tin</td>
+                                                                                        <td>Ordered</td>
+                                                                                        <td>NaN</td>
+                                                                                    </tr>
+                                                                                </tbody>-->
                                     </table>
                                 </div>
                             </div>
@@ -354,103 +354,136 @@
                                         <td colspan="3" style="text-align: center"><hr></td>
                                     </tr>
                                     <tr>
-                                        <td style="text-align: left"><b>Customer:<b></td>
-                                                    <td style="text-align: right" colspan="2">#0001_Truong Hai Nguyen</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: left"><b>OrderId:<b></td>
-                                                                    <td style="text-align: right" colspan="2">#1234</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="text-align: left"><b>Receive Time:<b></td>
-                                                                                    <td style="text-align: right" colspan="2"><span>6/6/2019 13:00:01</span></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td colspan="3" style="text-align: center"><hr></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td style="text-align: left;width: 55%" ><b>Product<b></td>
-                                                                                                    <td style="text-align: center;width: 10%"><b>Amount<b></td>
-                                                                                                                <td style="text-align: right;width: 35%"><b>Cash &nbsp;</b></td>
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td style="text-align: left">COCA COLA</td>
-                                                                                                                    <td style="text-align: center">1</td>
-                                                                                                                    <td style="text-align: right">3,500 &nbsp;</td>
-                                                                                                                </tr>
-                                                                                                                <tr>
+                                        <td style="text-align: left"><b>Customer:</b></td>
+                                        <td style="text-align: right" colspan="2">#0001_Truong Hai Nguyen</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left"><b>OrderId:</b></td>
+                                        <td style="text-align: right" colspan="2">#1234</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left"><b>Receive Time:</b></td>
+                                        <td style="text-align: right" colspan="2"><span>6/6/2019 13:00:01</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center"><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;width: 55%" ><b>Product</b></td>
+                                        <td style="text-align: center;width: 10%"><b>Amount</b></td>
+                                        <td style="text-align: right;width: 35%"><b>Cash &nbsp;</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left">COCA COLA</td>
+                                        <td style="text-align: center">1</td>
+                                        <td style="text-align: right">3,500 &nbsp;</td>
+                                    </tr>
+                                    <tr>
 
-                                                                                                                    <td style="text-align: left">3,500<br> </td>
-                                                                                                                    <td style="text-align: center"></td>
-                                                                                                                    <td style="text-align: right"></td>
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td style="text-align: left">Hao Hao spicy & shrimp instant noodle </td>
-                                                                                                                    <td style="text-align: center">5</td>
-                                                                                                                    <td style="text-align: right">12,500 &nbsp;</td>
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td style="text-align: left">2,500 &nbsp;</td>
-                                                                                                                    <td style="text-align: center"></td>
-                                                                                                                    <td style="text-align: right"></td>
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td colspan="3"><hr></td>
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td style="text-align: left"><b>Total </b></td>
-                                                                                                                    <td style="text-align: center"></td>
-                                                                                                                    <td style="text-align: right"><b>16,000 &nbsp;<b></td>
-                                                                                                                                </tr>
-                                                                                                                                <tr>
-                                                                                                                                    <td colspan="3"><hr></td>
-                                                                                                                                </tr>
-                                                                                                                                <tr>
-                                                                                                                                    <td colspan="3">THANK YOU FOR SHOPPING</td>
-                                                                                                                                </tr>
-                                                                                                                                <tr>
-                                                                                                                                    <td colspan="3">See You Again</td>
-                                                                                                                                </tr>
-                                                                                                                                </tbody>
-                                                                                                                                </table>
-                                                                                                                                </form>
-                                                                                                                                </div>                    
-                                                                                                                                </div>
-                                                                                                                                </div>
-                                                                                                                                </div>
+                                        <td style="text-align: left">3,500<br> </td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left">Hao Hao spicy & shrimp instant noodle </td>
+                                        <td style="text-align: center">5</td>
+                                        <td style="text-align: right">12,500 &nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left">2,500 &nbsp;</td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left"><b>Total </b></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: right"><b>16,000 &nbsp;</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">THANK YOU FOR SHOPPING</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">See You Again</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>                    
+                </div>
+            </div>
+        </div>
 
-                                                                                                                                <!-- Bootstrap core JavaScript-->
-                                                                                                                                <script src="vendor/jquery/jquery.min.js"></script>
-                                                                                                                                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                                                                                                                                <!-- Core plugin JavaScript-->
-                                                                                                                                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                                                                                                                                <!-- Custom scripts for all pages-->
-                                                                                                                                <script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-                                                                                                                                <!-- Page level plugins -->
-                                                                                                                                <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-                                                                                                                                <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-                                                                                                                                <!-- Page level custom scripts -->
-                                                                                                                                <script src="js/demo/datatables-demo.js"></script>
-                                                                                                                                <script>
-                                                                                                                                    $('document').ready(function () {
-                                                                                                                                        $('#searchOrder').submit(function (e) {
-                                                                                                                                            e.preventDefault();
-                                                                                                                                            $('#informationModal').modal();
-                                                                                                                                            if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
-                                                                                                                                                $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
-                                                                                                                                            }
-                                                                                                                                        });
-                                                                                                                                        $('#informationModal').on("hidden.bs.modal", function () {
-                                                                                                                                            if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
-                                                                                                                                                $('#btOrderConfirm').remove();
-                                                                                                                                            }
-                                                                                                                                        });
-                                                                                                                                    });
-                                                                                                                                </script>
-                                                                                                                                </body>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/datatables-demo.js"></script>
+        <script>
+            $('document').ready(function () {
+                $('#dataTable').dataTable({
+                    "ajax": {
+                        "url": "api/order/getAll?storeId=${sessionScope.store.storeId}",
+                        "method": "GET", "dataType": "json"
+                    },
+                    "processing": true,
+                    "serverSide": false,
+                    "columns": [
+                        {data: function (row, type, set) {
+                                if (type === 'display') {
+                                    return '<a data-toggle="modal" data-target="#informationModal">#' + row.orderId + '</a>';
+                                }
+                            }},
+                        {data: "dateOrder"},
+                        {data: function (row, type, set) {
+                                if (type === 'display') {
+                                    return row.lastname + " " + row.firstname;
+                                }
+                            }},
+                        {data: function (row, type, set) {
+                                if (type === 'display') {
+                                    if (row.status === true) {
+                                        return "Received";
+                                    } else {
+                                        return "Ordered";
+                                    }
+                                }
+                            }},
+                        {data: "ratingPoint"}
+                    ],
+                    bDestroy: true
+                })
+                $('#searchOrder').submit(function (e) {
+                    e.preventDefault();
+                    $('#informationModal').modal();
+                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
+                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
+                    }
+                });
+                $('#informationModal').on("hidden.bs.modal", function () {
+                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
+                        $('#btOrderConfirm').remove();
+                    }
+                });
+            }
+            );
+        </script>
+    </body>
 
-                                                                                                                                </html>
+</html>

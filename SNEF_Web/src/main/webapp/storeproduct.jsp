@@ -666,7 +666,7 @@
             function deleteProduct(productId) {
                 $('#deleteProductModal').modal('show');
                 $('#hiddenDeleteProductId').val(productId);
-//                $('#dataTable').DataTable().ajax.reload();
+                $('#dataTable').DataTable().ajax.reload();
             }
 
 
@@ -735,7 +735,6 @@
                             } else {
                                 alert(data.msg);
                             }
-
                         }
                     });
                 })

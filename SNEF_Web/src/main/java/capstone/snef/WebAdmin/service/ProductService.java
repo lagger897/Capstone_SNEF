@@ -60,14 +60,16 @@ public class ProductService {
         }
         List<Flashsales> flashsales = flashSaleRepos.findAllByStoreId(store.get());
         for (Flashsales flashsale : flashsales) {
+//            if (flashsale.getEndDate().compareTo(new Date()) <= 0) {
             List<FlashsaleProduct> products = flashSaleProductRepos.findAllByFlashSalesId(flashsale);
             if (products.size() > 0) {
                 for (FlashsaleProduct product : products) {
+
                     FlashSaleProductData productData = new FlashSaleProductData();
                     productData.setName(product.getStoreProductId().getProductName());
                     productData.setImage(product.getStoreProductId().getStoreProductImageList().get(0).getImageSrc());
                     productData.setExpireDate(product.getStoreProductId().getExpiredDate());
-                    productData.setDiscPrice(Math.round(product.getFlashSalesId().getDiscount() * product.getStoreProductId().getPrice() / 100));
+                    productData.setDiscPrice(Math.round((100-product.getFlashSalesId().getDiscount()) * product.getStoreProductId().getPrice() / 100));
                     productData.setTotalQuantity(product.getQuantity());
                     int soldNum = 0;
                     try {
@@ -76,9 +78,11 @@ public class ProductService {
                     }
                     productData.setSoldNum(soldNum);
                     productData.setInStock(product.getQuantity() - soldNum);
+                    productData.setStatus(product.getStatus());
                     list.add(productData);
                 }
             }
+//            }
         }
         return list;
     }
@@ -135,6 +139,12 @@ public class ProductService {
             StoreProduct storeProduct = storeProductRs.get();
             if (body.getQuantity() > storeProduct.getQuantity()) {
                 return new Message(false, "Exceed the store product quantity");
+            }
+            if (body.getStartDate().compareTo(storeProduct.getExpiredDate()) > 0) {
+                return new Message(false, "Start date must be before the expired date");
+            }
+            if (body.getEndDate().compareTo(storeProduct.getExpiredDate()) > 0) {
+                return new Message(false, "End date must be before the expired date");
             }
             Flashsales flashsale = new Flashsales(body.getDiscount(), body.getStartDate(), body.getEndDate(), storeProduct.getStoreId());
 

@@ -20,12 +20,12 @@ public class FlashSaleProductData {
     private int soldNum;
     private int inStock;
     private Date expireDate;
-    private String status;
+    private int status;
 
     public FlashSaleProductData() {
     }
 
-    public FlashSaleProductData(String image, String name, double discPrice, int totalQuantity, int soldNum, int inStock, Date expireDate, String status) {
+    public FlashSaleProductData(String image, String name, double discPrice, int totalQuantity, int soldNum, int inStock, Date expireDate, int status) {
         this.image = image;
         this.name = name;
         this.discPrice = discPrice;
@@ -35,6 +35,7 @@ public class FlashSaleProductData {
         this.expireDate = expireDate;
         this.status = status;
     }
+
 
     public String getImage() {
         return image;
@@ -92,11 +93,11 @@ public class FlashSaleProductData {
         this.expireDate = expireDate;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

@@ -5,9 +5,12 @@
  */
 package capstone.snef.WebAdmin.api;
 
-import capstone.snef.WebAdmin.entity.OrderDetail;
+import capstone.snef.WebAdmin.dataform.OrderData;
 import capstone.snef.WebAdmin.service.OrderDetailService;
+import capstone.snef.WebAdmin.service.OrderService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,11 +24,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping("/api/order")
 public class OrderAPIController {
+
     @Autowired
-    private OrderDetailService oService;
-    
+    private OrderDetailService orderDetailServ;
+    @Autowired
+    private OrderService orderServ;
     @GetMapping("/getAll")
-    public List<OrderDetail> getAllProduct(@RequestParam Integer storeId){
-        return oService.getAllOrderByStoreId(storeId);
+    public Map<String, List<OrderData>> getAllProduct(@RequestParam("storeId") Integer storeId) {
+        HashMap<String, List<OrderData>> map = new HashMap<String, List<OrderData>>();
+        map.put("data", orderServ.getAllOrderByStoreId(storeId));
+        return map;
     }
 }

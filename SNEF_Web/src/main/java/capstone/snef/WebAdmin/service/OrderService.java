@@ -5,18 +5,23 @@
  */
 package capstone.snef.WebAdmin.service;
 
-import capstone.snef.WebAdmin.entity.FlashsaleProduct;
-import capstone.snef.WebAdmin.entity.OrderDetail;
-import capstone.snef.WebAdmin.repository.IOrderDetailRepository;
+import capstone.snef.WebAdmin.dataform.OrderData;
+import capstone.snef.WebAdmin.repository.IOrderRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import capstone.snef.WebAdmin.repository.IFlashSaleProductRepository;
 
 /**
  *
  * @author Phuc Nguyen -VN
  */
 @Service
-public class OrderDetailService {
+public class OrderService {
+    @Autowired
+    private IOrderRepository orderService;
+    public List<OrderData> getAllOrderByStoreId(Integer storeId) {
+        List<OrderData> orders =orderService.getAllOrderByStoreId(storeId);
+        return orders;
+    }
+
 }

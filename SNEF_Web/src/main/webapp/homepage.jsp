@@ -145,11 +145,14 @@
                         {data: "inStock"},
                         {data: "expireDate"},
                         {data: function (row, type, set) {
-                                if (type === 'display') {
-                                    if (row.status === null)
+//                                if (type === 'display') {
+                                    if (row.status === null){
                                         return "Nothing";
-                                }
-                                return "Status: " + type;
+                                    }else if (row.status===0){
+                                        return "Selling";
+                                    }
+//                                }
+                               
                             }
                         }
                     ]
