@@ -5,8 +5,8 @@
  */
 package capstone.snef.WebAdmin.repository;
 
+import capstone.snef.WebAdmin.entity.Account;
 import capstone.snef.WebAdmin.entity.Store;
-import capstone.snef.WebAdmin.entity.StoreManager;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
@@ -23,6 +23,8 @@ public interface IStoreRepository extends CrudRepository<Store, Integer> {
     @Override
     public Optional<Store> findById(Integer id);
 
-    public Optional<Store> findByStoreManagerId(StoreManager id);
+//    public Optional<Store> findByStoreManagerId(StoreManager id);
+
+    public List<Store> findAllByaccountId(Account accountId);
     
 }

@@ -303,7 +303,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">�</span>
+                            <span aria-hidden="true">x</span>
                         </button>
                     </div>
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -321,7 +321,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">�</span>
+                            <span aria-hidden="true">x</span>
                         </button>
                     </div>
                     <div class="modal-body" style="text-align: center;align-items: center">
@@ -417,21 +417,25 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Post Sale</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">�</span>
+                        <span aria-hidden="true">x</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form id="addProduct">
+                        <input type="hidden" id="storeId" value="${sessionScope.store.storeId}"/>
                         <input type="hidden" id="productId"/>
                         <table border="0">
                             <tbody>
                                 <tr>
                                     <td>Name</td>
-                                    <td> <input type="text" name="txtName" id="txtName" value="Coca Cola" placeholder="Product name" required  style="width: 100%;border-top: none;border-left: none;border-right: none;"/> </td>
+                                    <td> <input type="text" name="name" id="name" value="" placeholder="Product name" required  style="width: 100%;border-top: none;border-left: none;border-right: none;"/> </td>
                                 </tr>
                                 <tr>
                                     <td >Image </td>
-                                    <td > <input type="file" name="txtFile" id="txtFile" value="" onchange="uploadImg(event)"  /> </td>
+                                    <td >
+                                        <input type="file" name="imageSrc" id="imageSrc" value="" onchange="uploadImg(event)"  />
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="text-align:center">
@@ -441,46 +445,25 @@
                                 <tr>
                                     <td>Description </td>
                                     <td>
-                                        <textarea id="txtDescription" style="width: 100%;height: 100px">Good soft drink</textarea>
+                                        <textarea name="description" id="description" style="width: 100%;height: 100px">Good soft drink</textarea>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Expired Date</td>
                                     <td>
-                                        <input type="date" id="eDate" required=""/>
+                                        <input type="date" id="expiredDate" name="expiredDate" required=""/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Quantity</td>
-                                    <td> <input type="number" id = "txtAmmount" name="txtAmmount" value="0" placeholder="1000"  placeholder="1"   required/>  </td>
+                                    <td> <input type="number" id = "ammount" name="ammount" value="0" placeholder="1000"  placeholder="1"   required/>  </td>
                                 </tr>
                                 <tr>
                                     <td>Price (VND)</td>
-                                    <td> <input type="number" id = "txtPrice" name="txtPrice" value="0" placeholder="1000"  placeholder="Product original price"   required/>   
+                                    <td> <input type="number" id = "price" name="price" value="0" placeholder="1000"  placeholder="Product original price"   required/>   
                                         <!--<a onclick="suggestPrice()" href="#"> Suggest</a>-->
                                     </td>
                                 </tr>
-                                <!--                                <tr>
-                                                                    <td>Discount </td>
-                                                                    <td>
-                                                                        <input type="range" name="range" id="range" min="0" max="100" step="" value="0"  class="slider"/>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td> </td>
-                                                                    <td>
-                                                                        <input type="text" id='output' style="width: 30px"><span>%</span>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Seling Price (VND)   </td>
-                                                                    <td>
-                                                                        <span id='calPrice'>0 </span>
-                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                        <span id='sugPrice'> </span>
-                                                                    </td>
-                                                                </tr>-->
-
                             </tbody>
                         </table>
 
@@ -511,123 +494,126 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     <script>
-                                        $('document').ready(function () {
-                                            $('#searchOrder').submit(function (e) {
-                                                e.preventDefault();
-                                                $('#informationModal').modal();
-                                                if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
-                                                    $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
-                                                }
-                                            });
-                                            $('#informationModal').on("hidden.bs.modal", function () {
-                                                if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
-                                                    $('#btOrderConfirm').remove();
-                                                }
-                                            });
-                                            $('#resultTable').hide();
-                                            $('#searchProduct').submit(function (e) {
-                                                e.preventDefault();
-                                                var search = $('#txtSearchProduct').val().trim();
-                                                if (search !== "") {
-                                                    $('#dataTable').dataTable({
-                                                        "ajax": {
-                                                            "url": "api/product/search?name=" + search,
-                                                            "method": "GET", "dataType": "json"
-                                                        },
-                                                        "processing": true,
-                                                        "serverSide": false,
-
-                                                        "columns": [
-                                                            {width: "25%", data: function (row, type, set) {
-                                                                    if (type === 'display') {
-                                                                        return "<img src='" + row.imageSrc + "' width=200px;height=200px />";
-                                                                    }
-                                                                    return "";
-                                                                }},
-                                                            {width: "60%", data: "productName"},
-                                                            {width: "15%", data: function (row, type, set) {
-                                                                    if (type === 'display') {
-                                                                        var content = '<input type="button" value="Select" onclick="getProduct(' + row.productId + ')" style="width:200px">';
-                                                                        return content;
-                                                                    }
-                                                                    return "";
-                                                                }}],
-                                                        destroy: true,
-                                                    });
-
-                                                    $('#resultTable').show();
-                                                } else {
-                                                    $('#resultTable').hide();
-                                                }
-                                            });
-                                            $('#range').on("input", function () {
-                                                $('#output').val(this.value);
-                                                var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;
-                                                $('#calPrice').html(cal);
-                                            }).trigger("change");
-                                            $('#output').change(function () {
-                                                $('#range').val(this.value);
-
-                                                var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;
-                                                $('#calPrice').html(cal);
-                                            })
-                                            $('#txtPrice').change(function () {
-
-                                                var cal = Math.round((1 - $('#range').value / 100) * $('#txtPrice').val() * 100) / 100;
-                                                $('#calPrice').html(cal);
-                                            })
-                                            $('#addProduct').submit(function (event) {
-                                                event.preventDefault();
-//                                                alert("Add Product");
-//                                                alert($('#productId').val());
-                                                $.ajax({
-                                                    url: "api/product/addProduct",
-                                                    method: "POST",
-                                                    data: JSON.stringify({
-                                                        "storeId": ${sessionScope.store.storeId},
-                                                        "productId": $('#productId').val(),
-                                                        "name": $('#txtName').val(),
-                                                        "imageSrc": $('#previewImage').attr('src'),
-                                                        "description": $('#txtDescription').html(),
-                                                        "expiredDate": $('#eDate').val(),
-                                                        "ammount": $('#txtAmmount').val(),
-                                                        "price": $('#txtPrice').val()
-                                                    }),
-                                                    dataType: "json",
-                                                    contentType: "application/json; charset=utf-8",
-                                                    success: function (rs) {
-                                                        if (rs.result === true) {
-                                                            alert(rs.msg);
-                                                            $('#addProductModal').modal('hide');
-                                                        } else {
-                                                            alert(rs.msg);
-                                                        }
-                                                    }, error: function (err) {
-                                                        console.log(err);
+                                            $('document').ready(function () {
+                                                $('#searchOrder').submit(function (e) {
+                                                    e.preventDefault();
+                                                    $('#informationModal').modal();
+                                                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
+                                                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
                                                     }
                                                 });
-                                            })
-                                        });
-                                        function uploadImg(event) {
-                                            $('#previewImage').attr("src", URL.createObjectURL(event.target.files[0]));
+                                                $('#informationModal').on("hidden.bs.modal", function () {
+                                                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
+                                                        $('#btOrderConfirm').remove();
+                                                    }
+                                                });
+                                                $('#resultTable').hide();
+//                                                $('#uploadImageForm').submit(function (e) {
+//                                                    e.preventDefault();
+////                                                        var data = new FormDatat($(this));
+//
+//                                                });
+                                                $('#searchProduct').submit(function (e) {
+                                                    e.preventDefault();
+                                                    var search = $('#txtSearchProduct').val().trim();
+                                                    if (search !== "") {
+                                                        $('#dataTable').dataTable({
+                                                            "ajax": {
+                                                                "url": "api/product/search?name=" + search,
+                                                                "method": "GET", "dataType": "json"
+                                                            },
+                                                            "processing": true,
+                                                            "serverSide": false,
 
-                                        }
-                                        function suggestPrice() {
-                                            $('#sugPrice').html(10000);
-                                        }
-                                        function getProduct(id) {
-                                            $.ajax({
-                                                url: "api/product/getProduct?id=" + id,
-                                                method: "GET",
-                                                dataType: "json",
-                                                success: function (data) {
-                                                    $('#productId').val(data.productId);
-                                                    $('#txtName').val(data.productName);
-                                                    $('#previewImage').attr("src", data.imageSrc);
-                                                    $('#addProductModal').modal('show');
-                                                }
+                                                            "columns": [
+                                                                {width: "25%", data: function (row, type, set) {
+                                                                        if (type === 'display') {
+                                                                            return "<img src='" + row.imageSrc + "' width=200px;height=200px />";
+                                                                        }
+                                                                        return "";
+                                                                    }},
+                                                                {width: "60%", data: "productName"},
+                                                                {width: "15%", data: function (row, type, set) {
+                                                                        if (type === 'display') {
+                                                                            var content = '<input type="button" value="Select" onclick="getProduct(' + row.productId + ')" style="width:200px">';
+                                                                            return content;
+                                                                        }
+                                                                        return "";
+                                                                    }}],
+                                                            destroy: true,
+                                                        });
+
+                                                        $('#resultTable').show();
+                                                    } else {
+                                                        $('#resultTable').hide();
+                                                    }
+                                                });
+                                                $('#range').on("input", function () {
+                                                    $('#output').val(this.value);
+                                                    var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;
+                                                    $('#calPrice').html(cal);
+                                                }).trigger("change");
+                                                $('#output').change(function () {
+                                                    $('#range').val(this.value);
+
+                                                    var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;
+                                                    $('#calPrice').html(cal);
+                                                });
+                                                $('#txtPrice').change(function () {
+
+                                                    var cal = Math.round((1 - $('#range').value / 100) * $('#txtPrice').val() * 100) / 100;
+                                                    $('#calPrice').html(cal);
+                                                });
+                                                $('#addProduct').submit(function (event) {
+                                                    event.preventDefault();
+                                                    var form = $('#addProduct')[0];
+                                                    var data = new FormData(form);
+                                                    
+                                                    data.append("storeId",${sessionScope.store.storeId});
+                                                    data.append("productId", $('#productId').val());
+                                                    data.append("description", $('#description').html());
+                                                    $.ajax({
+                                                        url: "api/product/addProduct",
+                                                        enctype: 'multipart/form-data',
+                                                        method: "POST",
+                                                        data: data, processData: false,
+                                                        contentType: false,
+                                                        cache: false,
+                                                        timeout: 1000000,
+                                                        success: function (rs) {
+                                                            if (rs.result === true) {
+                                                                alert(rs.msg);
+                                                                $('#addProductModal').modal('hide');
+                                                            } else {
+                                                                alert(rs.msg);
+                                                            }
+                                                        }, error: function (err) {
+                                                            console.log(err);
+                                                        }
+                                                    });
+                                                });
                                             });
-                                        }
+                                            function uploadImg(event) {
+                                                $('#previewImage').attr("src", URL.createObjectURL(event.target.files[0]));
+
+                                                $('#isUploaded').val(true);
+                                            }
+                                            function suggestPrice() {
+                                                $('#sugPrice').html(10000);
+                                            }
+                                            function getProduct(id) {
+                                                $.ajax({
+                                                    url: "api/product/getProduct?id=" + id,
+                                                    method: "GET",
+                                                    dataType: "json",
+                                                    success: function (data) {
+                                                        $('#productId').val(data.productId);
+                                                        $('#name').val(data.productName);
+                                                        $('#previewImage').attr("src", data.imageSrc);
+                                                        $('#addProductModal').modal('show');
+                                                    }
+                                                });
+                                            }
 
     </script>
 </body>

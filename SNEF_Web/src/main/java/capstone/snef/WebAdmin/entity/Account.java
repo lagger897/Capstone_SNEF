@@ -14,9 +14,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -48,51 +51,54 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "AccountId")
+    @Column(name = "AccountId", nullable = false)
     private Integer accountId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "UserName")
+    @Column(name = "UserName", nullable = false, length = 30)
     private String userName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "Password")
+    @Column(name = "Password", nullable = false, length = 30)
     private String password;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "FirstName")
+    @Column(name = "FirstName", nullable = false, length = 20)
     private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "LastName")
+    @Column(name = "LastName", nullable = false, length = 20)
     private String lastName;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 20)
-    @Column(name = "Phone")
+    @Column(name = "Phone", length = 20)
     private String phone;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 50)
-    @Column(name = "Email")
+    @Column(name = "Email", length = 50)
     private String email;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "IsActive")
-    private boolean isActive;
+    private Boolean isActive;
     @Size(max = 400)
-    @Column(name = "Avatar")
+    @Column(name = "Avatar", length = 400)
     private String avatar;
     @Column(name = "Gender")
-    private Boolean gender;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
-    private List<Customer> customerList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
-    private List<Admin> adminList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
-    private List<StoreManager> storeManagerList;
+    private Short gender;
+    @OneToMany(mappedBy = "accountId")
+    private List<Order1> order1List;
+    @JoinColumn(name = "roleId", referencedColumnName = "roleId")
+    @ManyToOne
+    private Role roleId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "adminId")
+    private List<NewProductRequest> newProductRequestList;
+    @OneToOne(mappedBy = "accountId")
+    private Store store;
+    @OneToMany(mappedBy = "accountId")
+    private List<Like1> like1List;
 
     public Account() {
     }
@@ -101,13 +107,12 @@ public class Account implements Serializable {
         this.accountId = accountId;
     }
 
-    public Account(Integer accountId, String userName, String password, String firstName, String lastName, boolean isActive) {
+    public Account(Integer accountId, String userName, String password, String firstName, String lastName) {
         this.accountId = accountId;
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isActive = isActive;
     }
 
     public Integer getAccountId() {
@@ -166,11 +171,11 @@ public class Account implements Serializable {
         this.email = email;
     }
 
-    public boolean getIsActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
 
@@ -182,39 +187,55 @@ public class Account implements Serializable {
         this.avatar = avatar;
     }
 
-    public Boolean getGender() {
+    public Short getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Short gender) {
         this.gender = gender;
     }
 
     @XmlTransient
-    public List<Customer> getCustomerList() {
-        return customerList;
+    public List<Order1> getOrder1List() {
+        return order1List;
     }
 
-    public void setCustomerList(List<Customer> customerList) {
-        this.customerList = customerList;
+    public void setOrder1List(List<Order1> order1List) {
+        this.order1List = order1List;
+    }
+
+    public Role getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Role roleId) {
+        this.roleId = roleId;
     }
 
     @XmlTransient
-    public List<Admin> getAdminList() {
-        return adminList;
+    public List<NewProductRequest> getNewProductRequestList() {
+        return newProductRequestList;
     }
 
-    public void setAdminList(List<Admin> adminList) {
-        this.adminList = adminList;
+    public void setNewProductRequestList(List<NewProductRequest> newProductRequestList) {
+        this.newProductRequestList = newProductRequestList;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     @XmlTransient
-    public List<StoreManager> getStoreManagerList() {
-        return storeManagerList;
+    public List<Like1> getLike1List() {
+        return like1List;
     }
 
-    public void setStoreManagerList(List<StoreManager> storeManagerList) {
-        this.storeManagerList = storeManagerList;
+    public void setLike1List(List<Like1> like1List) {
+        this.like1List = like1List;
     }
 
     @Override

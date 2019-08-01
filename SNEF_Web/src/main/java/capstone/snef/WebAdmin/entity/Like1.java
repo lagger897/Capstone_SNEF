@@ -35,12 +35,12 @@ public class Like1 implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "LikeId")
+    @Column(name = "LikeId", nullable = false)
     private Integer likeId;
-    @JoinColumn(name = "CustomerId", referencedColumnName = "CustomerId")
-    @ManyToOne(optional = false)
-    private Customer customerId;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
+    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
+    @ManyToOne
+    private Account accountId;
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
 
@@ -59,12 +59,12 @@ public class Like1 implements Serializable {
         this.likeId = likeId;
     }
 
-    public Customer getCustomerId() {
-        return customerId;
+    public Account getAccountId() {
+        return accountId;
     }
 
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
+    public void setAccountId(Account accountId) {
+        this.accountId = accountId;
     }
 
     public StoreProduct getStoreProductId() {

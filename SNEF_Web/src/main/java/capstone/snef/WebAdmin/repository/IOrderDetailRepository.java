@@ -6,6 +6,7 @@
 package capstone.snef.WebAdmin.repository;
 
 import capstone.snef.WebAdmin.entity.FlashsaleProduct;
+import capstone.snef.WebAdmin.entity.Order1;
 import capstone.snef.WebAdmin.entity.OrderDetail;
 import java.util.List;
 import java.util.Optional;
@@ -28,5 +29,7 @@ public interface IOrderDetailRepository extends CrudRepository<OrderDetail, Inte
     
     @Query(value="SELECT * FROM FlashsaleProduct f WHERE f.FlashsaleProductId = ?1",nativeQuery = true)
     public List<OrderDetail> findAllWithFlashSaleProductId(Integer id);
+
+    public List<OrderDetail> findAllByOrderOrderId(Order1 order);
    
 }

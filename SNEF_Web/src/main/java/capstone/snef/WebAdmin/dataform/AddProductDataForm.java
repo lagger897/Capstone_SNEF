@@ -6,6 +6,7 @@
 package capstone.snef.WebAdmin.dataform;
 
 import java.util.Date;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -15,16 +16,16 @@ public class AddProductDataForm {
     private Integer storeId;
     private Integer productId;
     private String name;
-    private String imageSrc;
+    private MultipartFile imageSrc;
     private String description;
-    private Date expiredDate;
+    private String expiredDate;
     private Integer ammount;
     private double price;
 
     public AddProductDataForm() {
     }
 
-    public AddProductDataForm(Integer storeId, Integer productId, String name, String imageSrc, String description, Date expiredDate, Integer ammount, double price) {
+    public AddProductDataForm(Integer storeId, Integer productId, String name, MultipartFile imageSrc, String description, String expiredDate, Integer ammount, double price) {
         this.storeId = storeId;
         this.productId = productId;
         this.name = name;
@@ -61,13 +62,7 @@ public class AddProductDataForm {
         this.name = name;
     }
 
-    public String getImageSrc() {
-        return imageSrc;
-    }
-
-    public void setImageSrc(String imageSrc) {
-        this.imageSrc = imageSrc;
-    }
+    
 
     public String getDescription() {
         return description;
@@ -77,13 +72,6 @@ public class AddProductDataForm {
         this.description = description;
     }
 
-    public Date getExpiredDate() {
-        return expiredDate;
-    }
-
-    public void setExpiredDate(Date expiredDate) {
-        this.expiredDate = expiredDate;
-    }
 
     public Integer getAmmount() {
         return ammount;
@@ -105,6 +93,22 @@ public class AddProductDataForm {
     public String toString() {
 //        return super.toString(); //To change body of generated methods, choose Tools | Templates.
         return getName() + "_" + getDescription() + "_" + getImageSrc() + "_" + getAmmount() + "_" + "_" + getExpiredDate().toString() + "_" + getPrice();
+    }
+
+    public MultipartFile getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(MultipartFile imageSrc) {
+        this.imageSrc = imageSrc;
+    }
+
+    public String getExpiredDate() {
+        return expiredDate;
+    }
+
+    public void setExpiredDate(String expiredDate) {
+        this.expiredDate = expiredDate;
     }
 
 }

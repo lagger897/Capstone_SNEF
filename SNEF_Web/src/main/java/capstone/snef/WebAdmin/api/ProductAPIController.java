@@ -15,13 +15,25 @@ import capstone.snef.WebAdmin.dataform.StoreProductData;
 import capstone.snef.WebAdmin.entity.Product;
 import capstone.snef.WebAdmin.entity.StoreProduct;
 import capstone.snef.WebAdmin.service.ProductService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +49,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/api/product")
 public class ProductAPIController {
 
+    private static final String CLOUDINARY_CLOUD_NAME = "dr4hpc9gi";
+    private static final String CLOUDINARY_API_KEY = "166957351197671";
+    private static final String CLOUDINARY_API_SECRET = "zakaWJRkTxjvVutIlhrhqOxpWDk";
     @Autowired
     private ProductService pService;
 
@@ -75,14 +90,42 @@ public class ProductAPIController {
         return pService.getProductById(id);
     }
 
-    @PostMapping(value = "/addProduct", consumes = "application/json")
-    public Message addProduct(@RequestBody AddProductDataForm data) {
-        StoreProduct rs = pService.saveStoreProduct(
-                data.getStoreId(), data.getProductId(), data.getName(),
-                data.getExpiredDate(), data.getAmmount(), data.getPrice(),
-                data.getDescription());
-        if (rs != null) {
-            return new Message(true, "Success");
+    @PostMapping(value = "/addProduct")
+    public Message addProduct(@ModelAttribute AddProductDataForm data) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(data.getExpiredDate());
+            StoreProduct rs = pService.saveStoreProduct(
+                    data.getStoreId(), data.getProductId(), data.getName(),
+                    date, data.getAmmount(), data.getPrice(),
+                    data.getDescription());
+            System.out.println("SAY something");
+            if (rs != null) {
+                try {
+                    byte[] bytes = data.getImageSrc().getBytes();
+                    Path path = Paths.get("" + data.getImageSrc().getOriginalFilename());
+//            Cloudinary cloudinary = new Cloudinary();
+                    File myFile = new File(String.valueOf(Files.write(path, bytes)));
+                    HashMap<String, String> config = new HashMap<>();
+                    config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
+                    config.put("api_key", CLOUDINARY_API_KEY);
+                    config.put("api_secret", CLOUDINARY_API_SECRET);
+                    Cloudinary cloudinary = new Cloudinary(config);
+                    HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
+                    String imageSrc = String.valueOf(uploadResult.get("url"));
+                    if (imageSrc != "") {
+                        StoreProduct sProduct = pService.saveStoreProductImage(rs, imageSrc);
+                        if (sProduct != null) {
+                            return new Message(true, "Success");
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return new Message(false, "Fail");
+        } catch (ParseException ex) {
+            Logger.getLogger(ProductAPIController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new Message(false, "Fail");
     }

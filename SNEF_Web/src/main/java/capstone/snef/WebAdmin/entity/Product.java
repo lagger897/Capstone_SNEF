@@ -36,28 +36,33 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
     , @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId")
     , @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE p.productName = :productName")
-    , @NamedQuery(name = "Product.findByImageSrc", query = "SELECT p FROM Product p WHERE p.imageSrc = :imageSrc")})
+    , @NamedQuery(name = "Product.findByImageSrc", query = "SELECT p FROM Product p WHERE p.imageSrc = :imageSrc")
+    , @NamedQuery(name = "Product.findByStatus", query = "SELECT p FROM Product p WHERE p.status = :status")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ProductId")
+    @Column(name = "ProductId", nullable = false)
     private Integer productId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ProductName")
+    @Column(name = "ProductName", nullable = false, length = 50)
     private String productName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 400)
-    @Column(name = "ImageSrc")
+    @Column(name = "ImageSrc", nullable = false, length = 400)
     private String imageSrc;
+    @Column(name = "Status")
+    private Boolean status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private List<StoreProduct> storeProductList;
-    @JoinColumn(name = "CategoriesId", referencedColumnName = "CategoriesId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
+    private List<NewProductRequest> newProductRequestList;
+    @JoinColumn(name = "CategoriesId", referencedColumnName = "CategoriesId", nullable = false)
     @ManyToOne(optional = false)
     private Categories categoriesId;
 
@@ -98,6 +103,14 @@ public class Product implements Serializable {
         this.imageSrc = imageSrc;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @XmlTransient
     public List<StoreProduct> getStoreProductList() {
         return storeProductList;
@@ -105,6 +118,15 @@ public class Product implements Serializable {
 
     public void setStoreProductList(List<StoreProduct> storeProductList) {
         this.storeProductList = storeProductList;
+    }
+
+    @XmlTransient
+    public List<NewProductRequest> getNewProductRequestList() {
+        return newProductRequestList;
+    }
+
+    public void setNewProductRequestList(List<NewProductRequest> newProductRequestList) {
+        this.newProductRequestList = newProductRequestList;
     }
 
     public Categories getCategoriesId() {

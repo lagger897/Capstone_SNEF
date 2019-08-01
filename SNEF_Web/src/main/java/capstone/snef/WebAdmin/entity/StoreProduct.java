@@ -43,45 +43,48 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "StoreProduct.findByQuantity", query = "SELECT s FROM StoreProduct s WHERE s.quantity = :quantity")
     , @NamedQuery(name = "StoreProduct.findByPrice", query = "SELECT s FROM StoreProduct s WHERE s.price = :price")
     , @NamedQuery(name = "StoreProduct.findByDescription", query = "SELECT s FROM StoreProduct s WHERE s.description = :description")
-    , @NamedQuery(name = "StoreProduct.findBySku", query = "SELECT s FROM StoreProduct s WHERE s.sku = :sku")})
+    , @NamedQuery(name = "StoreProduct.findBySku", query = "SELECT s FROM StoreProduct s WHERE s.sku = :sku")
+    , @NamedQuery(name = "StoreProduct.findByStatus", query = "SELECT s FROM StoreProduct s WHERE s.status = :status")})
 public class StoreProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "StoreProductId")
+    @Column(name = "StoreProductId", nullable = false)
     private Integer storeProductId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ProductName")
+    @Column(name = "ProductName", nullable = false, length = 50)
     private String productName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ExpiredDate")
+    @Column(name = "ExpiredDate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date expiredDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity")
+    @Column(name = "Quantity", nullable = false)
     private int quantity;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Price")
+    @Column(name = "Price", nullable = false)
     private float price;
     @Size(max = 4000)
-    @Column(name = "Description")
+    @Column(name = "Description", length = 4000)
     private String description;
     @Size(max = 50)
-    @Column(name = "SKU")
+    @Column(name = "SKU", length = 50)
     private String sku;
+    @Column(name = "Status")
+    private Boolean status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
     private List<StoreProductImage> storeProductImageList;
-    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
+    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId", nullable = false)
     @ManyToOne(optional = false)
     private Product productId;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
     @ManyToOne(optional = false)
     private Store storeId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
@@ -104,8 +107,16 @@ public class StoreProduct implements Serializable {
         this.price = price;
     }
 
-    public StoreProduct(String productName, Date expiredDate, int quantity, float price) {
+    public StoreProduct(String productName, Date expiredDate, int quantity, float price, boolean status) {
+        this.productName = productName;
+        this.expiredDate = expiredDate;
+        this.quantity = quantity;
+        this.price = price;
+        this.status = status;
+    }
 
+    public StoreProduct(String productName, Date expiredDate, int quantity, float price, Store storeId) {
+        this.storeId = storeId;
         this.productName = productName;
         this.expiredDate = expiredDate;
         this.quantity = quantity;
@@ -166,6 +177,14 @@ public class StoreProduct implements Serializable {
 
     public void setSku(String sku) {
         this.sku = sku;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @XmlTransient

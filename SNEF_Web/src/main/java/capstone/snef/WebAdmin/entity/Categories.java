@@ -41,17 +41,17 @@ public class Categories implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "CategoriesId")
+    @Column(name = "CategoriesId", nullable = false)
     private Integer categoriesId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "CategoryName")
+    @Column(name = "CategoryName", nullable = false, length = 30)
     private String categoryName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 400)
-    @Column(name = "ImageSrc")
+    @Column(name = "ImageSrc", nullable = false, length = 400)
     private String imageSrc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriesId")
     private List<Product> productList;

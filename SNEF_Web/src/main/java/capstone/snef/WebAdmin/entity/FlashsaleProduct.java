@@ -42,20 +42,20 @@ public class FlashsaleProduct implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "FlashSaleProductId")
+    @Column(name = "FlashSaleProductId", nullable = false)
     private Integer flashSaleProductId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity")
+    @Column(name = "Quantity", nullable = false)
     private int quantity;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     private int status;
-    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId")
+    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId", nullable = false)
     @ManyToOne(optional = false)
     private Flashsales flashSalesId;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flashSaleProductId")

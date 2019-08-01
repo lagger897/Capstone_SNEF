@@ -5,8 +5,7 @@
  */
 package capstone.snef.WebAdmin.repository;
 
-import capstone.snef.WebAdmin.entity.Account;
-import capstone.snef.WebAdmin.entity.StoreManager;
+import capstone.snef.WebAdmin.entity.Role;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,8 +13,9 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author Phuc Nguyen -VN
  */
-public interface IStoreManagerRepository extends CrudRepository<StoreManager, Integer> {
+public interface IRoleRepository extends CrudRepository<Role, Integer> {
 
-    public Optional<StoreManager> findByAccountId(Account id);
+    @Override
+    public Optional<Role> findById(Integer id);
     
 }

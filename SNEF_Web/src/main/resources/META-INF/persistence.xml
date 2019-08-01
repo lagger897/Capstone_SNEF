@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="capstone.snef_WebAdmin_war_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>capstone.snef.WebAdmin.entity.NewProductRequest</class>
+    <class>capstone.snef.WebAdmin.entity.Order1</class>
+    <class>capstone.snef.WebAdmin.entity.Categories</class>
+    <class>capstone.snef.WebAdmin.entity.Account</class>
+    <class>capstone.snef.WebAdmin.entity.Product</class>
+    <class>capstone.snef.WebAdmin.entity.Role</class>
+    <class>capstone.snef.WebAdmin.entity.FlashsaleProduct</class>
+    <class>capstone.snef.WebAdmin.entity.Store</class>
+    <class>capstone.snef.WebAdmin.entity.StoreProduct</class>
+    <class>capstone.snef.WebAdmin.entity.OrderDetail</class>
+    <class>capstone.snef.WebAdmin.entity.StoreProductImage</class>
+    <class>capstone.snef.WebAdmin.entity.Like1</class>
+    <class>capstone.snef.WebAdmin.entity.Flashsales</class>
+    <class>capstone.snef.WebAdmin.entity.Configuration</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://snef.cvkbe5tc6xkf.ap-southeast-1.rds.amazonaws.com:3306/snef_part2?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="TinLM"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Chaulen3"/>
+    </properties>
+  </persistence-unit>
+</persistence>

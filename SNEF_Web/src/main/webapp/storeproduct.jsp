@@ -16,7 +16,7 @@
         <meta name="author" content="">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>SAFO-Sale Food</title>
-
+        <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <!-- Custom fonts for this template -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -270,10 +270,10 @@
                     <!-- End of Topbar -->
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-
+                        HEADING
                         <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800"><c:out value="${sessionScope.store.storeName}"/></h1>
-                        <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.locationId.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
+                        <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
 
 
 

@@ -16,6 +16,7 @@ import capstone.snef.WebAdmin.entity.Flashsales;
 import capstone.snef.WebAdmin.entity.Product;
 import capstone.snef.WebAdmin.entity.Store;
 import capstone.snef.WebAdmin.entity.StoreProduct;
+import capstone.snef.WebAdmin.entity.StoreProductImage;
 import capstone.snef.WebAdmin.repository.IProductRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.Date;
 import java.util.Optional;
 import capstone.snef.WebAdmin.repository.IFlashSaleProductRepository;
 import capstone.snef.WebAdmin.repository.IFlashsaleRepository;
+import capstone.snef.WebAdmin.repository.IStoreProductImageRepository;
 
 /**
  *
@@ -37,7 +39,8 @@ public class ProductService {
 
     @Autowired
     private IProductRepository productRepos;
-
+    @Autowired
+    private IStoreProductImageRepository imageRepos;
     @Autowired
     private IStoreProductRepository storeProductRepos;
     @Autowired
@@ -64,12 +67,11 @@ public class ProductService {
             List<FlashsaleProduct> products = flashSaleProductRepos.findAllByFlashSalesId(flashsale);
             if (products.size() > 0) {
                 for (FlashsaleProduct product : products) {
-
                     FlashSaleProductData productData = new FlashSaleProductData();
                     productData.setName(product.getStoreProductId().getProductName());
                     productData.setImage(product.getStoreProductId().getStoreProductImageList().get(0).getImageSrc());
                     productData.setExpireDate(product.getStoreProductId().getExpiredDate());
-                    productData.setDiscPrice(Math.round((100-product.getFlashSalesId().getDiscount()) * product.getStoreProductId().getPrice() / 100));
+                    productData.setDiscPrice(Math.round((100 - product.getFlashSalesId().getDiscount()) * product.getStoreProductId().getPrice() / 100));
                     productData.setTotalQuantity(product.getQuantity());
                     int soldNum = 0;
                     try {
@@ -103,12 +105,10 @@ public class ProductService {
     public StoreProduct saveStoreProduct(Integer storeId, Integer productId, String name, Date expiredDate, Integer ammount, double price, String description) {
         Optional<Product> rs = productRepos.findById(productId);
         if (rs.isPresent()) {
-            StoreProduct storeProduct = new StoreProduct(name, expiredDate, ammount, (float) price);
+            StoreProduct storeProduct = new StoreProduct(name, expiredDate, ammount, (float) price, true);
             Optional<Store> store = storeRepos.findById(storeId);
             storeProduct.setStoreId(store.get());
             storeProduct.setProductId(rs.get());
-            storeProduct.setStoreProductImageList(null);
-            storeProduct.setLike1List(null);
             return storeProductRepos.save(storeProduct);
         }
         return null;
@@ -121,9 +121,11 @@ public class ProductService {
             if (storeProducts.size() > 0) {
                 List<InStoreProduct> list = new ArrayList<>();
                 for (StoreProduct storeProduct : storeProducts) {
-                    list.add(new InStoreProduct(storeProduct.getStoreProductId(), storeProduct.getProductName(), storeProduct.getStoreProductImageList().isEmpty()
-                            ? "" : storeProduct.getStoreProductImageList().get(0).getImageSrc(), storeProduct.getExpiredDate(), storeProduct.getQuantity(),
-                            storeProduct.getPrice(), storeProduct.getDescription(), storeProduct.getSku()));
+                    if (storeProduct.getStatus() != null & storeProduct.getStatus() == true) {
+                        list.add(new InStoreProduct(storeProduct.getStoreProductId(), storeProduct.getProductName(), storeProduct.getStoreProductImageList().isEmpty()
+                                ? "" : storeProduct.getStoreProductImageList().get(0).getImageSrc(), storeProduct.getExpiredDate(), storeProduct.getQuantity(),
+                                storeProduct.getPrice(), storeProduct.getDescription(), storeProduct.getSku()));
+                    }
                 }
                 if (!list.isEmpty()) {
                     return list;
@@ -169,7 +171,10 @@ public class ProductService {
     public boolean deleteStoreProduct(Integer productId) {
         Optional<StoreProduct> spResult = storeProductRepos.findById(productId);
         if (spResult.isPresent()) {
-            storeProductRepos.delete(spResult.get());
+            StoreProduct sProduct = spResult.get();
+            sProduct.setStatus(false);
+            storeProductRepos.save(sProduct);
+//            storeProductRepos.delete(spResult.get());
             return true;
         }
         return false;
@@ -202,6 +207,21 @@ public class ProductService {
             }
         }
         return false;
+    }
+
+    public StoreProduct saveStoreProductImage(StoreProduct product, String imageSrc) {
+        boolean rs = storeProductRepos.existsById(product.getStoreProductId());
+        if (rs) {
+            StoreProductImage image=imageRepos.save(new StoreProductImage(imageSrc,product));
+            List<StoreProductImage> list = new ArrayList<>();
+            list.add(image);
+            product.setStoreProductImageList(list);
+            StoreProduct result = storeProductRepos.save(product);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
     }
 
 }

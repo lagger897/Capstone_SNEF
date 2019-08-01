@@ -15,6 +15,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <title>SAFO- Sale Food</title>
         <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <!-- Custom fonts for this template -->
@@ -212,7 +213,7 @@
 
                         <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800"><c:out value="${sessionScope.store.storeName}"/></h1>
-                        <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.locationId.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
+                        <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
 
 
                         <!-- DataTales Example -->
@@ -242,38 +243,7 @@
                                                 <th>Rating Point</th>
                                             </tr>
                                         </tfoot>
-                                        <!--                                        <tbody>
-                                                                                    <tr>
-                                                                                        <td> 
-                                                                                            <a data-toggle="modal" data-target="#informationModal">#1234</a>
-                                                                                        </td>
-                                                                                        <td>6/6/2019 12:00:00</td>
-                                        
-                                                                                        <td>#0001_Truong Hai Nguyen</td>
-                                                                                        <td>Received</td>
-                                                                                        <td>6/6/2019 13:00:01</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td> 
-                                                                                            <a data-toggle="modal" data-target="#informationModal">#1233</a>
-                                                                                        </td>
-                                                                                        <td>5/6/2019 10:40:35</td>
-                                        
-                                                                                        <td>#0020_Lai Duc Hung</td>
-                                                                                        <td>Received</td>
-                                                                                        <td>5/6/2019 11:30:30</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td> 
-                                                                                            <a data-toggle="modal" data-target="#informationModal"> #1525</a>
-                                                                                        </td>
-                                                                                        <td>6/9/2019 7:00:00</td>
-                                        
-                                                                                        <td>#0101_Le Minh Tin</td>
-                                                                                        <td>Ordered</td>
-                                                                                        <td>NaN</td>
-                                                                                    </tr>
-                                                                                </tbody>-->
+
                                     </table>
                                 </div>
                             </div>
@@ -335,17 +305,21 @@
                         </button>
                     </div>
                     <div class="modal-body" style="text-align: center;align-items: center">
-                        <form>
+
+                        <form id="orderInfoConfirmationCodeForm">
                             <table border="0" cellspacing="1" cellpadding="1" style="margin: 0 auto;width: 100%" id="infoTable">
                                 <tbody>
                                     <tr>
-                                        <td colspan="3" style="text-align: center"><h3 class=""><b>B?ch H?a Xanh</b></h3></td>
+                                        <td colspan="3" style="text-align: center"><h3 class=""><b>${sessionScope.store.storeName}</b></h3></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
+                                        <td colspan="3" style="text-align: center"><p>${sessionScope.store.address}</p></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">----------***----------</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center"><h5 class=""><b id="orderInfoOrderDate">--DATE--</b></h5></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3" style="text-align: center"><h3 class=""><b>ORDER INFORMATION</b></h3></td>
@@ -355,15 +329,19 @@
                                     </tr>
                                     <tr>
                                         <td style="text-align: left"><b>Customer:</b></td>
-                                        <td style="text-align: right" colspan="2">#0001_Truong Hai Nguyen</td>
+                                        <td style="text-align: right" colspan="2" id="orderInfoCustomerName">#0001_Truong Hai Nguyen</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: left"><b>OrderId:</b></td>
-                                        <td style="text-align: right" colspan="2">#1234</td>
+                                        <td style="text-align: right" colspan="2" id="orderInfoOrderId"></td>
                                     </tr>
+                                    <!--                                    <tr>
+                                                                            <td style="text-align: left"><b>Confirmation Code:</b></td>
+                                                                            <td style="text-align: right" colspan="2" id="orderInfoConfirmationCode"></td>
+                                                                        </tr>-->
                                     <tr>
-                                        <td style="text-align: left"><b>Receive Time:</b></td>
-                                        <td style="text-align: right" colspan="2"><span>6/6/2019 13:00:01</span></td>
+                                        <td style="text-align: left"><b>Rating Point:</b></td>
+                                        <td style="text-align: right" colspan="2"><span id="orderInfoRatingPoint"></span></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3" style="text-align: center"><hr></td>
@@ -373,44 +351,45 @@
                                         <td style="text-align: center;width: 10%"><b>Amount</b></td>
                                         <td style="text-align: right;width: 35%"><b>Cash &nbsp;</b></td>
                                     </tr>
-                                    <tr>
-                                        <td style="text-align: left">COCA COLA</td>
-                                        <td style="text-align: center">1</td>
-                                        <td style="text-align: right">3,500 &nbsp;</td>
-                                    </tr>
-                                    <tr>
+                                <tbody id="orderInfoOrderItems">
 
-                                        <td style="text-align: left">3,500<br> </td>
-                                        <td style="text-align: center"></td>
-                                        <td style="text-align: right"></td>
-                                    </tr>
+                                </tbody>
+                                <tr>
+                                    <td colspan="3"><hr></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"><b>Total </b></td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: right" ><b id="orderInfoTotalPrice"></b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><hr></td>
+                                </tr>
+                                <tbody id="orderInfoFooter">
                                     <tr>
-                                        <td style="text-align: left">Hao Hao spicy & shrimp instant noodle </td>
-                                        <td style="text-align: center">5</td>
-                                        <td style="text-align: right">12,500 &nbsp;</td>
+                                        <td>
+                                            <b>Confirmation Code</b>
+                                        </td>
+                                        <td>
+                                            <input type='text' value='' id='orderInfoConfirmationCode'/>
+                                        </td>
+                                        <td>
+                                            <input type='submit' value='Confirm' id='btOrderConfirm'/>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td style="text-align: left">2,500 &nbsp;</td>
-                                        <td style="text-align: center"></td>
-                                        <td style="text-align: right"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left"><b>Total </b></td>
-                                        <td style="text-align: center"></td>
-                                        <td style="text-align: right"><b>16,000 &nbsp;</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">THANK YOU FOR SHOPPING</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">See You Again</td>
-                                    </tr>
+                                </tbody>
+
+                                <tr>
+                                    <td colspan="3"><hr></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">THANK YOU FOR SHOPPING</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">See You Again</td>
+                                </tr>
+                                <input type="hidden" id="orderInfoConfirmationCodeHidden"/>
+                                <input type="hidden" id="orderInfoOrderIdHidden"/>
                                 </tbody>
                             </table>
                         </form>
@@ -436,6 +415,40 @@
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
         <script>
+            function getDetailOrder(orderId) {
+                $.ajax({
+                    url: "api/order/getOrderDetail?orderId=" + orderId,
+                    type: 'GET', success: function (data) {
+                        $('#orderInfoOrderIdHidden').val(orderId);
+                        $('#orderInfoOrderDate').html(data.order.dateOrder);
+                        $('#orderInfoCustomerName').html(data.order.lastname + " " + data.order.firstname);
+                        $('#orderInfoOrderId').html("#" + data.order.orderId);
+                        $('#orderInfoRatingPoint').html(data.order.ratingPoint);
+                        $('#orderInfoConfirmationCodeHidden').val(data.order.confirmationCode);
+                        var count = 0;
+                        $("#orderInfoOrderItems").html("");
+                        for (var i = 0; i < data.orderItems.length; i++) {
+                            count += data.orderItems[i].price * data.orderItems[i].quantity;
+                            var content = "";
+                            content += "<tr>";
+                            content += '<td style="text-align: left">' + data.orderItems[i].name + '</td>';
+                            content += '<td style="text-align: center">' + data.orderItems[i].quantity + '</td>';
+                            content += '<td style="text-align: right">' + (data.orderItems[i].price * data.orderItems[i].quantity) + ' &nbsp;</td>';
+                            content += "</tr>";
+                            $("#orderInfoOrderItems").append(content);
+                        }
+                        $("#orderInfoTotalPrice").html(count + "&nbsp;");
+                        if (data.order.status) {
+                            $('#orderInfoFooter').hide()
+                        } else {
+                            $('#orderInfoFooter').show();
+                        }
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+                $('#informationModal').modal('toggle');
+            }
             $('document').ready(function () {
                 $('#dataTable').dataTable({
                     "ajax": {
@@ -447,16 +460,21 @@
                     "columns": [
                         {data: function (row, type, set) {
                                 if (type === 'display') {
-                                    return '<a data-toggle="modal" data-target="#informationModal">#' + row.orderId + '</a>';
+//                                    return '<a data-toggle="modal" data-target="#informationModal">#' + row.orderId + '</a>';
+                                    return '<a onclick="getDetailOrder(' + row.orderId + ')">#' + row.orderId + '</a>';
                                 }
+                                return row.orderId;
                             }},
-                        {data: "dateOrder"},
+                        {
+                            data: "dateOrder"},
                         {data: function (row, type, set) {
                                 if (type === 'display') {
                                     return row.lastname + " " + row.firstname;
                                 }
+                                return row.lastname + " " + row.firstname;
                             }},
-                        {data: function (row, type, set) {
+                        {
+                            data: function (row, type, set) {
                                 if (type === 'display') {
                                     if (row.status === true) {
                                         return "Received";
@@ -464,8 +482,10 @@
                                         return "Ordered";
                                     }
                                 }
+                                return row.status;
                             }},
-                        {data: "ratingPoint"}
+                        {
+                            data: "ratingPoint"}
                     ],
                     bDestroy: true
                 })
@@ -473,13 +493,24 @@
                     e.preventDefault();
                     $('#informationModal').modal();
                     if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
-                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
                     }
                 });
-                $('#informationModal').on("hidden.bs.modal", function () {
-                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
-                        $('#btOrderConfirm').remove();
-                    }
+                $('#orderInfoConfirmationCodeForm').submit(function (e) {
+
+                    e.preventDefault();
+                    $.ajax({
+                        url: "api/order/confirmOrder?code=" + $('#orderInfoConfirmationCode').val()
+                        , method: "POST", success: function (data) {
+                            if (data.result) {
+                                $('#informationModal').modal('hide');
+                                $('#dataTable').DataTable.ajax.reload();
+                            } else {
+                                alert("error " + data.msg);
+                            }
+                        }, error: function (data) {
+                            alert("error "+data);
+                        }
+                    })
                 });
             }
             );

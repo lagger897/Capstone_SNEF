@@ -346,7 +346,7 @@
 
                         <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800"><c:out value="${sessionScope.store.storeName}"/></h1>
-                        <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.locationId.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
+                        <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
 
 
                         <!-- DataTales Example -->

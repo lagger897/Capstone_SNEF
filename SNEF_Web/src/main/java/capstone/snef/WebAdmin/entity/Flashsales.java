@@ -46,25 +46,25 @@ public class Flashsales implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "FlashSalesId")
+    @Column(name = "FlashSalesId", nullable = false)
     private Integer flashSalesId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Discount")
+    @Column(name = "Discount", nullable = false)
     private int discount;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "StartDate")
+    @Column(name = "StartDate", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "EndDate")
+    @Column(name = "EndDate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date endDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flashSalesId")
     private List<FlashsaleProduct> flashsaleProductList;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
     @ManyToOne(optional = false)
     private Store storeId;
 
@@ -83,10 +83,10 @@ public class Flashsales implements Serializable {
     }
 
     public Flashsales(int discount, Date startDate, Date endDate, Store storeId) {
+        this.storeId = storeId;
         this.discount = discount;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.storeId = storeId;
     }
 
     public Integer getFlashSalesId() {

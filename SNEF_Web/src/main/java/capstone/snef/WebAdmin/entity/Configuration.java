@@ -37,17 +37,17 @@ public class Configuration implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "configurationId")
+    @Column(name = "configurationId", nullable = false)
     private Integer configurationId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "configurationName")
+    @Column(name = "configurationName", nullable = false, length = 30)
     private String configurationName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(name = "configurationValue")
+    @Column(name = "configurationValue", nullable = false, length = 500)
     private String configurationValue;
 
     public Configuration() {

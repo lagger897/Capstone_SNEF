@@ -41,35 +41,42 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Order1.findByDateOrder", query = "SELECT o FROM Order1 o WHERE o.dateOrder = :dateOrder")
     , @NamedQuery(name = "Order1.findByConfirmationCode", query = "SELECT o FROM Order1 o WHERE o.confirmationCode = :confirmationCode")
     , @NamedQuery(name = "Order1.findByStatus", query = "SELECT o FROM Order1 o WHERE o.status = :status")
-    , @NamedQuery(name = "Order1.findByRatingPoint", query = "SELECT o FROM Order1 o WHERE o.ratingPoint = :ratingPoint")})
+    , @NamedQuery(name = "Order1.findByRatingPoint", query = "SELECT o FROM Order1 o WHERE o.ratingPoint = :ratingPoint")
+    , @NamedQuery(name = "Order1.findByComment", query = "SELECT o FROM Order1 o WHERE o.comment = :comment")})
 public class Order1 implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "OrderId")
+    @Column(name = "OrderId", nullable = false)
     private Integer orderId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "DateOrder")
+    @Column(name = "DateOrder", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dateOrder;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ConfirmationCode")
+    @Column(name = "ConfirmationCode", nullable = false, length = 50)
     private String confirmationCode;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     private boolean status;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RatingPoint")
+    @Column(name = "RatingPoint", precision = 12, scale = 0)
     private Float ratingPoint;
-    @JoinColumn(name = "CustomerCustomerId", referencedColumnName = "CustomerId")
-    @ManyToOne(optional = false)
-    private Customer customerCustomerId;
+    @Size(max = 500)
+    @Column(name = "Comment", length = 500)
+    private String comment;
+    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
+    @ManyToOne
+    private Account accountId;
+    @JoinColumn(name = "storeid", referencedColumnName = "StoreId")
+    @ManyToOne
+    private Store storeid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderOrderId")
     private List<OrderDetail> orderDetailList;
 
@@ -127,12 +134,28 @@ public class Order1 implements Serializable {
         this.ratingPoint = ratingPoint;
     }
 
-    public Customer getCustomerCustomerId() {
-        return customerCustomerId;
+    public String getComment() {
+        return comment;
     }
 
-    public void setCustomerCustomerId(Customer customerCustomerId) {
-        this.customerCustomerId = customerCustomerId;
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Account getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Account accountId) {
+        this.accountId = accountId;
+    }
+
+    public Store getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(Store storeid) {
+        this.storeid = storeid;
     }
 
     @XmlTransient
