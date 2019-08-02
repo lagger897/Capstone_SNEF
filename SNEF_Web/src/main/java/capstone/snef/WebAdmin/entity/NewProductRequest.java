@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "NewProductRequest", catalog = "snef_part2", schema = "")
+@Table(name = "NewProductRequest")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "NewProductRequest.findAll", query = "SELECT n FROM NewProductRequest n")
@@ -38,20 +38,20 @@ public class NewProductRequest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "NPRId", nullable = false)
+    @Column(name = "NPRId")
     private Integer nPRId;
     @Column(name = "Status")
     private Boolean status;
     @Size(max = 500)
-    @Column(name = "Message", length = 500)
+    @Column(name = "Message")
     private String message;
-    @JoinColumn(name = "AdminId", referencedColumnName = "AccountId", nullable = false)
+    @JoinColumn(name = "AdminId", referencedColumnName = "AccountId")
     @ManyToOne(optional = false)
     private Account adminId;
-    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId", nullable = false)
+    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
     @ManyToOne(optional = false)
     private Product productId;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
     @ManyToOne(optional = false)
     private Store storeId;
 

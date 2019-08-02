@@ -109,6 +109,7 @@ public class ProductService {
             Optional<Store> store = storeRepos.findById(storeId);
             storeProduct.setStoreId(store.get());
             storeProduct.setProductId(rs.get());
+            storeProduct.setDescription(description);
             return storeProductRepos.save(storeProduct);
         }
         return null;
@@ -148,6 +149,12 @@ public class ProductService {
             if (body.getEndDate().compareTo(storeProduct.getExpiredDate()) > 0) {
                 return new Message(false, "End date must be before the expired date");
             }
+            if (body.getStartDate().compareTo(body.getEndDate()) > 0) {
+                return new Message(false, "Start date must be before the End date");
+            }
+            if (body.getQuantity() < 1) {
+                return new Message(false, "Quantity cannot lower than 1");
+            }
             Flashsales flashsale = new Flashsales(body.getDiscount(), body.getStartDate(), body.getEndDate(), storeProduct.getStoreId());
 
             Flashsales rs = flashSaleRepos.save(flashsale);
@@ -157,7 +164,7 @@ public class ProductService {
                 storeProduct.setQuantity(storeProduct.getQuantity() - body.getQuantity());
                 fsp.setFlashSalesId(rs);
                 fsp.setStoreProductId(storeProductRs.get());
-//                    fsp.setStatus(1);
+                fsp.setStatus(true);
                 FlashsaleProduct fspRs = flashSaleProductRepos.save(fsp);
                 StoreProduct sp = storeProductRepos.save(storeProduct);
                 if (fspRs != null && sp != null) {

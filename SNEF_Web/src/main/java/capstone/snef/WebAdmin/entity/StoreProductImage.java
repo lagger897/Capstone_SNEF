@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "StoreProductImage", catalog = "snef_part2", schema = "")
+@Table(name = "StoreProductImage")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreProductImage.findAll", query = "SELECT s FROM StoreProductImage s")
@@ -38,14 +38,14 @@ public class StoreProductImage implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "SPIId", nullable = false)
+    @Column(name = "SPIId")
     private Integer sPIId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 400)
-    @Column(name = "ImageSrc", nullable = false, length = 400)
+    @Column(name = "ImageSrc")
     private String imageSrc;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
 
@@ -61,9 +61,9 @@ public class StoreProductImage implements Serializable {
         this.imageSrc = imageSrc;
     }
     
-    public StoreProductImage( String imageSrc,StoreProduct storeProduct) {
-         this.imageSrc = imageSrc;
-         this.storeProductId = storeProduct;
+    public StoreProductImage(String imageSrc, StoreProduct product) {
+        this.imageSrc = imageSrc;
+        this.storeProductId = product;
     }
 
     public Integer getSPIId() {

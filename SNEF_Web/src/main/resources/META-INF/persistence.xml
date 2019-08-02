@@ -16,6 +16,13 @@
     <class>capstone.snef.WebAdmin.entity.Like1</class>
     <class>capstone.snef.WebAdmin.entity.Flashsales</class>
     <class>capstone.snef.WebAdmin.entity.Configuration</class>
+    <class>capstone.snef.WebAdmin.entity.Product_1</class>
+    <class>capstone.snef.WebAdmin.entity.StoreProduct_1</class>
+    <class>capstone.snef.WebAdmin.entity.Categories_1</class>
+    <class>capstone.snef.WebAdmin.entity.Account_1</class>
+    <class>capstone.snef.WebAdmin.entity.Flashsales_1</class>
+    <class>capstone.snef.WebAdmin.entity.FlashsaleProduct_1</class>
+    <class>capstone.snef.WebAdmin.entity.Store_1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://snef.cvkbe5tc6xkf.ap-southeast-1.rds.amazonaws.com:3306/snef_part2?zeroDateTimeBehavior=convertToNull"/>

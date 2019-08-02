@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "FlashsaleProduct", catalog = "snef_part2", schema = "")
+@Table(name = "FlashsaleProduct")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "FlashsaleProduct.findAll", query = "SELECT f FROM FlashsaleProduct f")
@@ -42,20 +42,18 @@ public class FlashsaleProduct implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "FlashSaleProductId", nullable = false)
+    @Column(name = "FlashSaleProductId")
     private Integer flashSaleProductId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity", nullable = false)
+    @Column(name = "Quantity")
     private int quantity;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Status", nullable = false)
-    private int status;
-    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId", nullable = false)
+    @Column(name = "Status")
+    private Boolean status;
+    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId")
     @ManyToOne(optional = false)
     private Flashsales flashSalesId;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flashSaleProductId")
@@ -68,10 +66,9 @@ public class FlashsaleProduct implements Serializable {
         this.flashSaleProductId = flashSaleProductId;
     }
 
-    public FlashsaleProduct(Integer flashSaleProductId, int quantity, int status) {
+    public FlashsaleProduct(Integer flashSaleProductId, int quantity) {
         this.flashSaleProductId = flashSaleProductId;
         this.quantity = quantity;
-        this.status = status;
     }
 
     public Integer getFlashSaleProductId() {
@@ -90,11 +87,11 @@ public class FlashsaleProduct implements Serializable {
         this.quantity = quantity;
     }
 
-    public int getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

@@ -6,9 +6,7 @@
 package capstone.snef.WebAdmin.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,20 +16,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Account", catalog = "snef_part2", schema = "")
+@Table(name = "Account", catalog = "snef_part2", schema = "", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"UserName"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
@@ -82,23 +79,15 @@ public class Account implements Serializable {
     @Column(name = "Email", length = 50)
     private String email;
     @Column(name = "IsActive")
-    private Boolean isActive;
+    private Short isActive;
     @Size(max = 400)
     @Column(name = "Avatar", length = 400)
     private String avatar;
     @Column(name = "Gender")
-    private Short gender;
-    @OneToMany(mappedBy = "accountId")
-    private List<Order1> order1List;
+    private Integer gender;
     @JoinColumn(name = "roleId", referencedColumnName = "roleId")
     @ManyToOne
     private Role roleId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "adminId")
-    private List<NewProductRequest> newProductRequestList;
-    @OneToOne(mappedBy = "accountId")
-    private Store store;
-    @OneToMany(mappedBy = "accountId")
-    private List<Like1> like1List;
 
     public Account() {
     }
@@ -171,11 +160,11 @@ public class Account implements Serializable {
         this.email = email;
     }
 
-    public Boolean getIsActive() {
+    public Short getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(Boolean isActive) {
+    public void setIsActive(Short isActive) {
         this.isActive = isActive;
     }
 
@@ -187,21 +176,12 @@ public class Account implements Serializable {
         this.avatar = avatar;
     }
 
-    public Short getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Short gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
-    }
-
-    @XmlTransient
-    public List<Order1> getOrder1List() {
-        return order1List;
-    }
-
-    public void setOrder1List(List<Order1> order1List) {
-        this.order1List = order1List;
     }
 
     public Role getRoleId() {
@@ -210,32 +190,6 @@ public class Account implements Serializable {
 
     public void setRoleId(Role roleId) {
         this.roleId = roleId;
-    }
-
-    @XmlTransient
-    public List<NewProductRequest> getNewProductRequestList() {
-        return newProductRequestList;
-    }
-
-    public void setNewProductRequestList(List<NewProductRequest> newProductRequestList) {
-        this.newProductRequestList = newProductRequestList;
-    }
-
-    public Store getStore() {
-        return store;
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
-    }
-
-    @XmlTransient
-    public List<Like1> getLike1List() {
-        return like1List;
-    }
-
-    public void setLike1List(List<Like1> like1List) {
-        this.like1List = like1List;
     }
 
     @Override

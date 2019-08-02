@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Configuration", catalog = "snef_part2", schema = "")
+@Table(name = "Configuration")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Configuration.findAll", query = "SELECT c FROM Configuration c")
@@ -37,17 +37,17 @@ public class Configuration implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "configurationId", nullable = false)
+    @Column(name = "configurationId")
     private Integer configurationId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "configurationName", nullable = false, length = 30)
+    @Column(name = "configurationName")
     private String configurationName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(name = "configurationValue", nullable = false, length = 500)
+    @Column(name = "configurationValue")
     private String configurationValue;
 
     public Configuration() {

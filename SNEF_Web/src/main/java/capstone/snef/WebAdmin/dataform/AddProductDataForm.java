@@ -17,6 +17,7 @@ public class AddProductDataForm {
     private Integer productId;
     private String name;
     private MultipartFile imageSrc;
+    private String previewImage;
     private String description;
     private String expiredDate;
     private Integer ammount;
@@ -25,17 +26,25 @@ public class AddProductDataForm {
     public AddProductDataForm() {
     }
 
-    public AddProductDataForm(Integer storeId, Integer productId, String name, MultipartFile imageSrc, String description, String expiredDate, Integer ammount, double price) {
+    public AddProductDataForm(Integer storeId, Integer productId, String name, MultipartFile imageSrc, String previewImage, String description, String expiredDate, Integer ammount, double price) {
         this.storeId = storeId;
         this.productId = productId;
         this.name = name;
         this.imageSrc = imageSrc;
+        this.previewImage = previewImage;
         this.description = description;
         this.expiredDate = expiredDate;
         this.ammount = ammount;
         this.price = price;
     }
 
+    public String getPreviewImage() {
+        return previewImage;
+    }
+
+    public void setPreviewImage(String previewImage) {
+        this.previewImage = previewImage;
+    }
 
 
     public Integer getStoreId() {

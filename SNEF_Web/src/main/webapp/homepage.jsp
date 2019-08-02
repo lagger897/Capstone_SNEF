@@ -145,18 +145,16 @@
                         {data: "inStock"},
                         {data: "expireDate"},
                         {data: function (row, type, set) {
-//                                if (type === 'display') {
                                     if (row.status === null){
                                         return "Nothing";
-                                    }else if (row.status===0){
+                                    } else if (row.status===false){
+                                        return "Expired";
+                                    } else if (row.status===true) {
                                         return "Selling";
                                     }
-//                                }
-                               
                             }
                         }
                     ]
-//                                                    , "destroy": true
                 });
             });
         </script>
@@ -626,28 +624,6 @@
                                             function uploadImg(event) {
                                                 $('#previewImage').attr("src", URL.createObjectURL(event.target.files[0]));
                                             }
-//                                            var initData = function () {
-//                                                $('#dataTable').DataTable({
-//                                                    "data": "data",
-//                                                    "ajax": {
-//                                                        "url": "api/product/getAllStoreProduct?id=1",
-//                                                        "method": "GET"
-//                                                    },
-//                                                    "processing": false,
-//                                                    "serverSide": false,
-//                                                    "columns": [
-//                                                        {"data": "image"},
-//                                                        {"data": "name"},
-//                                                        {"data": "discPrice"},
-//                                                        {"data": "totalQuantity"},
-//                                                        {"data": "soldNum"},
-//                                                        {"data": "inStock"},
-//                                                        {"data": "expireDate"},
-//                                                        {"data": "status"}
-//                                                    ]
-//                                                    , "destroy": true
-//                                                });
-//                                            };
                                             $('document').ready(function () {
                                                 $('#searchOrder').submit(function (e) {
                                                     e.preventDefault();

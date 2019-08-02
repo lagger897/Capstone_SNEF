@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Like", catalog = "snef_part2", schema = "")
+@Table(name = "Like")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Like1.findAll", query = "SELECT l FROM Like1 l")
@@ -35,12 +35,12 @@ public class Like1 implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "LikeId", nullable = false)
+    @Column(name = "LikeId")
     private Integer likeId;
     @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
     @ManyToOne
     private Account accountId;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
 

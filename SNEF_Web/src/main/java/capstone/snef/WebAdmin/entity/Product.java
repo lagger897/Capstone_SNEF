@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Product", catalog = "snef_part2", schema = "")
+@Table(name = "Product")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
@@ -44,17 +44,17 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ProductId", nullable = false)
+    @Column(name = "ProductId")
     private Integer productId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ProductName", nullable = false, length = 50)
+    @Column(name = "ProductName")
     private String productName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 400)
-    @Column(name = "ImageSrc", nullable = false, length = 400)
+    @Column(name = "ImageSrc")
     private String imageSrc;
     @Column(name = "Status")
     private Boolean status;
@@ -62,7 +62,7 @@ public class Product implements Serializable {
     private List<StoreProduct> storeProductList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private List<NewProductRequest> newProductRequestList;
-    @JoinColumn(name = "CategoriesId", referencedColumnName = "CategoriesId", nullable = false)
+    @JoinColumn(name = "CategoriesId", referencedColumnName = "CategoriesId")
     @ManyToOne(optional = false)
     private Categories categoriesId;
 

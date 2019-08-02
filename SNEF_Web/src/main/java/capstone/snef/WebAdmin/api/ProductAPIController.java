@@ -99,29 +99,36 @@ public class ProductAPIController {
                     data.getStoreId(), data.getProductId(), data.getName(),
                     date, data.getAmmount(), data.getPrice(),
                     data.getDescription());
-            System.out.println("SAY something");
             if (rs != null) {
-                try {
-                    byte[] bytes = data.getImageSrc().getBytes();
-                    Path path = Paths.get("" + data.getImageSrc().getOriginalFilename());
+                if (!data.getImageSrc().isEmpty()) {
+                    try {
+                        byte[] bytes = data.getImageSrc().getBytes();
+                        Path path = Paths.get("" + data.getImageSrc().getOriginalFilename());
 //            Cloudinary cloudinary = new Cloudinary();
-                    File myFile = new File(String.valueOf(Files.write(path, bytes)));
-                    HashMap<String, String> config = new HashMap<>();
-                    config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
-                    config.put("api_key", CLOUDINARY_API_KEY);
-                    config.put("api_secret", CLOUDINARY_API_SECRET);
-                    Cloudinary cloudinary = new Cloudinary(config);
-                    HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
-                    String imageSrc = String.valueOf(uploadResult.get("url"));
-                    if (imageSrc != "") {
-                        StoreProduct sProduct = pService.saveStoreProductImage(rs, imageSrc);
-                        if (sProduct != null) {
-                            return new Message(true, "Success");
+                        File myFile = new File(String.valueOf(Files.write(path, bytes)));
+                        HashMap<String, String> config = new HashMap<>();
+                        config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
+                        config.put("api_key", CLOUDINARY_API_KEY);
+                        config.put("api_secret", CLOUDINARY_API_SECRET);
+                        Cloudinary cloudinary = new Cloudinary(config);
+                        HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
+                        String imageSrc = String.valueOf(uploadResult.get("url"));
+                        if (imageSrc != "") {
+                            StoreProduct sProduct = pService.saveStoreProductImage(rs, imageSrc);
+                            if (sProduct != null) {
+                                return new Message(true, "Success");
+                            }
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } else {
+                    StoreProduct sProduct = pService.saveStoreProductImage(rs, data.getPreviewImage());
+                    if (sProduct != null) {
+                        return new Message(true, "Success");
+                    }
                 }
+
             }
             return new Message(false, "Fail");
         } catch (ParseException ex) {

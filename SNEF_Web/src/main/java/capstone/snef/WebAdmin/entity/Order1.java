@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Order", catalog = "snef_part2", schema = "")
+@Table(name = "Order")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o")
@@ -49,27 +49,27 @@ public class Order1 implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "OrderId", nullable = false)
+    @Column(name = "OrderId")
     private Integer orderId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "DateOrder", nullable = false)
+    @Column(name = "DateOrder")
     @Temporal(TemporalType.DATE)
     private Date dateOrder;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ConfirmationCode", nullable = false, length = 50)
+    @Column(name = "ConfirmationCode")
     private String confirmationCode;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Status", nullable = false)
+    @Column(name = "Status")
     private boolean status;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RatingPoint", precision = 12, scale = 0)
+    @Column(name = "RatingPoint")
     private Float ratingPoint;
     @Size(max = 500)
-    @Column(name = "Comment", length = 500)
+    @Column(name = "Comment")
     private String comment;
     @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
     @ManyToOne

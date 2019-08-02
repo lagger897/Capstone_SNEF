@@ -20,22 +20,7 @@ public class FlashSaleProductData {
     private int soldNum;
     private int inStock;
     private Date expireDate;
-    private int status;
-
-    public FlashSaleProductData() {
-    }
-
-    public FlashSaleProductData(String image, String name, double discPrice, int totalQuantity, int soldNum, int inStock, Date expireDate, int status) {
-        this.image = image;
-        this.name = name;
-        this.discPrice = discPrice;
-        this.totalQuantity = totalQuantity;
-        this.soldNum = soldNum;
-        this.inStock = inStock;
-        this.expireDate = expireDate;
-        this.status = status;
-    }
-
+    private boolean status;
 
     public String getImage() {
         return image;
@@ -93,12 +78,13 @@ public class FlashSaleProductData {
         this.expireDate = expireDate;
     }
 
-    public int getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
+
 
 }
