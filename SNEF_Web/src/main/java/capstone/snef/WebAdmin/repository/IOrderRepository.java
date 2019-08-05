@@ -16,7 +16,7 @@ import org.springframework.data.repository.CrudRepository;
  * @author Phuc Nguyen -VN
  */
 public interface IOrderRepository extends CrudRepository<Order1, Integer> {
-   List<Order1> findAllBystoreid(Store storeId);
+   List<Order1> findAllByStoreid(Store storeId);
 
     @Override
     public Optional<Order1> findById(Integer id);

@@ -7,9 +7,7 @@ package capstone.snef.WebAdmin.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,21 +17,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Order")
+@Table(name = "Order", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o")
@@ -49,27 +45,27 @@ public class Order1 implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "OrderId")
+    @Column(name = "OrderId", nullable = false)
     private Integer orderId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "DateOrder")
+    @Column(name = "DateOrder", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dateOrder;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ConfirmationCode")
+    @Column(name = "ConfirmationCode", nullable = false, length = 50)
     private String confirmationCode;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     private boolean status;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RatingPoint")
+    @Column(name = "RatingPoint", precision = 12, scale = 0)
     private Float ratingPoint;
     @Size(max = 500)
-    @Column(name = "Comment")
+    @Column(name = "Comment", length = 500)
     private String comment;
     @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
     @ManyToOne
@@ -77,8 +73,6 @@ public class Order1 implements Serializable {
     @JoinColumn(name = "storeid", referencedColumnName = "StoreId")
     @ManyToOne
     private Store storeid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderOrderId")
-    private List<OrderDetail> orderDetailList;
 
     public Order1() {
     }
@@ -156,15 +150,6 @@ public class Order1 implements Serializable {
 
     public void setStoreid(Store storeid) {
         this.storeid = storeid;
-    }
-
-    @XmlTransient
-    public List<OrderDetail> getOrderDetailList() {
-        return orderDetailList;
-    }
-
-    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
-        this.orderDetailList = orderDetailList;
     }
 
     @Override

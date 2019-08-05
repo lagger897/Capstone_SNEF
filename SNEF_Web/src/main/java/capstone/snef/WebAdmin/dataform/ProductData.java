@@ -12,14 +12,17 @@ package capstone.snef.WebAdmin.dataform;
 public class ProductData {
     private Integer productId;
     private String productName;
+    private String category;
     private String imageSrc;
 
-    public ProductData(Integer productId, String productName, String imageSrc) {
+    public ProductData(Integer productId, String productName, String category, String imageSrc) {
         this.productId = productId;
         this.productName = productName;
+        this.category = category;
         this.imageSrc = imageSrc;
     }
 
+    
     public ProductData() {
     }
 
@@ -45,6 +48,14 @@ public class ProductData {
 
     public void setImageSrc(String imageSrc) {
         this.imageSrc = imageSrc;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
     
 }

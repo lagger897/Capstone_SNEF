@@ -117,18 +117,6 @@
                             <i class="fa fa-bars"></i>
                         </button>
 
-                        <!-- Topbar Search -->
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="searchOrder">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Check code..." aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" form="searchOrder">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
 
@@ -199,7 +187,7 @@
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.user}</span>
                                     <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                                 </a>
                                 <!-- Dropdown - User Information -->
@@ -241,7 +229,7 @@
                                 </form>
                                 <br>
                                 <div class="input-group">
-                                    <h6 class="text-gray-500">Cannot find your product? <a class="link" href="#">Create a new one</a></h6>
+                                    <h6 class="text-gray-500">Cannot find your product? <a class="link" href="#" data-toggle="modal" data-target="#createProductModal">Create a new one</a></h6>
                                 </div>
 
                                 <hr>
@@ -309,106 +297,13 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="logout">Logout</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="informationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">x</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" style="text-align: center;align-items: center">
-                        <form>
-                            <table border="0" cellspacing="1" cellpadding="1" style="margin: 0 auto;width: 100%" id="infoTable">
-                                <tbody>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center"><h3 class=""><b>B�ch H�a Xanh</b></h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">----------***----------</td>
-                                    </tr>
-                                    <tr>                                        <td colspan="3" style="text-align: center"><h3 class=""><b>ORDER INFORMATION</b></h3></td>
-
-                                        <td colspan="3" style="text-align: center"><h3 class=""><b>ORDER INFORMATION</b></h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left"><b>Customer:</b></td>
-                                        <td style="text-align: right" colspan="2">#0001_Truong Hai Nguyen</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left"><b>OrderId:</b></td>
-                                        <td style="text-align: right" colspan="2">#1234</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left"><b>Receive Time:</b></td>
-                                        <td style="text-align: right" colspan="2"><span>6/6/2019 13:00:01</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left;width: 55%" ><b>Product</b></td>
-                                        <td style="text-align: center;width: 10%"><b>Amount</b></td>
-                                        <td style="text-align: right;width: 35%"><b>Cash &nbsp;</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left">COCA COLA</td>
-                                        <td style="text-align: center">1</td>
-                                        <td style="text-align: right">3,500 &nbsp;</td>
-                                    </tr>
-                                    <tr>
-
-                                        <td style="text-align: left">3,500<br> </td>
-                                        <td style="text-align: center"></td>
-                                        <td style="text-align: right"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left">Hao Hao spicy & shrimp instant noodle </td>
-                                        <td style="text-align: center">5</td>
-                                        <td style="text-align: right">12,500 &nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left">2,500 &nbsp;</td>
-                                        <td style="text-align: center"></td>
-                                        <td style="text-align: right"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left"><b>Total </b></td>
-                                        <td style="text-align: center"></td>
-                                        <td style="text-align: right"><b>16,000 &nbsp;</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">THANK YOU FOR SHOPPING</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">See You Again</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>                    
-                </div>
-            </div>
-        </div>
+     
     </div>
 
     <!-- Post Sale Modal Modal-->
@@ -476,6 +371,58 @@
             </div>
         </div>
     </div>
+                        
+                        
+    <!-- Create New Product Modal-->
+    <div class="modal fade" id="createProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Post Sale</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="createProduct">
+                        <table border="0" cellpadding="5">
+                            <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td> <input type="text" name="name" id="createName" value="" placeholder="Product name" required  style="width: 100%;border-top: none;border-left: none;border-right: none;"/> </td>
+                                </tr>
+                                <tr>
+                                    <td >Image </td>
+                                    <td >
+                                        <input type="file" name="imageSrc" id="createImageSrc" value="" onchange="uploadImgCreate(event)"  />
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center">
+                                        <img style ="max-width:300px;max-height:300px" id = "createPreviewImage" name ="previewImage" />                               </td>
+                                </tr>
+                                
+                               <tr>
+                                    <td >Category </td>
+                                    <td >
+                                        <select name="category" id="createCategory">
+                                        </select>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+
+                </div>
+                <div class="modal-footer" style="align-items: center;align-content: center">
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -495,18 +442,6 @@
     <script src="js/demo/datatables-demo.js"></script>
     <script>
                                             $('document').ready(function () {
-                                                $('#searchOrder').submit(function (e) {
-                                                    e.preventDefault();
-                                                    $('#informationModal').modal();
-                                                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
-                                                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
-                                                    }
-                                                });
-                                                $('#informationModal').on("hidden.bs.modal", function () {
-                                                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
-                                                        $('#btOrderConfirm').remove();
-                                                    }
-                                                });
                                                 $('#resultTable').hide();
 //                                                $('#uploadImageForm').submit(function (e) {
 //                                                    e.preventDefault();
@@ -532,7 +467,15 @@
                                                                         }
                                                                         return "";
                                                                     }},
-                                                                {width: "60%", data: "productName"},
+                                                                {width: "60%", data:
+                                                                            function (row, type, set) {
+                                                                                if (type === 'display') {
+                                                                                    var content = 'Name: '+row.productName;
+                                                                                    conent+="<br>Category: "+row.category;
+                                                                                    return content;
+                                                                                }
+                                                                                return "";
+                                                                            }},
                                                                 {width: "15%", data: function (row, type, set) {
                                                                         if (type === 'display') {
                                                                             var content = '<input type="button" value="Select" onclick="getProduct(' + row.productId + ')" style="width:200px">';
@@ -568,10 +511,35 @@
                                                     event.preventDefault();
                                                     var form = $('#addProduct')[0];
                                                     var data = new FormData(form);
-                                                    data.append("previewImage",$("#previewImage").attr("src"));
+                                                    data.append("previewImage", $("#previewImage").attr("src"));
                                                     data.append("storeId",${sessionScope.store.storeId});
                                                     data.append("productId", $('#productId').val());
-                                                    data.append("description", $('#description').val());                                                    
+                                                    data.append("description", $('#description').val());
+                                                    $.ajax({
+                                                        url: "api/product/addProduct",
+                                                        enctype: 'multipart/form-data',
+                                                        method: "POST",
+                                                        data: data, processData: false,
+                                                        contentType: false,
+                                                        cache: false,
+                                                        timeout: 1000000,
+                                                        success: function (rs) {
+                                                            if (rs.result === true) {
+                                                                alert(rs.msg);
+                                                                $('#addProductModal').modal('hide');
+                                                            } else {
+                                                                alert(rs.msg);
+                                                            }
+                                                        }, error: function (err) {
+                                                            console.log(err);
+                                                        }
+                                                    });
+                                                });
+                                                 $('#createProduct').submit(function (event) {
+                                                    event.preventDefault();
+                                                    var form = $('#createProduct')[0];
+                                                    var data = new FormData(form);
+                                                    data.append("storeId",${sessionScope.store.storeId});
                                                     $.ajax({
                                                         url: "api/product/addProduct",
                                                         enctype: 'multipart/form-data',
@@ -595,8 +563,9 @@
                                             });
                                             function uploadImg(event) {
                                                 $('#previewImage').attr("src", URL.createObjectURL(event.target.files[0]));
-
-                                                $('#isUploaded').val(true);
+                                            }
+                                            function uploadImgCreate(event) {
+                                                $('#createPreviewImage').attr("src", URL.createObjectURL(event.target.files[0]));
                                             }
                                             function suggestPrice() {
                                                 $('#sugPrice').html(10000);

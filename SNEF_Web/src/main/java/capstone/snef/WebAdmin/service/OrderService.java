@@ -36,7 +36,7 @@ public class OrderService {
     public List<OrderData> getAllOrderByStoreId(Integer storeId) {
         Optional<Store> storeRs = storeRepos.findById(storeId);
         if (storeRs.isPresent()) {
-            List<Order1> orders = orderRepos.findAllBystoreid(storeRs.get());
+            List<Order1> orders = orderRepos.findAllByStoreid(storeRs.get());
             List<OrderData> ordersData = new ArrayList<>();
             for (Order1 order : orders) {
                 OrderData data = new OrderData();

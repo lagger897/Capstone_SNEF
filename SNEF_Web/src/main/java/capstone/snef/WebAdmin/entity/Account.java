@@ -6,6 +6,7 @@
 package capstone.snef.WebAdmin.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,11 +17,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -85,9 +89,13 @@ public class Account implements Serializable {
     private String avatar;
     @Column(name = "Gender")
     private Integer gender;
+    @OneToMany(mappedBy = "accountId")
+    private List<Order1> order1List;
     @JoinColumn(name = "roleId", referencedColumnName = "roleId")
     @ManyToOne
     private Role roleId;
+    @OneToOne(mappedBy = "accountId")
+    private Store store;
 
     public Account() {
     }
@@ -184,12 +192,29 @@ public class Account implements Serializable {
         this.gender = gender;
     }
 
+    @XmlTransient
+    public List<Order1> getOrder1List() {
+        return order1List;
+    }
+
+    public void setOrder1List(List<Order1> order1List) {
+        this.order1List = order1List;
+    }
+
     public Role getRoleId() {
         return roleId;
     }
 
     public void setRoleId(Role roleId) {
         this.roleId = roleId;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     @Override

@@ -45,7 +45,7 @@
             $('document').ready(function () {
                 $table = $('#dataTable').dataTable({
                     "ajax": {
-                        "url": "api/product/getAllStoreProductWithoutFlashSale?storeId="+${sessionScope.store.storeId},
+                        "url": "api/product/getAllStoreProductWithoutFlashSale?storeId=" +${sessionScope.store.storeId},
                         "method": "GET",
                         "dataType": "json"
                     },
@@ -167,19 +167,7 @@
                         <!-- Sidebar Toggle (Topbar) -->
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                             <i class="fa fa-bars"></i>
-                        </button>
-
-                        <!-- Topbar Search -->
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="searchOrder">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Check code..." aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        </button>                      
 
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
@@ -247,7 +235,7 @@
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.user}</span>
                                     <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                                 </a>
                                 <!-- Dropdown - User Information -->
@@ -270,7 +258,7 @@
                     <!-- End of Topbar -->
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-                        HEADING
+                        
                         <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800"><c:out value="${sessionScope.store.storeName}"/></h1>
                         <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
@@ -360,105 +348,12 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="logout">Logout</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="informationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" style="text-align: center;align-items: center">
-                        <form>
-                            <table border="0" cellspacing="1" cellpadding="1" style="margin: 0 auto;width: 100%" id="infoTable">
-                                <tbody>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center"><h3 class=""><b>Bách Hóa Xanh</b></h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center"><p>34 Trung My Tay, 12 district, Ho Chi Minh city</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">----------***----------</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center"><h3 class=""><b>ORDER INFORMATION</b></h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left"><b>Customer:</b></td>
-                                        <td style="text-align: right" colspan="2">#0001_Truong Hai Nguyen</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left"><b>OrderId:</b></td>
-                                        <td style="text-align: right" colspan="2">#1234</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left"><b>Receive Time:</b></td>
-                                        <td style="text-align: right" colspan="2"><span>6/6/2019 13:00:01</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left;width: 55%" ><b>Product</b></td>
-                                        <td style="text-align: center;width: 10%"><b>Amount</b></td>
-                                        <td style="text-align: right;width: 35%"><b>Cash &nbsp;</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left">COCA COLA</td>
-                                        <td style="text-align: center">1</td>
-                                        <td style="text-align: right">3,500 &nbsp;</td>
-                                    </tr>
-                                    <tr>
-
-                                        <td style="text-align: left">3,500<br> </td>
-                                        <td style="text-align: center"></td>
-                                        <td style="text-align: right"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left">Hao Hao spicy & shrimp instant noodle </td>
-                                        <td style="text-align: center">5</td>
-                                        <td style="text-align: right">12,500 &nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left">2,500 &nbsp;</td>
-                                        <td style="text-align: center"></td>
-                                        <td style="text-align: right"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left"><b>Total </b></td>
-                                        <td style="text-align: center"></td>
-                                        <td style="text-align: right"><b>16,000 &nbsp;</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3"><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">THANK YOU FOR SHOPPING</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">See You Again</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>                    
-                </div>
-            </div>
-        </div>
         <!-- Post Sale  Modal-->
         <div class="modal fade" id="saleProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -615,8 +510,7 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">This will delete in store product and all sales with it. Press "Delete" if you are sure </div>
-
+                    <div class="modal-body">You cannot undo once you delete the product. Press "Delete" if you are sure </div>
                     <div class="modal-footer">
                         <form id="deleteProductForm">
                             <input type='hidden' id="hiddenDeleteProductId"/>
@@ -641,7 +535,10 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
-        <script> function saleProduct(productId, price, expiredDate) {
+        <!--Block UI-->
+        <script src="http://malsup.github.io/min/jquery.blockUI.min.js" ></script> 
+        <script>
+            function saleProduct(productId, price, expiredDate) {
                 $('#saleProductModal').modal('show');
                 $('#txtPrice').val(price);
                 $('#hiddenStoreProductId').val(productId);
@@ -671,18 +568,7 @@
 
 
             $('document').ready(function () {
-                $('#searchOrder').submit(function (e) {
-                    e.preventDefault();
-                    $('#informationModal').modal();
-                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
-                        $('#infoTable').append("<tr><td colspan = '3'><input type='submit' value='Confirm' id='btOrderConfirm'/></td></tr>");
-                    }
-                });
-                $('#informationModal').on("hidden.bs.modal", function () {
-                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length > 0) {
-                        $('#btOrderConfirm').remove();
-                    }
-                });
+                
                 $('#range').on("input", function () {
                     $('#output').val(this.value);
                     var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;

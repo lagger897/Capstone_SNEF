@@ -58,6 +58,12 @@ public class NewProductRequest implements Serializable {
     public NewProductRequest() {
     }
 
+    public NewProductRequest(Product product, Account adminId, Store storeId) {
+        this.productId = product;
+        this.adminId = adminId;
+        this.storeId = storeId;
+    }
+
     public NewProductRequest(Integer nPRId) {
         this.nPRId = nPRId;
     }
@@ -134,5 +140,5 @@ public class NewProductRequest implements Serializable {
     public String toString() {
         return "capstone.snef.WebAdmin.entity.NewProductRequest[ nPRId=" + nPRId + " ]";
     }
-    
+
 }

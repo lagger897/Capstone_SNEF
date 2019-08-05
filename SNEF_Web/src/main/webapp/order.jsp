@@ -109,17 +109,7 @@
                             <i class="fa fa-bars"></i>
                         </button>
 
-                        <!-- Topbar Search -->
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="searchOrder">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Check code..." aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                       
 
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
@@ -187,7 +177,7 @@
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.user}</span>
                                     <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                                 </a>
                                 <!-- Dropdown - User Information -->
@@ -290,7 +280,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="logout">Logout</a>
                     </div>
                 </div>
             </div>
@@ -335,10 +325,7 @@
                                         <td style="text-align: left"><b>OrderId:</b></td>
                                         <td style="text-align: right" colspan="2" id="orderInfoOrderId"></td>
                                     </tr>
-                                    <!--                                    <tr>
-                                                                            <td style="text-align: left"><b>Confirmation Code:</b></td>
-                                                                            <td style="text-align: right" colspan="2" id="orderInfoConfirmationCode"></td>
-                                                                        </tr>-->
+
                                     <tr>
                                         <td style="text-align: left"><b>Rating Point:</b></td>
                                         <td style="text-align: right" colspan="2"><span id="orderInfoRatingPoint"></span></td>
@@ -414,8 +401,11 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
+        <!--block UI-->
+        <script src="http://malsup.github.io/min/jquery.blockUI.min.js" ></script> 
         <script>
             function getDetailOrder(orderId) {
+                $.blockUI({message: "<h3>Processing</h3>"});
                 $.ajax({
                     url: "api/order/getOrderDetail?orderId=" + orderId,
                     type: 'GET', success: function (data) {
@@ -439,15 +429,17 @@
                         }
                         $("#orderInfoTotalPrice").html(count + "&nbsp;");
                         if (data.order.status) {
-                            $('#orderInfoFooter').hide()
+                            $('#orderInfoFooter').hide();
                         } else {
                             $('#orderInfoFooter').show();
                         }
+                        $.unblockUI();
+                        $('#informationModal').modal('toggle');
                     }, error: function (jqXHR, textStatus, errorThrown) {
                         alert(errorThrown);
                     }
                 });
-                $('#informationModal').modal('toggle');
+
             }
             $('document').ready(function () {
                 $('#dataTable').dataTable({
@@ -489,14 +481,7 @@
                     ],
                     bDestroy: true
                 })
-                $('#searchOrder').submit(function (e) {
-                    e.preventDefault();
-                    $('#informationModal').modal();
-                    if ($('#infoTable').find('td').find('input[id="btOrderConfirm"]').length <= 0) {
-                    }
-                });
                 $('#orderInfoConfirmationCodeForm').submit(function (e) {
-
                     e.preventDefault();
                     $.ajax({
                         url: "api/order/confirmOrder?code=" + $('#orderInfoConfirmationCode').val()
@@ -508,7 +493,7 @@
                                 alert("error " + data.msg);
                             }
                         }, error: function (data) {
-                            alert("error "+data);
+                            alert("error " + data);
                         }
                     })
                 });

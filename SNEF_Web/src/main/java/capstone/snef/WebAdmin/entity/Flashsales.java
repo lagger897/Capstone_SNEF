@@ -55,7 +55,7 @@ public class Flashsales implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "StartDate")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date startDate;
     @Basic(optional = false)
     @NotNull

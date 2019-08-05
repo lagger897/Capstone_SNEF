@@ -70,6 +70,8 @@ public class ProductService {
                     FlashSaleProductData productData = new FlashSaleProductData();
                     productData.setName(product.getStoreProductId().getProductName());
                     productData.setImage(product.getStoreProductId().getStoreProductImageList().get(0).getImageSrc());
+                    productData.setStartDate(product.getFlashSalesId().getStartDate());
+                    productData.setEndDate(product.getFlashSalesId().getEndDate());
                     productData.setExpireDate(product.getStoreProductId().getExpiredDate());
                     productData.setDiscPrice(Math.round((100 - product.getFlashSalesId().getDiscount()) * product.getStoreProductId().getPrice() / 100));
                     productData.setTotalQuantity(product.getQuantity());
@@ -97,7 +99,7 @@ public class ProductService {
         Optional<Product> rs = productRepos.findById(id);
         if (rs.isPresent()) {
             Product product = rs.get();
-            return new ProductData(product.getProductId(), product.getProductName(), product.getImageSrc());
+            return new ProductData(product.getProductId(), product.getProductName(),product.getCategoriesId().getCategoryName(), product.getImageSrc());
         }
         return null;
     }
@@ -181,7 +183,6 @@ public class ProductService {
             StoreProduct sProduct = spResult.get();
             sProduct.setStatus(false);
             storeProductRepos.save(sProduct);
-//            storeProductRepos.delete(spResult.get());
             return true;
         }
         return false;

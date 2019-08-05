@@ -5,15 +5,18 @@
  */
 package capstone.snef.WebAdmin.api;
 
+import capstone.snef.WebAdmin.Utility.ImageUtility;
 import capstone.snef.WebAdmin.dataform.AddProductDataForm;
 import capstone.snef.WebAdmin.dataform.FlashSaleForm;
 import capstone.snef.WebAdmin.dataform.InStoreProduct;
 import capstone.snef.WebAdmin.dataform.Message;
 import capstone.snef.WebAdmin.dataform.ProductData;
 import capstone.snef.WebAdmin.dataform.FlashSaleProductData;
+import capstone.snef.WebAdmin.dataform.RequestCreateProductData;
 import capstone.snef.WebAdmin.dataform.StoreProductData;
 import capstone.snef.WebAdmin.entity.Product;
 import capstone.snef.WebAdmin.entity.StoreProduct;
+import capstone.snef.WebAdmin.service.NewRequestProductService;
 import capstone.snef.WebAdmin.service.ProductService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -54,6 +57,9 @@ public class ProductAPIController {
     private static final String CLOUDINARY_API_SECRET = "zakaWJRkTxjvVutIlhrhqOxpWDk";
     @Autowired
     private ProductService pService;
+    @Autowired
+    private NewRequestProductService requestProductService;
+   
 
     @PostMapping("/getAll")
     public List<Product> getAllProduct() {
@@ -78,7 +84,7 @@ public class ProductAPIController {
         List<Product> products = pService.getProductByName(productName);
         List<ProductData> data = new ArrayList<>();
         for (Product product : products) {
-            data.add(new ProductData(product.getProductId(), product.getProductName(), product.getImageSrc()));
+            data.add(new ProductData(product.getProductId(), product.getProductName(),product.getCategoriesId().getCategoryName(), product.getImageSrc()));
         }
         Map<String, List<ProductData>> map = new HashMap<String, List<ProductData>>();
         map.put("data", data);
@@ -183,6 +189,11 @@ public class ProductAPIController {
         } else {
             return new Message(false, "Update fail");
         }
+    }
+    @PostMapping("/requestCreateProduct")
+    public Message requestCreateProduct(@ModelAttribute RequestCreateProductData data){
+       
+        return new Message(false, "Fail");
     }
 
 }
