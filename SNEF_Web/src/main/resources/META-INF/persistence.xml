@@ -3,7 +3,6 @@
   <persistence-unit name="capstone.snef_WebAdmin_war_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>capstone.snef.WebAdmin.entity.NewProductRequest</class>
-    <class>capstone.snef.WebAdmin.entity.Order1</class>
     <class>capstone.snef.WebAdmin.entity.Categories</class>
     <class>capstone.snef.WebAdmin.entity.Account</class>
     <class>capstone.snef.WebAdmin.entity.Product</class>
@@ -13,7 +12,6 @@
     <class>capstone.snef.WebAdmin.entity.StoreProduct</class>
     <class>capstone.snef.WebAdmin.entity.OrderDetail</class>
     <class>capstone.snef.WebAdmin.entity.StoreProductImage</class>
-    <class>capstone.snef.WebAdmin.entity.Like1</class>
     <class>capstone.snef.WebAdmin.entity.Flashsales</class>
     <class>capstone.snef.WebAdmin.entity.Configuration</class>
     <class>capstone.snef.WebAdmin.entity.Product_1</class>
@@ -23,6 +21,7 @@
     <class>capstone.snef.WebAdmin.entity.Flashsales_1</class>
     <class>capstone.snef.WebAdmin.entity.FlashsaleProduct_1</class>
     <class>capstone.snef.WebAdmin.entity.Store_1</class>
+    <class>capstone.snef.WebAdmin.entity.Order1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://snef.cvkbe5tc6xkf.ap-southeast-1.rds.amazonaws.com:3306/snef_part2?zeroDateTimeBehavior=convertToNull"/>

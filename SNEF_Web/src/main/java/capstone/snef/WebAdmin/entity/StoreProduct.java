@@ -89,8 +89,6 @@ public class StoreProduct implements Serializable {
     private Store storeId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
     private List<FlashsaleProduct> flashsaleProductList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
-    private List<Like1> like1List;
 
     public StoreProduct() {
     }
@@ -106,7 +104,7 @@ public class StoreProduct implements Serializable {
         this.quantity = quantity;
         this.price = price;
     }
-        public StoreProduct(String productName, Date expiredDate, int quantity, float price, boolean status) {
+    public StoreProduct(String productName, Date expiredDate, int quantity, float price, boolean status) {
         this.productName = productName;
         this.expiredDate = expiredDate;
         this.quantity = quantity;
@@ -210,15 +208,6 @@ public class StoreProduct implements Serializable {
 
     public void setFlashsaleProductList(List<FlashsaleProduct> flashsaleProductList) {
         this.flashsaleProductList = flashsaleProductList;
-    }
-
-    @XmlTransient
-    public List<Like1> getLike1List() {
-        return like1List;
-    }
-
-    public void setLike1List(List<Like1> like1List) {
-        this.like1List = like1List;
     }
 
     @Override

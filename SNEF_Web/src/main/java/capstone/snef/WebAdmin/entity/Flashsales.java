@@ -52,8 +52,6 @@ public class Flashsales implements Serializable {
     @NotNull
     @Column(name = "Discount")
     private int discount;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "StartDate")
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -75,16 +73,16 @@ public class Flashsales implements Serializable {
         this.flashSalesId = flashSalesId;
     }
 
-    public Flashsales(Integer flashSalesId, int discount, Date startDate, Date endDate) {
+    public Flashsales(Integer flashSalesId, int discount, Date endDate) {
         this.flashSalesId = flashSalesId;
         this.discount = discount;
-        this.startDate = startDate;
         this.endDate = endDate;
     }
+    
     public Flashsales(int discount, Date startDate, Date endDate, Store storeID) {
-        this.discount = discount;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.discount = discount;
         this.storeId = storeID;
     }
 

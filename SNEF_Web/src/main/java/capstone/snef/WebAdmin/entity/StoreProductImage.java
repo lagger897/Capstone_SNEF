@@ -55,15 +55,14 @@ public class StoreProductImage implements Serializable {
     public StoreProductImage(Integer sPIId) {
         this.sPIId = sPIId;
     }
-
+    public StoreProductImage(String imageSrc, StoreProduct storeProductId) {
+        this.imageSrc = imageSrc;
+        this.storeProductId = storeProductId;
+    }
+    
     public StoreProductImage(Integer sPIId, String imageSrc) {
         this.sPIId = sPIId;
         this.imageSrc = imageSrc;
-    }
-    
-    public StoreProductImage(String imageSrc, StoreProduct product) {
-        this.imageSrc = imageSrc;
-        this.storeProductId = product;
     }
 
     public Integer getSPIId() {

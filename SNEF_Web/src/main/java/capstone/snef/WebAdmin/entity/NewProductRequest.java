@@ -46,7 +46,7 @@ public class NewProductRequest implements Serializable {
     @Column(name = "Message")
     private String message;
     @JoinColumn(name = "AdminId", referencedColumnName = "AccountId")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Account adminId;
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
     @ManyToOne(optional = false)
@@ -58,15 +58,14 @@ public class NewProductRequest implements Serializable {
     public NewProductRequest() {
     }
 
-    public NewProductRequest(Product product, Account adminId, Store storeId,boolean status) {
-        this.productId = product;
-        this.adminId = adminId;
-        this.storeId = storeId;
-        this.status= status;
-    }
-
     public NewProductRequest(Integer nPRId) {
         this.nPRId = nPRId;
+    }
+    public NewProductRequest(Product productID, Account adminID, Store storeID, boolean status) {
+        this.productId = productID;
+        this.adminId = adminID;
+        this.storeId = storeID;
+        this.status = status;
     }
 
     public Integer getNPRId() {
@@ -141,5 +140,5 @@ public class NewProductRequest implements Serializable {
     public String toString() {
         return "capstone.snef.WebAdmin.entity.NewProductRequest[ nPRId=" + nPRId + " ]";
     }
-
+    
 }

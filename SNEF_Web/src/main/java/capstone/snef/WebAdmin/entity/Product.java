@@ -56,7 +56,7 @@ public class Product implements Serializable {
     @Size(min = 1, max = 400)
     @Column(name = "ImageSrc")
     private String imageSrc;
-    @Column(name = "Status")
+    @Column(name = "status")
     private Boolean status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private List<StoreProduct> storeProductList;
@@ -78,12 +78,11 @@ public class Product implements Serializable {
         this.productName = productName;
         this.imageSrc = imageSrc;
     }
-    
-    public Product(String productName, String imageSrc,boolean status,Categories categoriesId) {
+    public Product(String productName, String imageSrc, boolean status, Categories categories) {
         this.productName = productName;
         this.imageSrc = imageSrc;
-        this.status=status;
-        this.categoriesId=categoriesId;
+        this.status = status;
+        this.categoriesId = categories;
     }
 
     public Integer getProductId() {

@@ -8,6 +8,7 @@ package capstone.snef.WebAdmin.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Role", catalog = "snef_part2", schema = "")
+@Table(name = "Role")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
@@ -39,14 +40,14 @@ public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "roleId", nullable = false)
+    @Column(name = "roleId")
     private Integer roleId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "roleName", nullable = false, length = 255)
+    @Column(name = "roleName")
     private String roleName;
-    @OneToMany(mappedBy = "roleId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
     private List<Account> accountList;
 
     public Role() {

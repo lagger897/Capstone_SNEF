@@ -8,6 +8,7 @@ package capstone.snef.WebAdmin.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,8 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Account", catalog = "snef_part2", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"UserName"})})
+@Table(name = "Account")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
@@ -52,49 +51,53 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "AccountId", nullable = false)
+    @Column(name = "AccountId")
     private Integer accountId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "UserName", nullable = false, length = 30)
+    @Column(name = "UserName")
     private String userName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "Password", nullable = false, length = 30)
+    @Column(name = "Password")
     private String password;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "FirstName", nullable = false, length = 20)
+    @Column(name = "FirstName")
     private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "LastName", nullable = false, length = 20)
+    @Column(name = "LastName")
     private String lastName;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 20)
-    @Column(name = "Phone", length = 20)
+    @Column(name = "Phone")
     private String phone;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 50)
-    @Column(name = "Email", length = 50)
+    @Column(name = "Email")
     private String email;
     @Column(name = "IsActive")
     private Short isActive;
     @Size(max = 400)
-    @Column(name = "Avatar", length = 400)
+    @Column(name = "Avatar")
     private String avatar;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "Gender")
-    private Integer gender;
+    private short gender;
     @OneToMany(mappedBy = "accountId")
     private List<Order1> order1List;
     @JoinColumn(name = "roleId", referencedColumnName = "roleId")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Role roleId;
-    @OneToOne(mappedBy = "accountId")
+    @OneToMany(mappedBy = "adminId")
+    private List<NewProductRequest> newProductRequestList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "accountId")
     private Store store;
 
     public Account() {
@@ -104,12 +107,13 @@ public class Account implements Serializable {
         this.accountId = accountId;
     }
 
-    public Account(Integer accountId, String userName, String password, String firstName, String lastName) {
+    public Account(Integer accountId, String userName, String password, String firstName, String lastName, short gender) {
         this.accountId = accountId;
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.gender = gender;
     }
 
     public Integer getAccountId() {
@@ -184,11 +188,11 @@ public class Account implements Serializable {
         this.avatar = avatar;
     }
 
-    public Integer getGender() {
+    public short getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(short gender) {
         this.gender = gender;
     }
 
@@ -207,6 +211,15 @@ public class Account implements Serializable {
 
     public void setRoleId(Role roleId) {
         this.roleId = roleId;
+    }
+
+    @XmlTransient
+    public List<NewProductRequest> getNewProductRequestList() {
+        return newProductRequestList;
+    }
+
+    public void setNewProductRequestList(List<NewProductRequest> newProductRequestList) {
+        this.newProductRequestList = newProductRequestList;
     }
 
     public Store getStore() {
