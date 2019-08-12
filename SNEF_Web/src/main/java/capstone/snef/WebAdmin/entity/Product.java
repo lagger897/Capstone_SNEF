@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Product")
+@Table(name = "Product", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
@@ -44,17 +44,17 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ProductId")
+    @Column(name = "ProductId", nullable = false)
     private Integer productId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ProductName")
+    @Column(name = "ProductName", nullable = false, length = 50)
     private String productName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 400)
-    @Column(name = "ImageSrc")
+    @Column(name = "ImageSrc", nullable = false, length = 400)
     private String imageSrc;
     @Column(name = "status")
     private Boolean status;
@@ -62,7 +62,7 @@ public class Product implements Serializable {
     private List<StoreProduct> storeProductList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private List<NewProductRequest> newProductRequestList;
-    @JoinColumn(name = "CategoriesId", referencedColumnName = "CategoriesId")
+    @JoinColumn(name = "CategoriesId", referencedColumnName = "CategoriesId", nullable = false)
     @ManyToOne(optional = false)
     private Categories categoriesId;
 
@@ -78,11 +78,11 @@ public class Product implements Serializable {
         this.productName = productName;
         this.imageSrc = imageSrc;
     }
-    public Product(String productName, String imageSrc, boolean status, Categories categories) {
+
+    public Product(String name, String imgSrc, boolean status, Categories category) {
         this.productName = productName;
         this.imageSrc = imageSrc;
-        this.status = status;
-        this.categoriesId = categories;
+        this.categoriesId=category;
     }
 
     public Integer getProductId() {

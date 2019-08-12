@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Order")
+@Table(name = "Order", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o")
@@ -49,34 +49,34 @@ public class Order1 implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "OrderId")
+    @Column(name = "OrderId", nullable = false)
     private Integer orderId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "DateOrder")
+    @Column(name = "DateOrder", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dateOrder;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ConfirmationCode")
+    @Column(name = "ConfirmationCode", nullable = false, length = 50)
     private String confirmationCode;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     private boolean status;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RatingPoint")
+    @Column(name = "RatingPoint", precision = 12, scale = 0)
     private Float ratingPoint;
     @Size(max = 500)
-    @Column(name = "Comment")
+    @Column(name = "Comment", length = 500)
     private String comment;
-    @JoinColumn(name = "AccountId", referencedColumnName = "AccountId")
-    @ManyToOne
+    @JoinColumn(name = "accountId", referencedColumnName = "AccountId", nullable = false)
+    @ManyToOne(optional = false)
     private Account accountId;
-    @JoinColumn(name = "storeid", referencedColumnName = "StoreId")
-    @ManyToOne
-    private Store storeid;
+    @JoinColumn(name = "storeId", referencedColumnName = "StoreId", nullable = false)
+    @ManyToOne(optional = false)
+    private Store storeId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderOrderId")
     private List<OrderDetail> orderDetailList;
 
@@ -150,12 +150,12 @@ public class Order1 implements Serializable {
         this.accountId = accountId;
     }
 
-    public Store getStoreid() {
-        return storeid;
+    public Store getStoreId() {
+        return storeId;
     }
 
-    public void setStoreid(Store storeid) {
-        this.storeid = storeid;
+    public void setStoreId(Store storeId) {
+        this.storeId = storeId;
     }
 
     @XmlTransient

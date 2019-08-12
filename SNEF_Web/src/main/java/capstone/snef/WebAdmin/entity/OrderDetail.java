@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "OrderDetail")
+@Table(name = "OrderDetail", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "OrderDetail.findAll", query = "SELECT o FROM OrderDetail o")
@@ -38,20 +38,20 @@ public class OrderDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "OrderDetailId")
+    @Column(name = "OrderDetailId", nullable = false)
     private Integer orderDetailId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity")
+    @Column(name = "Quantity", nullable = false)
     private int quantity;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "OrderDetailPrice")
+    @Column(name = "OrderDetailPrice", nullable = false)
     private float orderDetailPrice;
-    @JoinColumn(name = "FlashSaleProductId", referencedColumnName = "FlashSaleProductId")
+    @JoinColumn(name = "FlashSaleProductId", referencedColumnName = "FlashSaleProductId", nullable = false)
     @ManyToOne(optional = false)
     private FlashsaleProduct flashSaleProductId;
-    @JoinColumn(name = "OrderOrderId", referencedColumnName = "OrderId")
+    @JoinColumn(name = "OrderOrderId", referencedColumnName = "OrderId", nullable = false)
     @ManyToOne(optional = false)
     private Order1 orderOrderId;
 

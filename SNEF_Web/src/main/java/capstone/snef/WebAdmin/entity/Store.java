@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,7 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Store")
+@Table(name = "Store", catalog = "snef_part2", schema = "", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"accountId"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Store.findAll", query = "SELECT s FROM Store s")
@@ -51,51 +53,51 @@ public class Store implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "StoreId")
+    @Column(name = "StoreId", nullable = false)
     private Integer storeId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "StoreName")
+    @Column(name = "StoreName", nullable = false, length = 50)
     private String storeName;
     @Size(max = 500)
-    @Column(name = "Address")
+    @Column(name = "Address", length = 500)
     private String address;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RatingPoint")
+    @Column(name = "RatingPoint", precision = 12, scale = 0)
     private Float ratingPoint;
     @Size(max = 400)
-    @Column(name = "Avatar")
+    @Column(name = "Avatar", length = 400)
     private String avatar;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "OpenHour")
+    @Column(name = "OpenHour", nullable = false, length = 5)
     private String openHour;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "CloseHour")
+    @Column(name = "CloseHour", nullable = false, length = 5)
     private String closeHour;
-    @Column(name = "Longitude")
+    @Column(name = "Longitude", precision = 22, scale = 0)
     private Double longitude;
-    @Column(name = "Latitude")
+    @Column(name = "Latitude", precision = 22, scale = 0)
     private Double latitude;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     private short status;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 20)
-    @Column(name = "Phone")
+    @Column(name = "Phone", length = 20)
     private String phone;
-    @OneToMany(mappedBy = "storeid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
     private List<Order1> order1List;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
     private List<StoreProduct> storeProductList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
     private List<NewProductRequest> newProductRequestList;
-    @JoinColumn(name = "accountId", referencedColumnName = "AccountId")
+    @JoinColumn(name = "accountId", referencedColumnName = "AccountId", nullable = false)
     @OneToOne(optional = false)
     private Account accountId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")

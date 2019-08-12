@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Flashsales")
+@Table(name = "Flashsales", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Flashsales.findAll", query = "SELECT f FROM Flashsales f")
@@ -46,23 +46,23 @@ public class Flashsales implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "FlashSalesId")
+    @Column(name = "FlashSalesId", nullable = false)
     private Integer flashSalesId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Discount")
+    @Column(name = "Discount", nullable = false)
     private int discount;
     @Column(name = "StartDate")
     @Temporal(TemporalType.DATE)
     private Date startDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "EndDate")
+    @Column(name = "EndDate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date endDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flashSalesId")
     private List<FlashsaleProduct> flashsaleProductList;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
     @ManyToOne(optional = false)
     private Store storeId;
 
@@ -78,12 +78,13 @@ public class Flashsales implements Serializable {
         this.discount = discount;
         this.endDate = endDate;
     }
-    
-    public Flashsales(int discount, Date startDate, Date endDate, Store storeID) {
+
+    public Flashsales(Integer discount, Date startDate, Date endDate, Store storeId) {
+       this.discount = discount;
+       
         this.startDate = startDate;
         this.endDate = endDate;
-        this.discount = discount;
-        this.storeId = storeID;
+        this.storeId=storeId;
     }
 
     public Integer getFlashSalesId() {

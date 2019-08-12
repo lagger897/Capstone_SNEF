@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "StoreProduct")
+@Table(name = "StoreProduct", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreProduct.findAll", query = "SELECT s FROM StoreProduct s")
@@ -51,40 +51,40 @@ public class StoreProduct implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "StoreProductId")
+    @Column(name = "StoreProductId", nullable = false)
     private Integer storeProductId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "ProductName")
+    @Column(name = "ProductName", nullable = false, length = 50)
     private String productName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ExpiredDate")
+    @Column(name = "ExpiredDate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date expiredDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity")
+    @Column(name = "Quantity", nullable = false)
     private int quantity;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Price")
+    @Column(name = "Price", nullable = false)
     private float price;
     @Size(max = 4000)
-    @Column(name = "Description")
+    @Column(name = "Description", length = 4000)
     private String description;
     @Size(max = 50)
-    @Column(name = "SKU")
+    @Column(name = "SKU", length = 50)
     private String sku;
     @Column(name = "Status")
     private Boolean status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
     private List<StoreProductImage> storeProductImageList;
-    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
+    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId", nullable = false)
     @ManyToOne(optional = false)
     private Product productId;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
     @ManyToOne(optional = false)
     private Store storeId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeProductId")
@@ -104,12 +104,13 @@ public class StoreProduct implements Serializable {
         this.quantity = quantity;
         this.price = price;
     }
-    public StoreProduct(String productName, Date expiredDate, int quantity, float price, boolean status) {
+
+    public StoreProduct(String productName, Date expiredDate, int ammount, float price, boolean status) {
         this.productName = productName;
         this.expiredDate = expiredDate;
-        this.quantity = quantity;
+        this.quantity = ammount;
         this.price = price;
-        this.status = status;
+        this.status=status;
     }
 
     public Integer getStoreProductId() {
@@ -234,5 +235,5 @@ public class StoreProduct implements Serializable {
     public String toString() {
         return "capstone.snef.WebAdmin.entity.StoreProduct[ storeProductId=" + storeProductId + " ]";
     }
-    
+
 }

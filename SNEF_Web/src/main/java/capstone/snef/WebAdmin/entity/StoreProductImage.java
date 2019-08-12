@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "StoreProductImage")
+@Table(name = "StoreProductImage", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreProductImage.findAll", query = "SELECT s FROM StoreProductImage s")
@@ -38,14 +38,14 @@ public class StoreProductImage implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "SPIId")
+    @Column(name = "SPIId", nullable = false)
     private Integer sPIId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 400)
-    @Column(name = "ImageSrc")
+    @Column(name = "ImageSrc", nullable = false, length = 400)
     private String imageSrc;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
 
@@ -55,15 +55,17 @@ public class StoreProductImage implements Serializable {
     public StoreProductImage(Integer sPIId) {
         this.sPIId = sPIId;
     }
-    public StoreProductImage(String imageSrc, StoreProduct storeProductId) {
-        this.imageSrc = imageSrc;
-        this.storeProductId = storeProductId;
-    }
-    
+
     public StoreProductImage(Integer sPIId, String imageSrc) {
         this.sPIId = sPIId;
         this.imageSrc = imageSrc;
     }
+
+    public StoreProductImage(String imageSrc, StoreProduct storeProduct) {
+        this.imageSrc = imageSrc;
+        this.storeProductId=storeProduct;
+    }
+
 
     public Integer getSPIId() {
         return sPIId;

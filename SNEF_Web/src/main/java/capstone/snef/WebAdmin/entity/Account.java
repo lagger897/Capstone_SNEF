@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,7 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "Account")
+@Table(name = "Account", catalog = "snef_part2", schema = "", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"UserName"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
@@ -51,48 +53,48 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "AccountId")
+    @Column(name = "AccountId", nullable = false)
     private Integer accountId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "UserName")
+    @Column(name = "UserName", nullable = false, length = 30)
     private String userName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "Password")
+    @Column(name = "Password", nullable = false, length = 30)
     private String password;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "FirstName")
+    @Column(name = "FirstName", nullable = false, length = 20)
     private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "LastName")
+    @Column(name = "LastName", nullable = false, length = 20)
     private String lastName;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 20)
-    @Column(name = "Phone")
+    @Column(name = "Phone", length = 20)
     private String phone;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 50)
-    @Column(name = "Email")
+    @Column(name = "Email", length = 50)
     private String email;
     @Column(name = "IsActive")
     private Short isActive;
     @Size(max = 400)
-    @Column(name = "Avatar")
+    @Column(name = "Avatar", length = 400)
     private String avatar;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Gender")
+    @Column(name = "Gender", nullable = false)
     private short gender;
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
     private List<Order1> order1List;
-    @JoinColumn(name = "roleId", referencedColumnName = "roleId")
+    @JoinColumn(name = "roleId", referencedColumnName = "roleId", nullable = false)
     @ManyToOne(optional = false)
     private Role roleId;
     @OneToMany(mappedBy = "adminId")

@@ -16,11 +16,13 @@ import org.springframework.data.repository.CrudRepository;
  * @author Phuc Nguyen -VN
  */
 public interface IOrderRepository extends CrudRepository<Order1, Integer> {
-   List<Order1> findAllByStoreid(Store storeId);
+//   List<Order1> findAllByStoreid(Store storeId);
 
     @Override
     public Optional<Order1> findById(Integer id);
 
     public Optional<Order1> findByConfirmationCode(String confirmationCode);
+
+    public List<Order1> findAllByStoreId(Store storeId);
    
 }

@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "NewProductRequest")
+@Table(name = "NewProductRequest", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "NewProductRequest.findAll", query = "SELECT n FROM NewProductRequest n")
@@ -38,20 +38,20 @@ public class NewProductRequest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "NPRId")
+    @Column(name = "NPRId", nullable = false)
     private Integer nPRId;
     @Column(name = "Status")
     private Boolean status;
     @Size(max = 500)
-    @Column(name = "Message")
+    @Column(name = "Message", length = 500)
     private String message;
     @JoinColumn(name = "AdminId", referencedColumnName = "AccountId")
     @ManyToOne
     private Account adminId;
-    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
+    @JoinColumn(name = "ProductId", referencedColumnName = "ProductId", nullable = false)
     @ManyToOne(optional = false)
     private Product productId;
-    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId")
+    @JoinColumn(name = "StoreId", referencedColumnName = "StoreId", nullable = false)
     @ManyToOne(optional = false)
     private Store storeId;
 
@@ -61,10 +61,11 @@ public class NewProductRequest implements Serializable {
     public NewProductRequest(Integer nPRId) {
         this.nPRId = nPRId;
     }
-    public NewProductRequest(Product productID, Account adminID, Store storeID, boolean status) {
-        this.productId = productID;
-        this.adminId = adminID;
-        this.storeId = storeID;
+
+    public NewProductRequest(Product product, Account account, Store store, boolean status) {
+        this.productId = product;
+        this.adminId = account;
+        this.storeId = store;
         this.status = status;
     }
 
@@ -140,5 +141,5 @@ public class NewProductRequest implements Serializable {
     public String toString() {
         return "capstone.snef.WebAdmin.entity.NewProductRequest[ nPRId=" + nPRId + " ]";
     }
-    
+
 }

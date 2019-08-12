@@ -27,6 +27,8 @@
 
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+        <link href="css/jquery.basic.toast.css" rel="stylesheet">
     </head>
 
     <body id="page-top">
@@ -109,7 +111,7 @@
                             <i class="fa fa-bars"></i>
                         </button>
 
-                       
+
 
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
@@ -401,6 +403,8 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
+        <!--Toast plugin-->
+        <script type="text/javascript" src="js/jquery.basic.toast.js"></script>
         <!--block UI-->
         <script src="http://malsup.github.io/min/jquery.blockUI.min.js" ></script> 
         <script>
@@ -453,7 +457,7 @@
                         {data: function (row, type, set) {
                                 if (type === 'display') {
 //                                    return '<a data-toggle="modal" data-target="#informationModal">#' + row.orderId + '</a>';
-                                    return '<a onclick="getDetailOrder(' + row.orderId + ')">#' + row.orderId + '</a>';
+                                    return '<a onclick="getDetailOrder(' + row.orderId + ')" href="#">#' + row.orderId + '</a>';
                                 }
                                 return row.orderId;
                             }},
@@ -487,13 +491,24 @@
                         url: "api/order/confirmOrder?code=" + $('#orderInfoConfirmationCode').val()
                         , method: "POST", success: function (data) {
                             if (data.result) {
+                                $.Toast(data.msg, {'duration': 2000,
+                                    'class': 'info',
+                                    'position': 'top',
+                                    'align': "right"});
                                 $('#informationModal').modal('hide');
-                                $('#dataTable').DataTable.ajax.reload();
+                                $('#dataTable').DataTable().ajax.reload();
+                               
                             } else {
-                                alert("error " + data.msg);
+                                $.Toast(data.msg, {'duration': 2000,
+                                    'class': 'alert',
+                                    'position': 'top',
+                                    'align': "right"});
                             }
                         }, error: function (data) {
-                            alert("error " + data);
+                            $.Toast(data, {'duration': 2000,
+                                    'class': 'alert',
+                                    'position': 'top',
+                                    'align': "right"});
                         }
                     })
                 });

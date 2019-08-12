@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Phuc Nguyen -VN
  */
 @Entity
-@Table(name = "FlashsaleProduct")
+@Table(name = "FlashsaleProduct", catalog = "snef_part2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "FlashsaleProduct.findAll", query = "SELECT f FROM FlashsaleProduct f")
@@ -42,18 +42,18 @@ public class FlashsaleProduct implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "FlashSaleProductId")
+    @Column(name = "FlashSaleProductId", nullable = false)
     private Integer flashSaleProductId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Quantity")
+    @Column(name = "Quantity", nullable = false)
     private int quantity;
     @Column(name = "Status")
     private Boolean status;
-    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId")
+    @JoinColumn(name = "FlashSalesId", referencedColumnName = "FlashSalesId", nullable = false)
     @ManyToOne(optional = false)
     private Flashsales flashSalesId;
-    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId")
+    @JoinColumn(name = "StoreProductId", referencedColumnName = "StoreProductId", nullable = false)
     @ManyToOne(optional = false)
     private StoreProduct storeProductId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flashSaleProductId")
