@@ -58,10 +58,11 @@ public class NewProductRequest implements Serializable {
     public NewProductRequest() {
     }
 
-    public NewProductRequest(Product product, Account adminId, Store storeId) {
+    public NewProductRequest(Product product, Account adminId, Store storeId,boolean status) {
         this.productId = product;
         this.adminId = adminId;
         this.storeId = storeId;
+        this.status= status;
     }
 
     public NewProductRequest(Integer nPRId) {

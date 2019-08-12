@@ -5,8 +5,6 @@
  */
 package capstone.snef.WebAdmin.Utility;
 
-import capstone.snef.WebAdmin.dataform.Message;
-import capstone.snef.WebAdmin.entity.StoreProduct;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.File;
@@ -17,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,16 +24,14 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Phuc Nguyen -VN
  */
-@Component
 public class ImageUtility {
 
     @Autowired
     private Environment env;
-    private final String CLOUDINARY_CLOUD_NAME = env.getProperty("cloud_name");
-    private final String CLOUDINARY_API_KEY = env.getProperty("cloudinary.api.key");
-    private final String CLOUDINARY_API_SECRET = env.getProperty("cloudinary.api.secrect");
+    private final String CLOUDINARY_CLOUD_NAME = "dr4hpc9gi";
+    private final String CLOUDINARY_API_KEY ="166957351197671";
+    private final String CLOUDINARY_API_SECRET = "zakaWJRkTxjvVutIlhrhqOxpWDk";
 
-    @Bean
     public String uploadImage(MultipartFile file) {
         try {
             byte[] bytes = file.getBytes();

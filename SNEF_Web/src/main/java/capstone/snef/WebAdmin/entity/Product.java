@@ -78,6 +78,13 @@ public class Product implements Serializable {
         this.productName = productName;
         this.imageSrc = imageSrc;
     }
+    
+    public Product(String productName, String imageSrc,boolean status,Categories categoriesId) {
+        this.productName = productName;
+        this.imageSrc = imageSrc;
+        this.status=status;
+        this.categoriesId=categoriesId;
+    }
 
     public Integer getProductId() {
         return productId;

@@ -303,15 +303,15 @@
             </div>
         </div>
 
-     
+
     </div>
 
-    <!-- Post Sale Modal Modal-->
+    <!-- Add to store Modal-->
     <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Post Sale</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add to store</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">x</span>
                     </button>
@@ -371,14 +371,14 @@
             </div>
         </div>
     </div>
-                        
-                        
+
+
     <!-- Create New Product Modal-->
     <div class="modal fade" id="createProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Post Sale</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Send create new product request</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">x</span>
                     </button>
@@ -402,15 +402,15 @@
                                     <td colspan="2" style="text-align:center">
                                         <img style ="max-width:300px;max-height:300px" id = "createPreviewImage" name ="previewImage" />                               </td>
                                 </tr>
-                                
-                               <tr>
+
+                                <tr>
                                     <td >Category </td>
                                     <td >
                                         <select name="category" id="createCategory">
                                         </select>
                                     </td>
                                 </tr>
-                                
+
                             </tbody>
                         </table>
 
@@ -441,13 +441,22 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     <script>
+                                            function initCategory() {
+                                                $.ajax({
+                                                    url: "api/category/getAll",
+                                                    method: "GET",
+                                                    success: function (rs) {
+                                                        var content="";
+                                                        for(var i=0;i<rs.length;i++){
+                                                            content+="<option value='"+rs[i].id+"'>"+rs[i].name+"</option>";
+                                                        }
+                                                        $('#createCategory').html(content);
+                                                    }
+                                                });
+                                            }
                                             $('document').ready(function () {
                                                 $('#resultTable').hide();
-//                                                $('#uploadImageForm').submit(function (e) {
-//                                                    e.preventDefault();
-////                                                        var data = new FormDatat($(this));
-//
-//                                                });
+                                                initCategory();
                                                 $('#searchProduct').submit(function (e) {
                                                     e.preventDefault();
                                                     var search = $('#txtSearchProduct').val().trim();
@@ -470,8 +479,8 @@
                                                                 {width: "60%", data:
                                                                             function (row, type, set) {
                                                                                 if (type === 'display') {
-                                                                                    var content = 'Name: '+row.productName;
-                                                                                    conent+="<br>Category: "+row.category;
+                                                                                    var content = 'Name: ' + row.productName;
+                                                                                    content += "<br>Category: " + row.category;
                                                                                     return content;
                                                                                 }
                                                                                 return "";
@@ -535,13 +544,16 @@
                                                         }
                                                     });
                                                 });
-                                                 $('#createProduct').submit(function (event) {
+                                                $('#createProduct').submit(function (event) {
                                                     event.preventDefault();
                                                     var form = $('#createProduct')[0];
                                                     var data = new FormData(form);
+                                                    
                                                     data.append("storeId",${sessionScope.store.storeId});
+                                                    data.append("category",$('#createCategory').val());
+//                                                    alert($('#createCategory').val());
                                                     $.ajax({
-                                                        url: "api/product/addProduct",
+                                                        url: "api/product/requestCreateProduct",
                                                         enctype: 'multipart/form-data',
                                                         method: "POST",
                                                         data: data, processData: false,
@@ -551,7 +563,7 @@
                                                         success: function (rs) {
                                                             if (rs.result === true) {
                                                                 alert(rs.msg);
-                                                                $('#addProductModal').modal('hide');
+                                                                $('#createProductModal').modal('hide');
                                                             } else {
                                                                 alert(rs.msg);
                                                             }

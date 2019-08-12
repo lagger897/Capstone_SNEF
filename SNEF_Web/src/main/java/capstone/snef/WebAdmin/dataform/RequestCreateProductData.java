@@ -15,23 +15,23 @@ public class RequestCreateProductData {
     private Integer storeId;
     private String name;
     private MultipartFile imageSrc;
-    private String category;
+    private Integer category;
 
     public RequestCreateProductData() {
     }
 
-    public RequestCreateProductData(Integer storeId, String name, MultipartFile imageSrc, String category) {
+    public RequestCreateProductData(Integer storeId, String name, MultipartFile imageSrc, Integer category) {
         this.storeId = storeId;
         this.name = name;
         this.imageSrc = imageSrc;
         this.category = category;
     }
 
-    public String getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 

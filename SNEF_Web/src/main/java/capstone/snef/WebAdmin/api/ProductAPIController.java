@@ -5,7 +5,6 @@
  */
 package capstone.snef.WebAdmin.api;
 
-import capstone.snef.WebAdmin.Utility.ImageUtility;
 import capstone.snef.WebAdmin.dataform.AddProductDataForm;
 import capstone.snef.WebAdmin.dataform.FlashSaleForm;
 import capstone.snef.WebAdmin.dataform.InStoreProduct;
@@ -59,7 +58,6 @@ public class ProductAPIController {
     private ProductService pService;
     @Autowired
     private NewRequestProductService requestProductService;
-   
 
     @PostMapping("/getAll")
     public List<Product> getAllProduct() {
@@ -84,7 +82,9 @@ public class ProductAPIController {
         List<Product> products = pService.getProductByName(productName);
         List<ProductData> data = new ArrayList<>();
         for (Product product : products) {
-            data.add(new ProductData(product.getProductId(), product.getProductName(),product.getCategoriesId().getCategoryName(), product.getImageSrc()));
+            if (product.getStatus()) {
+                data.add(new ProductData(product.getProductId(), product.getProductName(), product.getCategoriesId().getCategoryName(), product.getImageSrc()));
+            }
         }
         Map<String, List<ProductData>> map = new HashMap<String, List<ProductData>>();
         map.put("data", data);
@@ -101,6 +101,9 @@ public class ProductAPIController {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = sdf.parse(data.getExpiredDate());
+            if (data.getAmmount() < 0) {
+                return new Message(false, "Fail");
+            }
             StoreProduct rs = pService.saveStoreProduct(
                     data.getStoreId(), data.getProductId(), data.getName(),
                     date, data.getAmmount(), data.getPrice(),
@@ -190,9 +193,13 @@ public class ProductAPIController {
             return new Message(false, "Update fail");
         }
     }
+
     @PostMapping("/requestCreateProduct")
-    public Message requestCreateProduct(@ModelAttribute RequestCreateProductData data){
-       
+    public Message requestCreateProduct(@ModelAttribute RequestCreateProductData data) {
+        boolean rs = requestProductService.requestCreateProduct(data);
+        if (rs) {
+            return new Message(true, "Success");
+        }
         return new Message(false, "Fail");
     }
 
