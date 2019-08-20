@@ -46,7 +46,7 @@ public class NewRequestProductService {
             if (imgSrc != null) {
                 Optional<Categories> categoryRs = cateRepos.findById(data.getCategory());
                 Product product = new Product(data.getName(), imgSrc, false, categoryRs.get());
-
+                
                 product = productRepos.save(product);
                 if (product != null) {
                     Optional<Account> adminRs = accRepos.findById(3);

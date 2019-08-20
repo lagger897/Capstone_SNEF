@@ -17,6 +17,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>SAFO-Sale Food</title>
         <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <!-- Custom fonts for this template -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -41,9 +43,11 @@
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <link href="css/inputRange.css" rel="stylesheet"/>
+
+        <link href="css/jquery.basic.toast.css" rel="stylesheet">
         <script>
             $('document').ready(function () {
-                $table = $('#dataTable').dataTable({
+                $('#dataTable').dataTable({
                     "ajax": {
                         "url": "api/product/getAllStoreProductWithoutFlashSale?storeId=" +${sessionScope.store.storeId},
                         "method": "GET",
@@ -52,8 +56,10 @@
                     "processing": true,
                     "serverSide": false,
                     "columns": [
-
-                        {width: "5%", data: "storeProductId"},
+//                        {width: "5%", data: "storeProductId"},
+                        {width: "3%", "render": function (data, type, full, meta) {
+                                return  meta.row + 1;
+                            }},
                         {width: "20%", data: "name"},
                         {data: function (row, type, set) {
 //                                alert(type);
@@ -65,22 +71,35 @@
                         {data: "price"},
                         {width: "10%", data: "expiredDate"},
                         {width: "5%", data: "quantity"},
-                        {width: "10%", data: function (row, type, set) {
-                                return row.sku !== null ? row.sku : "";
-                            }},
+//                        {width: "10%", data: function (row, type, set) {
+//                                return row.sku !== null ? row.sku : "";
+//                            }},
                         {width: "60px", data: function (row, type, set) {
                                 if (type === 'display') {
                                     var content = "<ul class='navbar-nav '>";
-                                    content += '<li class="nav-item"><a class="nav-link" href="#" onclick="saleProduct(' + row.storeProductId + ',' + row.price + ',' + row.expiredDate + ')" ><i class="fas fa-fw fa-cart-plus"></i><span style="color:black"> Sale</span></a><li>';
+                                    content += '<li class="nav-item"><a class="nav-link" href="#" onclick="saleProduct(' + row.storeProductId + ',' + row.price + ',\'' + row.expiredDate + '\'' + ',' + row.quantity + ')" ><i class="fas fa-fw fa-cart-plus"></i><span style="color:black"> Sale</span></a><li>';
+
                                     content += '<li class="nav-item"><a class="nav-link" href="#" onclick="editProduct(' + row.storeProductId + ')" ><i class="fas fa-edit" ></i><span style="color:black"> Edit</span></a><li>';
                                     content += '<li class="nav-item"><a class="nav-link" href="#" onclick="deleteProduct(' + row.storeProductId + ')"><i class="fas fa-fw fa-trash" ></i><span style="color:black"> Delete</span></a><li>';
                                     content += "<ul>";
+//                                    alert(row.expiredDate);
                                     //content += '<input type="button" value="Edit" onclick="" style="width:70px"><br><br>';
                                     //content += '<input type="button" value="Delete" onclick="" style="width:70px">';
                                     return content;
                                 }
                                 return "";
-                            }},
+                            }}
+                    ], "columnDefs": [
+                        {
+                            "searchable": false,
+                            "orderable": false,
+                            "targets": 0
+                        },
+                        {
+                            "searchable": false,
+                            "orderable": false,
+                            "targets": 2
+                        }
                     ]
                             //                    , "destroy": true
                 });
@@ -111,7 +130,7 @@
                 <!-- Nav Item - Home -->
                 <li class="nav-item ">
                     <a class="nav-link" href="homepage">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <i class="fas fa-fw fa-star"></i>
                         <span>Home</span></a>
                 </li>
 
@@ -120,26 +139,33 @@
 
                 <!-- Heading -->
                 <div class="sidebar-heading">
-                    Utility
+                    Manage Store Product
                 </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed"  href="addStoreProduct" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-file-alt"></i>
                     <span>Add store product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item active">
                     <a class="nav-link collapsed "  href="storeProduct" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-file-alt"></i>
                     <span>Store Product</span>
                     </a>
                 </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Manage Order
+                </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed "  href="order" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-search"></i>
                     <span>Order</span>
                     </a>
                 </li>
@@ -236,11 +262,11 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.user}</span>
-                                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                                    <img class="img-profile rounded-circle" src="${sessionScope.userAvatar}" >
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="profile">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
@@ -258,7 +284,7 @@
                     <!-- End of Topbar -->
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-                        
+
                         <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800"><c:out value="${sessionScope.store.storeName}"/></h1>
                         <p class="mb-4"><c:out value="Retail store at ${sessionScope.store.address}"/><br><c:out value="Open from ${sessionScope.store.openHour} - ${sessionScope.store.closeHour}"/></p>
@@ -276,13 +302,13 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Product Id</th>
+                                                <th>No.</th>
                                                 <th>Name</th>
                                                 <th>Image</th>
                                                 <th>Price Per Unit</th>
                                                 <th>Expired Date</th> 
                                                 <th>Quantity</th>
-                                                <th>SKU</th>
+                                                <!--<th>SKU</th>-->
                                                 <!--<th>Last Update</th>-->
                                                 <th>Action</th>
 
@@ -291,13 +317,13 @@
                                         <tbody></tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>Product Id</th>
+                                                <th>No.</th>
                                                 <th>Name</th>
                                                 <th>Image</th>
                                                 <th>Price Per Unit</th>
                                                 <th>Expired Date</th> 
                                                 <th>Quantity</th>
-                                                <th>SKU</th>
+                                                <!--<th>SKU</th>-->
                                                 <!--<th>Last Update</th>-->
                                                 <th>Action</th>
                                             </tr>
@@ -342,7 +368,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">Ã—</span>
                         </button>
                     </div>
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -361,7 +387,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Post Sale</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">Ã—</span>
                         </button>
                     </div>
                     <form id="addSale">
@@ -371,7 +397,7 @@
                                     <tr>
                                         <td>Start Date</td>
                                         <td>
-                                            <input type="date" id="sDate" name="sDate" required="" />
+                                            <input type="date" id="sDate" name="sDate" min='2019/8/14' required="" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -382,22 +408,22 @@
                                     </tr>
                                     <tr>
                                         <td>Quantity</td>
-                                        <td> <input type="number" id = "txtQuantity" name="txtQuantity" required/> </td>
+                                        <td> <input type="number" id = "txtQuantity" name="txtQuantity" min="1" required/></td>
                                     </tr>
                                     <tr>
                                         <td>Price (VND)</td>
-                                        <td> <input type="number" id = "txtPrice" name="txtPrice" disabled/> </td>
+                                        <td> <input type="number" id = "txtPrice" name="txtPrice" min='1' disabled/> </td>
                                     </tr>
                                     <tr>
                                         <td>Discount </td>
                                         <td>
-                                            <input type="range" name="range" id="range" min="0" max="100" step="" value="0"  class="slider"/>
+                                            <input type="range" name="range" id="range" min="0" max="100" step="" value="50"  class="slider"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td> </td>
                                         <td>
-                                            <input type="text" id='output' style="width: 30px" value="0"><span>%</span>
+                                            <input type="number" id='output' style="width: 40px" value="50" min='50'><span>%</span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -433,7 +459,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" >Edit In Store Product</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">Ã—</span>
                         </button>
                     </div>
                     <form id="editStoreProduct">
@@ -464,7 +490,7 @@
                                     <tr>
                                         <td>Price </td>
                                         <td>
-                                            <input type="number" id="txtEditPrice" required/>
+                                            <input type="number" id="txtEditPrice" min=1000 required disabled/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -476,18 +502,18 @@
                                     <tr>
                                         <td>Quantity</td>
                                         <td>
-                                            <input type='number' required id='editQuantity'/>
+                                            <input type='number' min=1 required id='editQuantity'/>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>SKU</td>
-                                        <td>
-                                            <input type='text' id='editSKU'/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><span id="editProductError" style="color: red"></span></td>
-                                    </tr>
+                                    <!--<tr>-->
+                                    <!--<td>SKU</td>-->
+                                    <!--<td>-->
+                                <input type='hidden' id='editSKU'/>
+                                <!--</td>-->
+                                <!--</tr>-->
+                                <tr>
+                                    <td colspan="2"><span id="editProductError" style="color: red"></span></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -507,7 +533,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"><b>Are you sure to delete?</b></h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">Ã—</span>
                         </button>
                     </div>
                     <div class="modal-body">You cannot undo once you delete the product. Press "Delete" if you are sure </div>
@@ -537,12 +563,19 @@
         <script src="js/demo/datatables-demo.js"></script>
         <!--Block UI-->
         <script src="http://malsup.github.io/min/jquery.blockUI.min.js" ></script> 
+
+        <!--Toast plugin-->
+        <script type="text/javascript" src="js/jquery.basic.toast.js"></script>
         <script>
-            function saleProduct(productId, price, expiredDate) {
+            function saleProduct(productId, price, expiredDate, quantity) {
                 $('#saleProductModal').modal('show');
                 $('#txtPrice').val(price);
                 $('#hiddenStoreProductId').val(productId);
                 $('#hiddenExpiredDate').val(expiredDate);
+                $('#sDate').val(expiredDate);
+                $('#eDate').val(expiredDate);
+
+                $('#txtQuantity').attr('placeholder', "maximum " + quantity);
             }
             function editProduct(productId) {
                 $.ajax({
@@ -568,7 +601,9 @@
 
 
             $('document').ready(function () {
-                
+                $('#sDate').change(function () {
+                    $('#eDate').val($(this).val());
+                })
                 $('#range').on("input", function () {
                     $('#output').val(this.value);
                     var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;
@@ -598,7 +633,10 @@
                             "discount": $('#output').val(),
                         }), dataType: "json", contentType: "application/json", success: function (result) {
                             if (result.result === true) {
-                                alert(result.msg);
+                                $.Toast(result.msg, {'duration': 2000,
+                                    'class': 'info',
+                                    'position': 'top',
+                                    'align': "right"});
                                 $('#saleProductModal').modal('hide');
                                 $('#dataTable').DataTable().ajax.reload();
                             } else {
@@ -619,7 +657,10 @@
                                 $('#dataTable').DataTable().ajax.reload();
                                 $('#deleteProductModal').modal("hide");
                             } else {
-                                alert(data.msg);
+                                $.Toast(data.msg, {'duration': 2000,
+                                    'class': 'info',
+                                    'position': 'top',
+                                    'align': "right"});
                             }
                         }
                     });
@@ -644,13 +685,16 @@
                                 $('#dataTable').DataTable().ajax.reload();
                                 $('#editProductModal').modal("hide");
                             } else {
-                                alert(data.msg);
+                                $.Toast(data.msg, {'duration': 2000,
+                                    'class': 'info',
+                                    'position': 'top',
+                                    'align': "right"});
                             }
 
                         }
                     });
                 }
-                )
+                );
             });
         </script>
     </body>

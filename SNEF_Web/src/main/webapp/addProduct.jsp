@@ -13,6 +13,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <title>SAFO- Sale Food</title>
 
         <!-- Custom fonts for this template -->
@@ -24,6 +25,7 @@
 
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="css/jquery.basic.toast.css" rel="stylesheet">
 
         <style>
             input[type=text], input[type=number],input[type=date]{
@@ -59,7 +61,7 @@
                 <!-- Nav Item - Home -->
                 <li class="nav-item ">
                     <a class="nav-link" href="homepage">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <i class="fas fa-fw fa-star"></i>
                         <span>Home</span></a>
                 </li>
 
@@ -68,26 +70,33 @@
 
                 <!-- Heading -->
                 <div class="sidebar-heading">
-                    Utility
+                    Manage Store Product
                 </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item active">
                     <a class="nav-link collapsed "  href="addStoreProduct" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-file-alt"></i>
                     <span>Add store product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed"  href="storeProduct" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-file-alt"></i>
                     <span>Store Product</span>
                     </a>
                 </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Manage Order
+                </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed"  href="order" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-search"></i>
                     <span>Order</span>
                     </a>
                 </li>
@@ -188,11 +197,11 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.user}</span>
-                                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                                    <img class="img-profile rounded-circle" src="${sessionScope.userAvatar}">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="profile">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
@@ -346,16 +355,16 @@
                                 <tr>
                                     <td>Expired Date</td>
                                     <td>
-                                        <input type="date" id="expiredDate" name="expiredDate" required=""/>
+                                        <input type="date" id="expiredDate" name="expiredDate" required />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Quantity</td>
-                                    <td> <input type="number" id = "ammount" name="ammount" value="0" placeholder="1000"  placeholder="1"   required/>  </td>
+                                    <td> <input type="number" id = "ammount" name="ammount" value="0" placeholder="1000" min="1" required/>  </td>
                                 </tr>
                                 <tr>
                                     <td>Price (VND)</td>
-                                    <td> <input type="number" id = "price" name="price" value="0" placeholder="1000"  placeholder="Product original price"   required/>   
+                                    <td> <input type="number" id = "price" name="price" value="0" placeholder="1000"  placeholder="Product original price" min="1000"  required/>   
                                         <!--<a onclick="suggestPrice()" href="#"> Suggest</a>-->
                                     </td>
                                 </tr>
@@ -440,21 +449,26 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+
+    <!--Toast plugin-->
+    <script type="text/javascript" src="js/jquery.basic.toast.js"></script>
     <script>
                                             function initCategory() {
                                                 $.ajax({
                                                     url: "api/category/getAll",
                                                     method: "GET",
                                                     success: function (rs) {
-                                                        var content="";
-                                                        for(var i=0;i<rs.length;i++){
-                                                            content+="<option value='"+rs[i].id+"'>"+rs[i].name+"</option>";
+                                                        var content = "";
+                                                        for (var i = 0; i < rs.length; i++) {
+                                                            content += "<option value='" + rs[i].id + "'>" + rs[i].name + "</option>";
                                                         }
                                                         $('#createCategory').html(content);
                                                     }
                                                 });
                                             }
                                             $('document').ready(function () {
+                                                var d = new Date();
+                                                $('#expiredDate').attr("min", d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
                                                 $('#resultTable').hide();
                                                 initCategory();
                                                 $('#searchProduct').submit(function (e) {
@@ -534,10 +548,16 @@
                                                         timeout: 1000000,
                                                         success: function (rs) {
                                                             if (rs.result === true) {
-                                                                alert(rs.msg);
+                                                                $.Toast(rs.msg, {'duration': 2000,
+                                                                    'class': 'info',
+                                                                    'position': 'top',
+                                                                    'align': "right"});
                                                                 $('#addProductModal').modal('hide');
                                                             } else {
-                                                                alert(rs.msg);
+                                                                $.Toast(rs.msg, {'duration': 2000,
+                                                                    'class': 'alert',
+                                                                    'position': 'top',
+                                                                    'align': "right"});
                                                             }
                                                         }, error: function (err) {
                                                             console.log(err);
@@ -548,9 +568,9 @@
                                                     event.preventDefault();
                                                     var form = $('#createProduct')[0];
                                                     var data = new FormData(form);
-                                                    
+
                                                     data.append("storeId",${sessionScope.store.storeId});
-                                                    data.append("category",$('#createCategory').val());
+                                                    data.append("category", $('#createCategory').val());
 //                                                    alert($('#createCategory').val());
                                                     $.ajax({
                                                         url: "api/product/requestCreateProduct",
@@ -562,10 +582,16 @@
                                                         timeout: 1000000,
                                                         success: function (rs) {
                                                             if (rs.result === true) {
-                                                                alert(rs.msg);
+                                                                $.Toast(rs.msg, {'duration': 2000,
+                                                                    'class': 'info',
+                                                                    'position': 'top',
+                                                                    'align': "right"});
                                                                 $('#createProductModal').modal('hide');
                                                             } else {
-                                                                alert(rs.msg);
+                                                                $.Toast(rs.msg, {'duration': 2000,
+                                                                    'class': 'alert',
+                                                                    'position': 'top',
+                                                                    'align': "right"});
                                                             }
                                                         }, error: function (err) {
                                                             console.log(err);

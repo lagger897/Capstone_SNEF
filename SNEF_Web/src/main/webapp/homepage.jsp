@@ -14,10 +14,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>SAFO-Sale Food</title>
         <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <!-- Custom fonts for this template -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -132,6 +133,9 @@
                     "processing": true,
                     "serverSide": false,
                     "columns": [
+                        {"width":"3%","render": function (data, type, full, meta) {
+                                return  meta.row + 1;
+                            }},
                         {data: function (row, type, set) {
                                 if (type === 'display') {
                                     return "<img src='" + row.image + "' width=70px;height=30px />";
@@ -145,16 +149,23 @@
                         {data: "inStock"},
                         {data: "startDate"},
                         {data: "endDate"},
-                        {data: "expireDate"},
-                        {data: function (row, type, set) {
-                                    if (row.status === null){
-                                        return "Nothing";
-                                    } else if (row.status===false){
-                                        return "Expired";
-                                    } else if (row.status===true) {
-                                        return "Selling";
-                                    }
-                            }
+                        {data: "expireDate"}
+//                        ,{data: function (row, type, set) {
+//                                if (row.status === null) {
+//                                    return "Nothing";
+//                                } else if (row.status === false) {
+//                                    return "Expired";
+//                                } else if (row.status === true) {
+//                                    return "Selling";
+//                                }
+//                            }
+//                        }
+                    ]
+                    , "columnDefs": [
+                        {
+                            "searchable": false,
+                            "orderable": false,
+                            "targets": 1
                         }
                     ]
                 });
@@ -184,35 +195,42 @@
                 <!-- Nav Item - Home -->
                 <li class="nav-item active">
                     <a class="nav-link" href="homepage">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <i class="fas fa-fw fa-star"></i>
                         <span>Home</span></a>
                 </li>
-                
+
                 <!-- Divider -->
                 <hr class="sidebar-divider">
 
                 <!-- Heading -->
                 <div class="sidebar-heading">
-                    Utility
+                    Manage Store Product
                 </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed"  href="addStoreProduct" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-file-alt"></i>
                     <span>Add store product</span>
                     </a>
                 </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed"  href="storeProduct" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-file-alt"></i>
                     <span>Store Product</span>
                     </a>
                 </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Manage Order
+                </div>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed"  href="order" />
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-search"></i>
                     <span>Order</span>
                     </a>
                 </li>
@@ -242,7 +260,7 @@
                             <i class="fa fa-bars"></i>
                         </button>
 
-                    
+
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
 
@@ -310,11 +328,11 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.user}</span>
-                                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                                    <img class="img-profile rounded-circle" src="${sessionScope.userAvatar}">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="profile">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
@@ -349,6 +367,7 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>No.</th>
                                                 <th>Image</th>
                                                 <th>Name</th>
                                                 <th>Disc. Price Per Unit</th>
@@ -358,7 +377,7 @@
                                                 <th>Start Date</th>
                                                 <th>End Date</th>
                                                 <th>Expired Date</th>
-                                                <th>Status</th>
+                                                <!--<th>Status</th>-->
                                                 <!--<th>Last Update</th>-->
                                                 <!--<th>Action</th>-->
 
@@ -367,6 +386,7 @@
                                         <tbody></tbody>
                                         <tfoot>
                                             <tr>
+                                                <th>No.</th>
                                                 <th>Image</th>
                                                 <th>Name</th>
                                                 <th>Disc. Price Per Unit</th>
@@ -376,7 +396,7 @@
                                                 <th>Start Date</th>
                                                 <th>End Date</th>
                                                 <th>Expired Date</th>
-                                                <th>Status</th>
+                                                <!--<th>Status</th>-->
                                                 <!--<th>Last Update</th>-->
                                                 <!--<th>Action</th>-->
                                             </tr>
@@ -421,7 +441,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">Ã—</span>
                         </button>
                     </div>
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -432,7 +452,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Post Sale Modal Modal-->
         <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -440,7 +460,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Post Sale</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">Ã—</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -527,7 +547,6 @@
                                                 $('#previewImage').attr("src", URL.createObjectURL(event.target.files[0]));
                                             }
                                             $('document').ready(function () {
-                                               
                                                 $('#range').on("input", function () {
                                                     $('#output').val(this.value);
                                                     var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;

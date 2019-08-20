@@ -23,7 +23,7 @@ public class LoginService {
 
         if (userId.isPresent()) {
             Account user = userId.get();
-            if (user.getRoleId().getRoleName().equalsIgnoreCase("Store Manager")) {
+            if (user.getRoleId().getRoleName().equalsIgnoreCase("Store Manager") && user.getIsActive() == 1) {
                 List<Store> store = storeResp.findAllByaccountId(user);
                 if (store.size() > 0) {
                     return store.get(0);

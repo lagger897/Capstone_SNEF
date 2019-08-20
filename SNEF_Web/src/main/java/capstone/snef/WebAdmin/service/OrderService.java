@@ -5,6 +5,7 @@
  */
 package capstone.snef.WebAdmin.service;
 
+import capstone.snef.WebAdmin.dataform.CommentData;
 import capstone.snef.WebAdmin.dataform.OrderData;
 import capstone.snef.WebAdmin.entity.Order1;
 import capstone.snef.WebAdmin.entity.Store;
@@ -67,14 +68,33 @@ public class OrderService {
 
     public boolean checkConfirmCode(String confirmCode) {
         Optional<Order1> orderRs = orderRepos.findByConfirmationCode(confirmCode);
-        if (orderRs.isPresent()){
+        if (orderRs.isPresent()) {
             Order1 order = orderRs.get();
             order.setStatus(true);
-            if (orderRepos.save(order)!=null){
+            if (orderRepos.save(order) != null) {
                 return true;
             }
         }
         return false;
+    }
+
+    public List<CommentData> findAllCommentByStoreId(Integer storeId) {
+        List<CommentData> list = new ArrayList<>();
+
+        if (storeId != null && storeId > 0) {
+            Optional<Store> storeRs = storeRepos.findById(storeId);
+            if (storeRs.isPresent()) {
+                List<Order1> orders = orderRepos.findAllByStoreId(storeRs.get());
+                for (Order1 order : orders) {
+                    if (order.getRatingPoint() > 0 && order.getRatingPoint() != null) {
+                        list.add(new CommentData(order.getOrderId(), order.getAccountId().getFirstName() + " "
+                                + order.getAccountId().getLastName(), order.getComment(),
+                                (double) order.getRatingPoint(), order.getDateOrder()));
+                    }
+                }
+            }
+        }
+        return list;
     }
 
 }

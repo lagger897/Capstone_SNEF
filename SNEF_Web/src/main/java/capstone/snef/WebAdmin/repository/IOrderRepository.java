@@ -5,10 +5,12 @@
  */
 package capstone.snef.WebAdmin.repository;
 
+import capstone.snef.WebAdmin.dataform.CommentData;
 import capstone.snef.WebAdmin.entity.Order1;
 import capstone.snef.WebAdmin.entity.Store;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -24,5 +26,5 @@ public interface IOrderRepository extends CrudRepository<Order1, Integer> {
     public Optional<Order1> findByConfirmationCode(String confirmationCode);
 
     public List<Order1> findAllByStoreId(Store storeId);
-   
+
 }

@@ -80,9 +80,10 @@ public class Product implements Serializable {
     }
 
     public Product(String name, String imgSrc, boolean status, Categories category) {
-        this.productName = productName;
-        this.imageSrc = imageSrc;
-        this.categoriesId=category;
+        this.productName = name;
+        this.imageSrc = imgSrc;
+        this.status = status;
+        this.categoriesId = category;
     }
 
     public Integer getProductId() {
@@ -167,5 +168,5 @@ public class Product implements Serializable {
     public String toString() {
         return "capstone.snef.WebAdmin.entity.Product[ productId=" + productId + " ]";
     }
-    
+
 }

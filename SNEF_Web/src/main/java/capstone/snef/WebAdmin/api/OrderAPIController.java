@@ -5,6 +5,7 @@
  */
 package capstone.snef.WebAdmin.api;
 
+import capstone.snef.WebAdmin.dataform.CommentData;
 import capstone.snef.WebAdmin.dataform.Message;
 import capstone.snef.WebAdmin.dataform.OrderData;
 import capstone.snef.WebAdmin.dataform.OrderItemData;
@@ -60,5 +61,12 @@ public class OrderAPIController {
             return new Message(true, "Success");
         }
         return new Message(false, "Wrong Confirmation Code");
+    }
+
+    @GetMapping("/getAllComment")
+    public Map<String, List<CommentData>> getAllComment(@RequestParam("storeId") Integer storeId) {
+        Map<String, List<CommentData>> map = new HashMap<>();
+        map.put("data", orderServ.findAllCommentByStoreId(storeId));
+        return map;
     }
 }

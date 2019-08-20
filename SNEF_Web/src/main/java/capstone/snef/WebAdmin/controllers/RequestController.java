@@ -60,6 +60,14 @@ public class RequestController {
         }
         return "login";
     }
+    @RequestMapping("/profile")
+    public String profile(HttpSession session) {
+         if(!isLogin(session)){
+            return "login";
+        }
+        return "profile";
+    }
+
 
     public boolean isLogin(HttpSession session) {
         return (session.getAttribute("user") != null);
