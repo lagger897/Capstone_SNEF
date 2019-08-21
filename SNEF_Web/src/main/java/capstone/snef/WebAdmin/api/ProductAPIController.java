@@ -198,9 +198,9 @@ public class ProductAPIController {
     public Message requestCreateProduct(@ModelAttribute RequestCreateProductData data) {
         boolean rs = requestProductService.requestCreateProduct(data);
         if (rs) {
-            return new Message(true, "Success");
+            return new Message(true, "Request has been sent. Please wait 2-4 days for confirmation.");
         }
-        return new Message(false, "Fail");
+        return new Message(false, "Cannot sent request. Please contact customer service for help.");
     }
 
 }

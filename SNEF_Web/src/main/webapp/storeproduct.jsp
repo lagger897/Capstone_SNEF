@@ -64,6 +64,7 @@
                         {data: function (row, type, set) {
 //                                alert(type);
                                 if (type === 'display') {
+                                    
                                     return "<img src='" + row.imageSrc + "' width=70px;height=30px />";
                                 }
                                 return "";
@@ -397,7 +398,7 @@
                                     <tr>
                                         <td>Start Date</td>
                                         <td>
-                                            <input type="date" id="sDate" name="sDate" min='2019/8/14' required="" />
+                                            <input type="date" id="sDate" name="sDate" min="2019-08-26"required="" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -496,7 +497,7 @@
                                     <tr>
                                         <td>Expired Date</td>
                                         <td>
-                                            <input type="date" required id="editExpiredDate"/>
+                                            <input type="date" min="2019-08-26" required id="editExpiredDate"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -567,17 +568,24 @@
         <!--Toast plugin-->
         <script type="text/javascript" src="js/jquery.basic.toast.js"></script>
         <script>
+            var now = new Date();
+            var formatDate = now.getFullYear() + "-" + 
+                    ((now.getMonth() + 1) < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1)) +
+                    "-" + (now.getDate()<10?"0"+now.getDate():now.getDate());
             function saleProduct(productId, price, expiredDate, quantity) {
+//                alert(formatDate);
                 $('#saleProductModal').modal('show');
                 $('#txtPrice').val(price);
                 $('#hiddenStoreProductId').val(productId);
                 $('#hiddenExpiredDate').val(expiredDate);
-                $('#sDate').val(expiredDate);
+                $('#sDate').val(formatDate);
+                $('#sDate').attr("min",formatDate);
                 $('#eDate').val(expiredDate);
-
+                 $('#eDate').attr("max",expiredDate);
                 $('#txtQuantity').attr('placeholder', "maximum " + quantity);
             }
             function editProduct(productId) {
+                $.blockUI({message:"<h5>Processing...</h5>"});
                 $.ajax({
                     url: "api/product/getStoreProduct?id=" + productId,
                     type: 'GET', success: function (data) {
@@ -586,12 +594,21 @@
                         $("#txtEditDescription").val(data.description);
                         $("#txtEditPrice").val(data.price);
                         $("#editExpiredDate").val(data.expiredDate);
+                        if (new Date(data.expiredDate) < now){
+                            $("#editExpiredDate").attr('disabled','disabled');
+                             $("#editExpiredDate").removeAttr('min');
+                        }else{
+                            $("#editExpiredDate").removeAttr('disabled');
+                             $("#editExpiredDate").attr('min',formatDate);
+                        }
                         $("#editQuantity").val(data.quantity);
                         $("#editSKU").val(data.sku);
                         $("#hiddenStoreProductId").val(data.storeProductId);
+                        $.unblockUI();
+                         $('#editProductModal').modal('show');
                     }
                 });
-                $('#editProductModal').modal('show');
+               
             }
             function deleteProduct(productId) {
                 $('#deleteProductModal').modal('show');
@@ -601,9 +618,9 @@
 
 
             $('document').ready(function () {
-                $('#sDate').change(function () {
-                    $('#eDate').val($(this).val());
-                })
+//                $('#sDate').change(function () {
+//                    $('#eDate').val($(this).val());
+//                })
                 $('#range').on("input", function () {
                     $('#output').val(this.value);
                     var cal = Math.round((1 - this.value / 100) * $('#txtPrice').val() * 100) / 100;

@@ -453,6 +453,10 @@
     <!--Toast plugin-->
     <script type="text/javascript" src="js/jquery.basic.toast.js"></script>
     <script>
+                                            var now = new Date();
+                                            var formatDate = now.getFullYear() + "-" +
+                                                    ((now.getMonth() + 1) < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1)) +
+                                                    "-" + (now.getDate() < 10 ? "0" + now.getDate() : now.getDate());
                                             function initCategory() {
                                                 $.ajax({
                                                     url: "api/category/getAll",
@@ -617,6 +621,8 @@
                                                         $('#productId').val(data.productId);
                                                         $('#name').val(data.productName);
                                                         $('#previewImage').attr("src", data.imageSrc);
+                                                        $('#expiredDate').attr('min',formatDate);
+                                                        $('#expiredDate').val(formatDate);
                                                         $('#addProductModal').modal('show');
                                                     }
                                                 });

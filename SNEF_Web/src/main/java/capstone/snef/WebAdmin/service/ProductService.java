@@ -170,11 +170,11 @@ public class ProductService {
                 FlashsaleProduct fspRs = flashSaleProductRepos.save(fsp);
                 StoreProduct sp = storeProductRepos.save(storeProduct);
                 if (fspRs != null && sp != null) {
-                    return new Message(true, "Add success, return to home page");
+                    return new Message(true, "Add success!");
                 }
             }
         }
-        return new Message(false, "Error somewhere i dont know");
+        return new Message(false, "Error somewhere I dont know");
     }
 
     public boolean deleteStoreProduct(Integer productId) {
