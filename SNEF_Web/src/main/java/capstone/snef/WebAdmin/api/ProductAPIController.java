@@ -13,6 +13,7 @@ import capstone.snef.WebAdmin.dataform.ProductData;
 import capstone.snef.WebAdmin.dataform.FlashSaleProductData;
 import capstone.snef.WebAdmin.dataform.RequestCreateProductData;
 import capstone.snef.WebAdmin.dataform.StoreProductData;
+import capstone.snef.WebAdmin.dataform.StoreProductImageData;
 import capstone.snef.WebAdmin.entity.Product;
 import capstone.snef.WebAdmin.entity.StoreProduct;
 import capstone.snef.WebAdmin.service.NewRequestProductService;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -158,8 +160,11 @@ public class ProductAPIController {
         Date sDate = body.getStartDate();
         Date eDate = body.getEndDate();
         Date now = new Date();
+        
         if (sDate.compareTo(now) < 0) {
+            if(!DateUtils.isSameDay(sDate, now)){
             return new Message(false, "Start date cannot be set before current date");
+            }
         }
         if (eDate.compareTo(sDate) < 0) {
             return new Message(false, "End date must be set after start date");
@@ -184,8 +189,8 @@ public class ProductAPIController {
     }
 
     @PostMapping("/updateStoreProduct")
-    public Message saleStoreProduct(@RequestBody StoreProductData body) {
-
+    public Message saleStoreProduct(@ModelAttribute StoreProductImageData body) {
+        
         boolean rs = pService.updateStoreProduct(body);
         if (rs) {
             return new Message(true, "Update success");

@@ -8,13 +8,13 @@ package capstone.snef.WebAdmin.repository;
 import capstone.snef.WebAdmin.entity.Store;
 import capstone.snef.WebAdmin.entity.StoreProduct;
 import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Phuc Nguyen -VN
  */
-public interface IStoreProductRepository extends CrudRepository<StoreProduct, Integer> {
+public interface IStoreProductRepository extends JpaRepository<StoreProduct, Integer> {
 
     @Override
     public List<StoreProduct> findAll();

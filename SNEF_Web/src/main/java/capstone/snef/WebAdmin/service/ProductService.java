@@ -5,12 +5,14 @@
  */
 package capstone.snef.WebAdmin.service;
 
+import capstone.snef.WebAdmin.Utility.ImageUtility;
 import capstone.snef.WebAdmin.dataform.FlashSaleForm;
 import capstone.snef.WebAdmin.dataform.InStoreProduct;
 import capstone.snef.WebAdmin.dataform.Message;
 import capstone.snef.WebAdmin.dataform.ProductData;
 import capstone.snef.WebAdmin.dataform.FlashSaleProductData;
 import capstone.snef.WebAdmin.dataform.StoreProductData;
+import capstone.snef.WebAdmin.dataform.StoreProductImageData;
 import capstone.snef.WebAdmin.entity.FlashsaleProduct;
 import capstone.snef.WebAdmin.entity.Flashsales;
 import capstone.snef.WebAdmin.entity.Product;
@@ -29,6 +31,10 @@ import java.util.Optional;
 import capstone.snef.WebAdmin.repository.IFlashSaleProductRepository;
 import capstone.snef.WebAdmin.repository.IFlashsaleRepository;
 import capstone.snef.WebAdmin.repository.IStoreProductImageRepository;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -199,19 +205,29 @@ public class ProductService {
         return null;
     }
 
-    public boolean updateStoreProduct(StoreProductData storeProductData) {
+    public boolean updateStoreProduct(StoreProductImageData storeProductData) {
         Optional<StoreProduct> spResult = storeProductRepos.findById(storeProductData.getStoreProductId());
-        if (spResult.isPresent()) {
-            StoreProduct storeProduct = spResult.get();
-            storeProduct.getStoreProductImageList().get(0).setImageSrc(storeProductData.getImageSrc());
-            storeProduct.setProductName(storeProductData.getName());
-            storeProduct.setQuantity(storeProductData.getQuantity());
-            storeProduct.setPrice((float) storeProductData.getPrice());
-            storeProduct.setDescription(storeProductData.getDescription());
-            storeProduct.setSku(storeProductData.getSku());
-            StoreProduct result = storeProductRepos.save(storeProduct);
-            if (result != null) {
-                return true;
+        if (spResult.isPresent()) {            
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = sdf.parse(storeProductData.getExpiredDate());
+                StoreProduct storeProduct = spResult.get();
+                if (storeProductData.getImageFileSrc()!=null && !storeProductData.getImageFileSrc().isEmpty()){
+                    ImageUtility imageUtil = new ImageUtility();
+                    String imgSrc=imageUtil.uploadImage(storeProductData.getImageFileSrc());
+                    storeProduct.getStoreProductImageList().get(0).setImageSrc(imgSrc);
+                }
+                storeProduct.setProductName(storeProductData.getName());
+                storeProduct.setQuantity(storeProductData.getQuantity());
+                storeProduct.setPrice((float) storeProductData.getPrice());
+                storeProduct.setDescription(storeProductData.getDescription());
+                storeProduct.setExpiredDate(date);
+                StoreProduct result = storeProductRepos.saveAndFlush(storeProduct);
+                if (result != null) {
+                    return true;
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(ProductService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return false;

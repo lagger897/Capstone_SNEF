@@ -465,45 +465,45 @@
                     </div>
                     <form id="editStoreProduct">
                         <div class="modal-body">
-                            <input type="hidden" id="hiddenEditStoreProductId"/>
+                            <input type="hidden" id="hiddenEditStoreProductId" name="storeProductId"/>
                             <table border="0" style="margin:0 auto">
                                 <tbody>
                                     <tr>
                                         <td>Image</td>
                                         <td>
-                                            <img id="editImage" style="width:300px;height:300px"/>
+                                            <img id="editImage" style="width:300px;height:300px" name="imageSrc"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Change Image</td>
                                         <td>
-                                            <input type="file" id ="editImageFile" value="" />
+                                            <input type="file" id ="editImageFile" value="" onchange="uploadImg(event)" name="imageFileSrc" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Name</td>
-                                        <td> <input type="text" id = "txtEditName" id = "txtEditName"  required/> </td>
+                                        <td> <input type="text" id = "txtEditName" name="name"  required/> </td>
                                     </tr>
                                     <tr>
                                         <td>Description</td>
-                                        <td> <textarea style="width:300px;height: 300px" id="txtEditDescription"></textarea> </td>
+                                        <td> <textarea style="width:300px;height: 300px" id="txtEditDescription" name="description"></textarea> </td>
                                     </tr>
                                     <tr>
                                         <td>Price </td>
                                         <td>
-                                            <input type="number" id="txtEditPrice" min=1000 required disabled/>
+                                            <input type="number" id="txtEditPrice" name="price" min=1000 required disabled/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Expired Date</td>
                                         <td>
-                                            <input type="date" min="2019-08-26" required id="editExpiredDate"/>
+                                            <input type="date" min="2019-08-26" required id="editExpiredDate" name="expiredDate"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Quantity</td>
                                         <td>
-                                            <input type='number' min=1 required id='editQuantity'/>
+                                            <input type='number' min=1 required id='editQuantity' name="quantity"/>
                                         </td>
                                     </tr>
                                     <!--<tr>-->
@@ -572,6 +572,9 @@
             var formatDate = now.getFullYear() + "-" + 
                     ((now.getMonth() + 1) < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1)) +
                     "-" + (now.getDate()<10?"0"+now.getDate():now.getDate());
+             function uploadImg(event) {
+                $('#editImage').attr("src", URL.createObjectURL(event.target.files[0]));
+            }
             function saleProduct(productId, price, expiredDate, quantity) {
 //                alert(formatDate);
                 $('#saleProductModal').modal('show');
@@ -596,14 +599,14 @@
                         $("#editExpiredDate").val(data.expiredDate);
                         if (new Date(data.expiredDate) < now){
                             $("#editExpiredDate").attr('disabled','disabled');
-                             $("#editExpiredDate").removeAttr('min');
+                            $("#editExpiredDate").removeAttr('min');
                         }else{
                             $("#editExpiredDate").removeAttr('disabled');
-                             $("#editExpiredDate").attr('min',formatDate);
+                            $("#editExpiredDate").attr('min',formatDate);
                         }
                         $("#editQuantity").val(data.quantity);
                         $("#editSKU").val(data.sku);
-                        $("#hiddenStoreProductId").val(data.storeProductId);
+                        $("#hiddenEditStoreProductId").val(data.storeProductId);
                         $.unblockUI();
                          $('#editProductModal').modal('show');
                     }
@@ -645,7 +648,7 @@
                         url: "api/product/saleStoreProduct", type: 'POST',
                         data: JSON.stringify({"storeProductId": $('#hiddenStoreProductId').val(),
                             "startDate": $('#sDate').val(),
-                            "endDate": $('#sDate').val(),
+                            "endDate": $('#eDate').val(),
                             "quantity": $('#txtQuantity').val(),
                             "discount": $('#output').val(),
                         }), dataType: "json", contentType: "application/json", success: function (result) {
@@ -684,20 +687,23 @@
                 })
                 $('#editStoreProduct').submit(function (event) {
                     event.preventDefault();
+                    var formData = new FormData(this);
+                    //formData.append('description',$('txtEditDescription').val());
+                    formData.append('imageSrc',$('#editImage').attr('src'));
+                    formData.set('price',$("#txtEditPrice").val());
+                     formData.set('expiredDate',$("#editExpiredDate").val());
+                    //formData.append('storeProductId',$('#hiddenEditStoreProductId').val());
+                    console.log(formData.get('expiredDate'));
                     $.ajax({
                         url: "api/product/updateStoreProduct",
-                        type: "POST", dataType: "json", contentType: "application/json",
-                        data: JSON.stringify({
-                            "storeProductId": $("#hiddenStoreProductId").val(),
-                            "imageSrc": $("#editImage").attr("src"),
-                            "name": $("#txtEditName").val(),
-                            "expiredDate": $("#editExpiredDate").val(),
-                            "quantity": $("#editQuantity").val(),
-                            "price": $("#txtEditPrice").val(),
-                            "description": $("#txtEditDescription").val(),
-                            "sku": $("#editSKU").val()
-                        })
-                        , success: function (data) {
+                        type: "POST",
+                        enctype: 'multipart/form-data',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        timeout: 1000000,
+                        success: function (data) {
                             if (data.result) {
                                 $('#dataTable').DataTable().ajax.reload();
                                 $('#editProductModal').modal("hide");
