@@ -6,6 +6,7 @@
 package capstone.snef.WebAdmin.service;
 
 import capstone.snef.WebAdmin.Utility.ImageUtility;
+import capstone.snef.WebAdmin.Utility.LinearRegressionClassifier;
 import capstone.snef.WebAdmin.dataform.FlashSaleForm;
 import capstone.snef.WebAdmin.dataform.InStoreProduct;
 import capstone.snef.WebAdmin.dataform.Message;
@@ -31,10 +32,13 @@ import java.util.Optional;
 import capstone.snef.WebAdmin.repository.IFlashSaleProductRepository;
 import capstone.snef.WebAdmin.repository.IFlashsaleRepository;
 import capstone.snef.WebAdmin.repository.IStoreProductImageRepository;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -55,6 +59,12 @@ public class ProductService {
     private IFlashSaleProductRepository flashSaleProductRepos;
     @Autowired
     private IFlashsaleRepository flashSaleRepos;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    private final String CONFIG_FILE_PATH = "src/main/resources";
+    private final String CONFIG_FILE_NAME = "config.csv";
 
     public List<Product> getAllProduct() {
         return productRepos.findAll();
@@ -105,7 +115,7 @@ public class ProductService {
         Optional<Product> rs = productRepos.findById(id);
         if (rs.isPresent()) {
             Product product = rs.get();
-            return new ProductData(product.getProductId(), product.getProductName(),product.getCategoriesId().getCategoryName(), product.getImageSrc());
+            return new ProductData(product.getProductId(), product.getProductName(), product.getCategoriesId().getCategoryName(), product.getImageSrc());
         }
         return null;
     }
@@ -207,14 +217,14 @@ public class ProductService {
 
     public boolean updateStoreProduct(StoreProductImageData storeProductData) {
         Optional<StoreProduct> spResult = storeProductRepos.findById(storeProductData.getStoreProductId());
-        if (spResult.isPresent()) {            
+        if (spResult.isPresent()) {
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = sdf.parse(storeProductData.getExpiredDate());
                 StoreProduct storeProduct = spResult.get();
-                if (storeProductData.getImageFileSrc()!=null && !storeProductData.getImageFileSrc().isEmpty()){
+                if (storeProductData.getImageFileSrc() != null && !storeProductData.getImageFileSrc().isEmpty()) {
                     ImageUtility imageUtil = new ImageUtility();
-                    String imgSrc=imageUtil.uploadImage(storeProductData.getImageFileSrc());
+                    String imgSrc = imageUtil.uploadImage(storeProductData.getImageFileSrc());
                     storeProduct.getStoreProductImageList().get(0).setImageSrc(imgSrc);
                 }
                 storeProduct.setProductName(storeProductData.getName());
@@ -236,7 +246,7 @@ public class ProductService {
     public StoreProduct saveStoreProductImage(StoreProduct product, String imageSrc) {
         boolean rs = storeProductRepos.existsById(product.getStoreProductId());
         if (rs) {
-            StoreProductImage image=imageRepos.save(new StoreProductImage(imageSrc,product));
+            StoreProductImage image = imageRepos.save(new StoreProductImage(imageSrc, product));
             List<StoreProductImage> list = new ArrayList<>();
             list.add(image);
             product.setStoreProductImageList(list);
@@ -246,6 +256,51 @@ public class ProductService {
             }
         }
         return null;
+    }
+
+    public Message suggestPrice(Date sDate, Date eDate, Integer quantity, int storeProductId) {
+        if (quantity==null){
+               return new Message(false, "Invalid quantity");
+        }
+      
+        double dateDiff = Math.round((eDate.getTime() - sDate.getTime()) / 1000 / 60 / 60 / 24);
+        double input = quantity / (dateDiff + 1) * 7;
+//        String query = "SELECT sum(od.Quantity) as QuantityBought, "
+//                + "((fs.Discount * sp.Price) / 100) as PriceD , DATEDIFF(fs.EndDate, fs.StartDate) as DateSale "
+//                + "from snef_part2.OrderDetail od, snef_part2.FlashsaleProduct fsp , snef_part2.StoreProduct sp  "
+//                + ", snef_part2.Flashsales fs "
+//                + " where od.FlashSaleProductId = fsp.FlashSaleProductId and sp.StoreProductId = fsp.StoreProductId  "
+//                + " and fs.FlashSalesId = fsp.FlashSalesId and sp.ProductId = :productId "
+//                + "group by FlashSaleProductId";
+
+        Optional<StoreProduct> sp = storeProductRepos.findById(storeProductId);
+        StoreProduct sProduct=sp.get();
+//        List<Object[]> rs = em.createQuery(query).setParameter("productId", sProduct.getProductId().getProductId()).getResultList();
+        List<Long[]>rs=productRepos.calData(sProduct.getProductId().getProductId());
+        if (rs.size() < 3) {
+            return new Message(false, "Not enough data for prediction");
+        }
+        ArrayList<Double> salePerWeek = new ArrayList<>(); // Tưởng ứng với giá trị X
+        ArrayList<Double> priceProduct = new ArrayList<>(); // Tương ứng với giá trị Y
+        for (Long[] r : rs) {
+            Double quantityBought = Double.valueOf(Long.toString(r[0]));
+            Double priceD = Double.valueOf(Long.toString(r[1]));
+            Integer dateSale =  Integer.valueOf(Long.toString(r[2]));
+            double salePW = quantityBought / (dateSale) * 7;
+            salePerWeek.add(salePW);
+            priceProduct.add(priceD);
+        }
+        LinearRegressionClassifier linearRegressionClassifier
+                = new LinearRegressionClassifier(salePerWeek, priceProduct);
+        double prediction = linearRegressionClassifier.predictValue(input);
+        if (prediction <= 0) {
+            return new Message(false, "Unable to predict the price");
+        }
+        if (prediction > (sProduct.getPrice() / 2)) {
+            prediction =sProduct.getPrice()/2;
+        }
+        return new Message(true, "" +String.format("%.2f", prediction));
+
     }
 
 }

@@ -160,10 +160,10 @@ public class ProductAPIController {
         Date sDate = body.getStartDate();
         Date eDate = body.getEndDate();
         Date now = new Date();
-        
+
         if (sDate.compareTo(now) < 0) {
-            if(!DateUtils.isSameDay(sDate, now)){
-            return new Message(false, "Start date cannot be set before current date");
+            if (!DateUtils.isSameDay(sDate, now)) {
+                return new Message(false, "Start date cannot be set before current date");
             }
         }
         if (eDate.compareTo(sDate) < 0) {
@@ -190,7 +190,7 @@ public class ProductAPIController {
 
     @PostMapping("/updateStoreProduct")
     public Message saleStoreProduct(@ModelAttribute StoreProductImageData body) {
-        
+
         boolean rs = pService.updateStoreProduct(body);
         if (rs) {
             return new Message(true, "Update success");
@@ -206,6 +206,21 @@ public class ProductAPIController {
             return new Message(true, "Request has been sent. Please wait 2-4 days for confirmation.");
         }
         return new Message(false, "Cannot sent request. Please contact customer service for help.");
+    }
+
+    @GetMapping("/suggestPrice")
+    public Message requestCreateProduct(
+            @RequestParam("startDate") String sDate,
+            @RequestParam("endDate") String eDate,
+            @RequestParam("quantity") int quantity,
+            @RequestParam("storeProductId") int storeProductId) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return pService.suggestPrice(sdf.parse(sDate), sdf.parse(eDate), quantity, storeProductId);
+        } catch (ParseException ex) {
+            Logger.getLogger(ProductAPIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new Message(false,"Invalid input");
     }
 
 }

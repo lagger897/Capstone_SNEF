@@ -430,7 +430,8 @@
                                     <tr>
                                         <td>Seling Price (VND)   </td>
                                         <td>
-                                            <span id='calPrice'>0 </span>
+                                            <span id='calPrice'>0 </span> <span id="suggestPrice" style="color: red"></span>
+
                                         </td>
                                     </tr>
                                     <tr>
@@ -445,7 +446,7 @@
                         </div>
                         <div class="modal-footer" style="align-items: center;align-content: center">
 
-                            <button class="btn btn-secondary" type="button" >Suggest</button>
+                            <button class="btn btn-secondary" type="button" onclick="suggestPrice()" >Suggest</button>
                             <input type="submit" class="btn btn-primary" value="Save"/>
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                         </div>
@@ -492,7 +493,7 @@
                                         <td>Price </td>
                                         <td>
                                             <input type="number" id="txtEditPrice" name="price" min=1000 required disabled/>
-                                        </td>
+                                                                                    </td>
                                     </tr>
                                     <tr>
                                         <td>Expired Date</td>
@@ -584,8 +585,11 @@
                 $('#sDate').val(formatDate);
                 $('#sDate').attr("min",formatDate);
                 $('#eDate').val(expiredDate);
-                 $('#eDate').attr("max",expiredDate);
+                $('#eDate').attr("max",expiredDate);
                 $('#txtQuantity').attr('placeholder', "maximum " + quantity);
+                $('#suggestPrice').html("");
+                 $('#saleProductError').html("");
+               
             }
             function editProduct(productId) {
                 $.blockUI({message:"<h5>Processing...</h5>"});
@@ -619,7 +623,23 @@
                 $('#dataTable').DataTable().ajax.reload();
             }
 
-
+            function suggestPrice(){
+                $('#saleProductError').html("");
+                $('#suggestPrice').html("");
+                if($('#txtQuantity').val()===""){
+                    $('#saleProductError').html("Quantity cannot be empty");
+                }else{
+                $.ajax({
+                    url:"api/product/suggestPrice?startDate="+$('#sDate').val()+
+                       "&&endDate="+$('#eDate').val()+"&&quantity="+$('#txtQuantity').val()+
+                       "&&storeProductId="+$('#hiddenStoreProductId').val(),
+                    method:"GET",
+                    success:function(result){
+                        $('#suggestPrice').html(result.msg);
+                    }
+                })
+            }
+            }
             $('document').ready(function () {
 //                $('#sDate').change(function () {
 //                    $('#eDate').val($(this).val());
